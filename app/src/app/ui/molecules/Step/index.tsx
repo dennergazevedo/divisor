@@ -6,7 +6,7 @@ interface StepProps {
 
 export default function Step({ index, title, description }: StepProps) {
   return (
-    <div className="group relative rounded-2xl border border-neutral-800 border-l-4 border-l-purple-600 shadow-lg shadow-purple-600/20 bg-neutral-950/80 p-6 transition-all duration-300 hover:border-neutral-700 hover:bg-neutral-900/80">
+    <div className="group relative rounded-2xl border border-neutral-800 border-l-4 border-l-purple-600 shadow-lg shadow-purple-600/20 bg-zinc-900/80 p-6 transition-all duration-300 hover:border-neutral-700 hover:bg-zinc-900/80">
       {/* Index */}
       <div className="flex items-center gap-3">
         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-purple-500/10 text-sm font-medium text-purple-400 ring-1 ring-purple-500/30">

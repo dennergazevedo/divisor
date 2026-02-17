@@ -3,8 +3,6 @@ import { Button } from "../../atoms/Button";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-transparent to-transparent" />
-
       <div className="relative mx-auto max-w-6xl px-6 py-32 text-center">
         <h1 className="text-4xl md:text-6xl font-semibold tracking-tight">
           Edge-first A/B testing

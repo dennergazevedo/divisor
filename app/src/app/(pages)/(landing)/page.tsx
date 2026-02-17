@@ -1,12 +1,13 @@
 import { FileCode, Flame, Gem, Github, Zap } from "lucide-react";
-import Card from "./ui/molecules/Card";
-import Hero from "./ui/sections/Hero";
-import Step from "./ui/molecules/Step";
-import { Button } from "./ui/atoms/Button";
+import Card from "@/app/ui/molecules/Card";
+import Hero from "@/app/ui/sections/Hero";
+import Step from "@/app/ui/molecules/Step";
+import { Button } from "@/app/ui/atoms/Button";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen bg-neutral-950 text-neutral-100 w-full">
+    <main className="flex flex-col min-h-screen w-full">
       <Hero />
 
       {/* FEATURES */}
@@ -33,7 +34,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="border-t border-neutral-900 bg-neutral-950/50">
+      <section className="border-t border-neutral-900 bg-zinc-900/50">
         <div className="mx-auto max-w-6xl px-6 py-24">
           <h2 className="text-3xl font-semibold tracking-tight">
             How Divisor works
@@ -84,10 +85,12 @@ export default function Home() {
             Documentation
           </Button>
 
-          <Button variant="outline">
-            <Github />
-            Repository
-          </Button>
+          <Link href="https://github.com/dennrgazevedo/divisor">
+            <Button variant="outline">
+              <Github />
+              Repository
+            </Button>
+          </Link>
         </div>
       </section>
 

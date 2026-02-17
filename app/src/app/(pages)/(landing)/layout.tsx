@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import "./globals.css";
-import { SidebarProvider } from "@/app/ui/organisms/Sidebar";
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  display: "swap",
-});
+import Header from "@/app/ui/sections/Header";
 
 export const metadata: Metadata = {
   title: {
@@ -40,12 +32,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${montserrat.variable} antialiased bg-zinc-900 max-w-screen overflow-x-hidden text-neutral-100`}
-      >
-        <SidebarProvider>{children}</SidebarProvider>
-      </body>
-    </html>
+    <div className="flex flex-col h-full w-full">
+      <div className="absolute -z-10 inset-0 bg-gradient-to-b from-purple-500/10 via-transparent to-transparent" />
+      <Header />
+      {children}
+    </div>
   );
 }
