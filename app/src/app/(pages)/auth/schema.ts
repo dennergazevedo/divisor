@@ -1,15 +1,15 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string().min(6, "Mínimo de 6 caracteres"),
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Minimum of 6 characters"),
 });
 
 export const registerSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string().min(6, "Mínimo de 6 caracteres"),
-  tenantName: z.string().min(2, "Nome do tenant obrigatório"),
-  tenantSlug: z.string().min(2, "Slug obrigatório"),
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Minimum of 6 characters"),
+  tenantName: z.string().min(2, "Tenant name required"),
+  tenantSlug: z.string().min(2, "Tenant URL required"),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;

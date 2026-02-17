@@ -4,9 +4,10 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
   ReactNode,
+  useEffect,
 } from "react";
+import { useRouter } from "next/navigation";
 import * as authService from "@/services/auth";
 
 type Tenant = {
@@ -22,7 +23,6 @@ type User = {
 type AuthContextType = {
   user: User | null;
   tenants: Tenant[];
-  token: string | null;
   loading: boolean;
 
   register: (
@@ -30,45 +30,33 @@ type AuthContextType = {
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   selectTenant: (tenantId: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
+
   const [user, setUser] = useState<User | null>(null);
   const [tenants, setTenants] = useState<Tenant[]>([]);
-  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  // 🔁 restaurar sessão
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
 
   // 🆕 Cadastro
   async function register(payload: Parameters<typeof authService.register>[0]) {
     setLoading(true);
     try {
-      const { user, token } = await authService.register(payload);
+      const { user } = await authService.register(payload);
 
       setUser({ email: user.email });
-      setToken(token);
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify({ email: user.email }));
+      router.push("/dashboard");
     } finally {
       setLoading(false);
     }
   }
 
-  // 🔑 Login (email + senha)
+  // 🔑 Login
   async function login(email: string, password: string) {
     setLoading(true);
     try {
@@ -80,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
       setTenants(tenants);
 
-      localStorage.setItem("user", JSON.stringify(user));
+      router.push("/dashboard");
     } finally {
       setLoading(false);
     }
@@ -92,31 +80,58 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setLoading(true);
     try {
-      const { token } = await authService.selectTenant(user.email, tenantId);
+      await authService.selectTenant(user.email, tenantId);
 
-      setToken(token);
-      localStorage.setItem("token", token);
+      router.push("/dashboard");
     } finally {
       setLoading(false);
     }
   }
 
   // 🚪 Logout
-  function logout() {
-    setUser(null);
-    setTenants([]);
-    setToken(null);
+  async function logout() {
+    setLoading(true);
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+      });
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+      setUser(null);
+      setTenants([]);
+
+      router.push("/");
+    } finally {
+      setLoading(false);
+    }
   }
+
+  useEffect(() => {
+    async function loadSession() {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/auth/me", {
+          credentials: "include",
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        setUser(data.user);
+        setTenants(data.tenants);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadSession();
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         user,
         tenants,
-        token,
         loading,
         register,
         login,

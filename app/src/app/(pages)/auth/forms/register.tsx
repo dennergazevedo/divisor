@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterFormData } from "../schema";
 import { useAuth } from "@/contexts/AuthContext";
+import { LoaderCircle } from "lucide-react";
+import { Input } from "@/app/ui/atoms/Input";
+import { Button } from "@/app/ui/atoms/Button";
 
 export default function RegisterForm() {
   const { register: registerUser, loading } = useAuth();
@@ -28,52 +31,51 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h1 className="text-2xl font-semibold text-white">Criar conta</h1>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+      <h1 className="text-2xl font-semibold text-white mb-8">Create account</h1>
 
-      <input
-        {...register("email")}
-        placeholder="Email"
-        className="w-full rounded-md bg-neutral-800 px-4 py-3 text-white"
-      />
-      {errors.email && (
-        <p className="text-sm text-red-400">{errors.email.message}</p>
-      )}
+      <div>
+        <Input {...register("email")} placeholder="E-mail" />
+        {errors.email && (
+          <p className="ml-4 text-xs text-red-400">{errors.email.message}</p>
+        )}
+      </div>
 
-      <input
-        type="password"
-        {...register("password")}
-        placeholder="Senha"
-        className="w-full rounded-md bg-neutral-800 px-4 py-3 text-white"
-      />
-      {errors.password && (
-        <p className="text-sm text-red-400">{errors.password.message}</p>
-      )}
+      <div>
+        <Input
+          type="password"
+          {...register("password")}
+          placeholder="Password"
+        />
+        {errors.password && (
+          <p className="ml-4 text-xs text-red-400">{errors.password.message}</p>
+        )}
+      </div>
 
-      <input
-        {...register("tenantName")}
-        placeholder="Nome da empresa"
-        className="w-full rounded-md bg-neutral-800 px-4 py-3 text-white"
-      />
-      {errors.tenantName && (
-        <p className="text-sm text-red-400">{errors.tenantName.message}</p>
-      )}
+      <div>
+        <Input {...register("tenantName")} placeholder="Tenant name" />
+        {errors.tenantName && (
+          <p className="ml-4 text-xs text-red-400">
+            {errors.tenantName.message}
+          </p>
+        )}
+      </div>
 
-      <input
-        {...register("tenantSlug")}
-        placeholder="Slug (ex: minha-empresa)"
-        className="w-full rounded-md bg-neutral-800 px-4 py-3 text-white"
-      />
-      {errors.tenantSlug && (
-        <p className="text-sm text-red-400">{errors.tenantSlug.message}</p>
-      )}
+      <div>
+        <Input
+          {...register("tenantSlug")}
+          placeholder="Tenant URL (ex: https://divisor.dev)"
+        />
+        {errors.tenantSlug && (
+          <p className="ml-4 text-xs text-red-400">
+            {errors.tenantSlug.message}
+          </p>
+        )}
+      </div>
 
-      <button
-        disabled={loading}
-        className="w-full rounded-md bg-white py-3 font-medium text-black transition hover:bg-neutral-200 disabled:opacity-50"
-      >
-        {loading ? "Criando..." : "Criar conta"}
-      </button>
+      <Button disabled={loading} type="submit" className="w-full mt-2">
+        {loading ? <LoaderCircle className="animate-spin" /> : "Register"}
+      </Button>
     </form>
   );
 }

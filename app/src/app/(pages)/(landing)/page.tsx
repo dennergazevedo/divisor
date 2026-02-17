@@ -4,14 +4,15 @@ import Hero from "@/app/ui/sections/Hero";
 import Step from "@/app/ui/molecules/Step";
 import { Button } from "@/app/ui/atoms/Button";
 import Link from "next/link";
+import { Separator } from "@/app/ui/atoms/Separator";
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen w-full">
+    <main className="flex flex-col min-h-screen w-full md:max-w-5xl md:m-auto">
       <Hero />
 
       {/* FEATURES */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      <section className="mx-auto max-w-5xl px-6 md:px-0 py-24">
         <div className="grid gap-12 md:grid-cols-3">
           <Card
             icon={Zap}
@@ -33,9 +34,11 @@ export default function Home() {
         </div>
       </section>
 
+      <Separator />
+
       {/* HOW IT WORKS */}
       <section className="border-t border-neutral-900 bg-zinc-900/50">
-        <div className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mx-auto max-w-5xl px-6 md:px-0 py-24">
           <h2 className="text-3xl font-semibold tracking-tight">
             How Divisor works
           </h2>
@@ -69,7 +72,7 @@ export default function Home() {
       </section>
 
       {/* OPEN SOURCE */}
-      <section className="mx-auto max-w-6xl px-6 py-24 text-center">
+      <section className="mx-auto max-w-5xl px-6 md:px-0 py-24 text-center">
         <h2 className="text-3xl font-semibold tracking-tight">
           Open source by default
         </h2>

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { sql } from "@/lib/db";
 import { signJwt } from "@/lib/auth";
+
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
@@ -14,7 +15,7 @@ export async function POST(req: Request) {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
-    const passwordHash = await bcrypt.hash(password, 8);
+    const passwordHash = await bcrypt.hash(password, 10);
 
     let tenantId: string;
 
@@ -55,14 +56,9 @@ export async function POST(req: Request) {
       if (!tenantId) {
         throw new Error("Erro ao criar ou localizar tenant");
       }
-    }
-
-    // ❌ Dados insuficientes
-    else {
+    } else {
       return NextResponse.json({ error: "Tenant inválido" }, { status: 400 });
     }
-
-    console.log("tenantId", tenantId);
 
     // 👤 Criar usuário
     const [user] = await sql`
@@ -71,13 +67,31 @@ export async function POST(req: Request) {
       RETURNING id, email, tenant_id
     `;
 
+    // 🔐 Gerar token
     const token = signJwt({
       userId: user.id,
-      tenantId: user.tenant_id,
+      tenantIds: [user.tenant_id],
       email: user.email,
     });
 
-    return NextResponse.json({ user, token });
+    // 🍪 Criar response com cookie HTTP-only
+    const response = NextResponse.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        tenantId: user.tenant_id,
+      },
+    });
+
+    response.cookies.set("auth_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: Number(process.env.JWT_EXPIRES_IN ?? 604800),
+    });
+
+    return response;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

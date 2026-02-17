@@ -2,7 +2,7 @@ import jwt, { SignOptions } from "jsonwebtoken";
 
 type JwtPayload = {
   userId: string;
-  tenantId: string;
+  tenantIds: string[];
   email: string;
 };
 

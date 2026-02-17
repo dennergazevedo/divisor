@@ -21,12 +21,12 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/app/ui/molecules/Accordion";
 
 export function MenuSidebar() {
   return (
     <Sidebar>
-      <SidebarContent className="pt-16 px-2">
+      <SidebarContent className="pt-14 px-2">
         <MenuLink href="/dashboard" icon={Gauge} label="Dashboard" />
         <MenuLink
           href="https://docs.divisor.dev"
