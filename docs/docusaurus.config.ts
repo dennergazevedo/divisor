@@ -15,7 +15,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: "https://divider.dev",
+  url: "https://divisor.dev",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -23,7 +23,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "dennergazevedo", // Usually your GitHub org/user name.
-  projectName: "divider", // Usually your repo name.
+  projectName: "divisor", // Usually your repo name.
 
   onBrokenLinks: "throw",
 
@@ -52,9 +52,9 @@ const config: Config = {
       disableSwitch: true,
     },
     navbar: {
-      title: "Divider",
+      title: "Divisor",
       logo: {
-        alt: "Divider Logo",
+        alt: "Divisor Logo",
         src: "img/logo.png",
       },
       items: [
@@ -92,7 +92,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Divider, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Divisor, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
