@@ -107,9 +107,9 @@ Response returned
 - Fully stateless
 
 ## 🚧 Current Status
-✔ Repository initialized
-✔ Architecture defined
-✔ Naming and domain selected (divisor.dev)
+✔ Repository initialized \n
+✔ Architecture defined \n
+✔ Naming and domain selected (divisor.dev) \n
 
 ## 🚧 In progress:
 - SDK implementation
