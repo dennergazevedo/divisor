@@ -1,4 +1,3 @@
-
 # Divisor
 
 **Divisor** is an open-source, edge-first A/B testing and feature flag platform designed to be simple, fast, and extremely scalable.
@@ -43,8 +42,7 @@ Divisor is built around a few key ideas:
 This repository follows a **monorepo** structure.
 
 ```txt
-├─ apps/
-│  └─ dashboard/          # Admin panel (Next.js)
+├─ apps/                  # Admin panel (Next.js)
 │
 ├─ packages/
 │  ├─ sdk-js/             # JavaScript SDK
