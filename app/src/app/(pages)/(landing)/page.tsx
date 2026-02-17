@@ -80,12 +80,14 @@ export default function Home() {
         </p>
 
         <div className="mt-8 flex justify-center gap-4">
-          <Button variant="secondary">
-            <FileCode />
-            Documentation
-          </Button>
+          <Link href="https://docs.divisor.dev" target="_blank">
+            <Button variant="secondary">
+              <FileCode />
+              Documentation
+            </Button>
+          </Link>
 
-          <Link href="https://github.com/dennrgazevedo/divisor">
+          <Link href="https://github.com/dennrgazevedo/divisor" target="_blank">
             <Button variant="outline">
               <Github />
               Repository

@@ -28,7 +28,12 @@ export function MenuSidebar() {
     <Sidebar>
       <SidebarContent className="pt-16 px-2">
         <MenuLink href="/dashboard" icon={Gauge} label="Dashboard" />
-        <MenuLink href="#" icon={Album} label="Documentation" />
+        <MenuLink
+          href="https://docs.divisor.dev"
+          icon={Album}
+          label="Documentation"
+          newTab
+        />
         <Accordion type="single" collapsible defaultValue="item-1">
           <AccordionItem value="item-1">
             <AccordionTrigger>tests</AccordionTrigger>
