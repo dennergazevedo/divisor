@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
 import Header from "@/app/ui/sections/Header";
-import Footer from "@/app/ui/sections/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Welcome",
+    default: "Divisor",
     template: "%s • Divisor",
   },
   description:
     "Divisor is an open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
   metadataBase: new URL("https://divisor.dev"),
   openGraph: {
-    title: "Welcome to Divisor",
+    title: "Divisor",
     description:
-      "Welcome to Divisor, the open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
+      "Edge-first A/B testing and feature flags with minimal cost and massive scale.",
     url: "https://divisor.dev",
     siteName: "Divisor",
     locale: "en_US",
@@ -21,9 +20,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Welcome to Divisor",
+    title: "Divisor",
     description:
-      "Welcome to Divisor, the open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
+      "Open-source A/B testing and feature flags, optimized for Edge and scale.",
   },
 };
 
@@ -37,7 +36,6 @@ export default function RootLayout({
       <div className="absolute -z-10 inset-0 bg-gradient-to-b from-purple-500/10 via-transparent to-transparent" />
       <Header />
       {children}
-      <Footer />
     </div>
   );
 }

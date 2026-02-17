@@ -1,0 +1,57 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  /* ===============================
+     🎯 Brand / Primary (Purple)
+     =============================== */
+  --ifm-color-primary: #7c3aed;          /* purple-600 */
+  --ifm-color-primary-dark: #6d28d9;     /* purple-700 */
+  --ifm-color-primary-darker: #5b21b6;   /* purple-800 */
+  --ifm-color-primary-darkest: #4c1d95;  /* purple-900 */
+  --ifm-color-primary-light: #8b5cf6;    /* purple-500 */
+  --ifm-color-primary-lighter: #a78bfa;  /* purple-400 */
+  --ifm-color-primary-lightest: #c4b5fd; /* purple-300 */
+
+  /* ===============================
+     🟣 Secondary (Soft Purple)
+     =============================== */
+  --ifm-color-secondary: #a78bfa;        /* purple-400 */
+  --ifm-color-secondary-dark: #8b5cf6;   /* purple-500 */
+  --ifm-color-secondary-light: #c4b5fd;  /* purple-300 */
+
+  /* ===============================
+     ⚪ Neutral (UI base)
+     =============================== */
+  --ifm-color-gray-0: #fafafa;   /* neutral-50 */
+  --ifm-color-gray-100: #f5f5f5; /* neutral-100 */
+  --ifm-color-gray-200: #e5e5e5; /* neutral-200 */
+  --ifm-color-gray-300: #d4d4d4; /* neutral-300 */
+  --ifm-color-gray-400: #a3a3a3; /* neutral-400 */
+  --ifm-color-gray-500: #737373; /* neutral-500 */
+  --ifm-color-gray-600: #525252; /* neutral-600 */
+  --ifm-color-gray-700: #404040; /* neutral-700 */
+  --ifm-color-gray-800: #262626; /* neutral-800 */
+  --ifm-color-gray-900: #171717; /* neutral-900 */
+
+  /* ===============================
+     🧠 Texto
+     =============================== */
+  --ifm-font-color-base: #c1c1c1;        /* neutral-900 */
+  --ifm-font-color-secondary: #525252;   /* neutral-600 */
+  --ifm-heading-color: #F5F5F5;
+
+  /* ===============================
+     💻 Código
+     =============================== */
+  --ifm-code-font-size: 95%;
+  --ifm-code-background: #f5f3ff; /* purple-50 */
+  --ifm-code-color: #5b21b6;      /* purple-800 */
+
+  /* Linha destacada no code block */
+  --docusaurus-highlighted-code-line-bg: rgba(124, 58, 237, 0.12);
+}

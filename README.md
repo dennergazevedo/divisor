@@ -42,7 +42,7 @@ Divisor is built around a few key ideas:
 This repository follows a **monorepo** structure.
 
 ```txt
-├─ apps/                  # Admin panel (Next.js)
+├─ app/                  # Admin panel (Next.js)
 │
 ├─ packages/
 │  ├─ sdk-js/             # JavaScript SDK

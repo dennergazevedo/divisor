@@ -93,14 +93,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-neutral-900">
-        <div className="mx-auto max-w-6xl px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
-          <span>© {new Date().getFullYear()} Divisor</span>
-          <span>Edge-first A/B testing</span>
-        </div>
-      </footer>
     </main>
   );
 }

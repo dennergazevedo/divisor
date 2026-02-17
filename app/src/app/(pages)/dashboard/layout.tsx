@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { MenuSidebar } from "@/app/ui/sections/Menu";
-import Header from "@/app/ui/sections/Header";
 import Logo from "@/app/ui/atoms/Logo";
 import { Bell, User } from "lucide-react";
 import { Button } from "@/app/ui/atoms/Button";
@@ -30,7 +29,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

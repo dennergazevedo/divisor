@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../../atoms/Button";
 
 export default function Hero() {
@@ -18,7 +19,12 @@ export default function Hero() {
         <div className="mt-10 flex justify-center gap-4">
           <Button>Get started</Button>
 
-          <Button variant="outline">View on GitHub</Button>
+          <Link
+            href="https://github.com/dennergazevedo/divisor"
+            target="_blank"
+          >
+            <Button variant="outline">View on GitHub</Button>
+          </Link>
         </div>
       </div>
     </section>
