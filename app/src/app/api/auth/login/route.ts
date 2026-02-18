@@ -15,11 +15,11 @@ export async function POST(req: Request) {
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    // 1️⃣ Buscar usuários
     const users = await sql`
-      SELECT id, email, password_hash, tenant_id
+      SELECT id, email, password_hash
       FROM users
       WHERE LOWER(email) = ${normalizedEmail}
+      LIMIT 1
     `;
 
     if (users.length === 0) {
@@ -29,11 +29,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2️⃣ Validar senha
-    const passwordValid = await bcrypt.compare(
-      password,
-      users[0].password_hash,
-    );
+    const user = users[0];
+    const passwordValid = await bcrypt.compare(password, user.password_hash);
 
     if (!passwordValid) {
       return NextResponse.json(
@@ -42,34 +39,47 @@ export async function POST(req: Request) {
       );
     }
 
-    // 3️⃣ Buscar tenants ativos
-    const tenantIds = users.map((u) => u.tenant_id);
-
     const tenants = await sql`
-      SELECT id, name, slug
-      FROM tenants
-      WHERE id = ANY(${tenantIds})
-        AND is_active = true
+      SELECT
+        t.id,
+        t.name,
+        tm.role
+      FROM tenant_members tm
+      INNER JOIN tenants t ON t.id = tm.tenant_id
+      WHERE tm.user_id = ${user.id}
     `;
 
-    // 🔐 4️⃣ Gerar JWT
+    const invites = await sql`
+      SELECT
+        ti.id,
+        ti.tenant_id,
+        t.name AS tenant_name,
+        ti.role,
+        ti.created_at
+      FROM tenant_invites ti
+      INNER JOIN tenants t ON t.id = ti.tenant_id
+      WHERE ti.email = ${user.email}
+        AND ti.accepted_at IS NULL
+      ORDER BY ti.created_at DESC
+    `;
+
     const secret = process.env.JWT_SECRET;
     if (!secret) {
       throw new Error("JWT_SECRET não definido");
     }
 
     const token = signJwt({
-      userId: users[0].id,
-      email: users[0].email,
-      tenantIds: tenants.map((t) => t.id),
+      userId: user.id,
+      email: user.email,
     });
 
-    // 🍪 5️⃣ Salvar token em cookie HTTP-only
     const response = NextResponse.json({
       user: {
-        email: users[0].email,
+        id: user.id,
+        email: user.email,
       },
       tenants,
+      invites,
     });
 
     response.cookies.set("auth_token", token, {
@@ -77,7 +87,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: Number(process.env.JWT_EXPIRES_IN ?? 604800),
+      maxAge: Number(process.env.JWT_EXPIRES_IN ?? 60 * 60 * 24 * 7),
     });
 
     return response;

@@ -96,12 +96,7 @@ const ArchitectureSection = () => (
             {" client = "}
             <span className="text-purple-600">new</span>
             {" Divisor({\n"}
-            {"  edgeUrl: "}
-            <span className="text-amber-200">
-              {'"https://edge.divisor.dev"'}
-            </span>
-            {",\n"}
-            {"  apiKey: process.env.DIVISOR_TENANT_KEY,\n"}
+            {"  tenantId: process.env.DIVISOR_TENANT_ID,\n"}
             {"})\n\n"}
             <span className="text-purple-600">const</span>
             {" variant = client.getVariant({\n"}

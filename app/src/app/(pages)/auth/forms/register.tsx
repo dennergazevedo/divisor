@@ -4,11 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterFormData } from "../schema";
 import { useAuth } from "@/contexts/AuthContext";
-import { Github, LoaderCircle, UserRoundPlus } from "lucide-react";
+import { LoaderCircle, UserRoundPlus } from "lucide-react";
 import { Input } from "@/app/ui/atoms/Input";
 import { Button } from "@/app/ui/atoms/Button";
 import { Separator } from "@/app/ui/atoms/Separator";
-import GoogleIcon from "@/app/ui/atoms/Icons/google";
 
 export default function RegisterForm() {
   const { register: registerUser, loading } = useAuth();
@@ -25,10 +24,7 @@ export default function RegisterForm() {
     await registerUser({
       email: data.email,
       password: data.password,
-      tenant: {
-        name: data.tenantName,
-        slug: data.tenantSlug,
-      },
+      name: data.name,
     });
   }
 
@@ -43,6 +39,13 @@ export default function RegisterForm() {
           <span className="text-sm text-neutral-400">
             Get started with edge-native A/B testing in minutes
           </span>
+        </div>
+
+        <div>
+          <Input {...register("name")} placeholder="Name" />
+          {errors.name && (
+            <p className="ml-4 text-xs text-red-400">{errors.name.message}</p>
+          )}
         </div>
 
         <div>
@@ -65,27 +68,6 @@ export default function RegisterForm() {
           )}
         </div>
 
-        <div>
-          <Input {...register("tenantName")} placeholder="Tenant name" />
-          {errors.tenantName && (
-            <p className="ml-4 text-xs text-red-400">
-              {errors.tenantName.message}
-            </p>
-          )}
-        </div>
-
-        <div>
-          <Input
-            {...register("tenantSlug")}
-            placeholder="Tenant URL (ex: https://divisor.dev)"
-          />
-          {errors.tenantSlug && (
-            <p className="ml-4 text-xs text-red-400">
-              {errors.tenantSlug.message}
-            </p>
-          )}
-        </div>
-
         <Button disabled={loading} type="submit" className="w-full mt-2">
           {loading ? <LoaderCircle className="animate-spin" /> : "Register"}
         </Button>
@@ -95,24 +77,6 @@ export default function RegisterForm() {
           <Separator className="flex-1" />
           <p className="text-xs">or</p>
           <Separator className="flex-1" />
-        </div>
-        <div className="grid grid-cols-2 gap-4 mt-2 w-full">
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => alert("Disabled")}
-          >
-            <GoogleIcon />
-            Google
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => alert("Disabled")}
-          >
-            <Github />
-            Github
-          </Button>
         </div>
       </div>
     </>

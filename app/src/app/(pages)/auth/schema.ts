@@ -6,10 +6,9 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
+  name: z.string().min(2, "Name required"),
   email: z.string().email("Invalid email"),
   password: z.string().min(6, "Minimum of 6 characters"),
-  tenantName: z.string().min(2, "Tenant name required"),
-  tenantSlug: z.string().min(2, "Tenant URL required"),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;

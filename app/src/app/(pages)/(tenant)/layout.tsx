@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MenuSidebar } from "@/app/ui/sections/Menu";
+import { MenuSidebar } from "@/app/ui/sections/MenuSidebar";
 import LoggedHeader from "@/app/ui/sections/Header/logged";
 
 export const metadata: Metadata = {

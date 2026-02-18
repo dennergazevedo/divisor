@@ -6,7 +6,6 @@ import { sql } from "@/lib/db";
 type JwtPayload = {
   userId: string;
   email: string;
-  tenantIds: string[];
 };
 
 export async function GET() {
@@ -19,20 +18,48 @@ export async function GET() {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
-    // 🔎 Buscar tenants completos
+    const [user] = await sql`
+      SELECT id, email, name
+      FROM users
+      WHERE id = ${payload.userId}
+      LIMIT 1
+    `;
+
+    if (!user) {
+      return NextResponse.json(null, { status: 401 });
+    }
+
     const tenants = await sql`
-      SELECT id, name, slug
-      FROM tenants
-      WHERE id = ANY(${payload.tenantIds})
-        AND is_active = true
+      SELECT
+        t.id,
+        t.name,
+        tm.role
+      FROM tenant_members tm
+      INNER JOIN tenants t ON t.id = tm.tenant_id
+      WHERE tm.user_id = ${user.id}
+    `;
+
+    const invites = await sql`
+      SELECT
+        ti.id,
+        ti.tenant_id,
+        t.name AS tenant_name,
+        ti.role,
+        ti.created_at
+      FROM tenant_invites ti
+      INNER JOIN tenants t ON t.id = ti.tenant_id
+      WHERE ti.email = ${user.email}
+        AND ti.accepted_at IS NULL
     `;
 
     return NextResponse.json({
       user: {
-        id: payload.userId,
-        email: payload.email,
+        id: user.id,
+        email: user.email,
+        name: user.name,
       },
       tenants,
+      invites,
     });
   } catch (error) {
     console.error(error);

@@ -10,29 +10,6 @@ import {
 import { useRouter } from "next/navigation";
 import * as authService from "@/services/auth";
 
-type Tenant = {
-  id: string;
-  name: string;
-  slug: string;
-};
-
-type User = {
-  email: string;
-};
-
-type AuthContextType = {
-  user: User | null;
-  tenants: Tenant[];
-  loading: boolean;
-
-  register: (
-    payload: Parameters<typeof authService.register>[0],
-  ) => Promise<void>;
-  login: (email: string, password: string) => Promise<void>;
-  selectTenant: (tenantId: string) => Promise<void>;
-  logout: () => Promise<void>;
-};
-
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -40,15 +17,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [user, setUser] = useState<User | null>(null);
   const [tenants, setTenants] = useState<Tenant[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [invites, setInvites] = useState<TenantInvite[]>([]);
+  const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // 🆕 Cadastro
-  async function register(payload: Parameters<typeof authService.register>[0]) {
+  // 🆕 Cadastro (usuário sem tenant)
+  async function register(payload: RegisterPayload) {
     setLoading(true);
     try {
       const { user } = await authService.register(payload);
 
-      setUser({ email: user.email });
+      setUser(user);
+      setTenants([]);
+      setSelectedTenant(null);
 
       router.push("/");
     } finally {
@@ -67,20 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       setUser(user);
       setTenants(tenants);
-
-      router.push("/");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // 🏢 Seleção de tenant
-  async function selectTenant(tenantId: string) {
-    if (!user) return;
-
-    setLoading(true);
-    try {
-      await authService.selectTenant(user.email, tenantId);
+      setSelectedTenant(tenants[0] ?? null);
 
       router.push("/");
     } finally {
@@ -92,12 +60,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function logout() {
     setLoading(true);
     try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-      });
+      await fetch("/api/auth/logout", { method: "POST" });
 
       setUser(null);
       setTenants([]);
+      setInvites([]);
+      setSelectedTenant(null);
 
       router.push("/");
     } finally {
@@ -105,6 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  // 🔄 Carregar sessão (/me)
   useEffect(() => {
     async function loadSession() {
       setLoading(true);
@@ -113,12 +82,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           credentials: "include",
         });
 
-        if (!res.ok) return;
+        if (!res.ok) {
+          setUser(null);
+          setTenants([]);
+          setInvites([]);
+          return;
+        }
 
         const data = await res.json();
 
         setUser(data.user);
         setTenants(data.tenants);
+        setInvites(data.invites ?? []);
+        setSelectedTenant(data.tenants?.[0] ?? null);
       } finally {
         setLoading(false);
       }
@@ -132,10 +108,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={{
         user,
         tenants,
+        invites,
+        selectedTenant,
+        setSelectedTenant,
         loading,
         register,
         login,
-        selectTenant,
         logout,
       }}
     >

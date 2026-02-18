@@ -6,10 +6,9 @@ import { loginSchema, LoginFormData } from "../schema";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/app/ui/atoms/Button";
 import { Input } from "@/app/ui/atoms/Input";
-import { Github, LoaderCircle, User } from "lucide-react";
+import { LoaderCircle, User } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "@/app/ui/atoms/Separator";
-import GoogleIcon from "@/app/ui/atoms/Icons/google";
 
 export default function LoginForm() {
   const { login, loading } = useAuth();
@@ -74,24 +73,6 @@ export default function LoginForm() {
           <Separator className="flex-1" />
           <p className="text-xs">or</p>
           <Separator className="flex-1" />
-        </div>
-        <div className="grid grid-cols-2 gap-4 mt-2 w-full">
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => alert("Disabled")}
-          >
-            <GoogleIcon />
-            Google
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => alert("Disabled")}
-          >
-            <Github />
-            Github
-          </Button>
         </div>
       </div>
     </>

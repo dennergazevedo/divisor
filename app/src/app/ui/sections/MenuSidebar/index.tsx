@@ -6,6 +6,7 @@ import {
 import { MenuLink } from "./link";
 import {
   Album,
+  Briefcase,
   ChartPie,
   Clock,
   FlaskConical,
@@ -13,7 +14,6 @@ import {
   Info,
   Settings,
   Users,
-  Zap,
 } from "lucide-react";
 
 import {
@@ -27,7 +27,7 @@ export function MenuSidebar() {
   return (
     <Sidebar>
       <SidebarContent className="pt-10 md:pt-20 px-2">
-        <MenuLink href="/" icon={Gauge} label="Dashboard" />
+        <MenuLink href="/" icon={Briefcase} label="Tenants" />
         <MenuLink
           href="https://docs.divisor.dev"
           icon={Album}
@@ -39,7 +39,7 @@ export function MenuSidebar() {
             <AccordionTrigger>tests</AccordionTrigger>
             <AccordionContent>
               <MenuLink href="#" icon={FlaskConical} label="Experiments" />
-              <MenuLink href="#" icon={Zap} label="Performance" />
+              <MenuLink href="#" icon={Gauge} label="Performance" />
               <MenuLink href="#" icon={Info} label="Logs" />
               <MenuLink href="#" icon={Clock} label="History" />
             </AccordionContent>
