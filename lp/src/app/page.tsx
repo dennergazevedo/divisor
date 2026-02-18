@@ -8,12 +8,12 @@ import { Separator } from "@/app/ui/atoms/Separator";
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen w-full md:max-w-5xl md:m-auto">
+    <main className="flex flex-col min-h-screen w-full sm:max-w-2xl md:max-w-5xl sm:m-auto">
       <Hero />
 
       {/* FEATURES */}
-      <section className="mx-auto max-w-5xl px-6 md:px-0 py-24">
-        <div className="grid gap-12 md:grid-cols-3">
+      <section className="mx-auto max-w-5xl px-6 md:px-8 lg:px-0 py-24">
+        <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3">
           <Card
             icon={Zap}
             title="Edge-native"
@@ -37,13 +37,13 @@ export default function Home() {
       <Separator />
 
       {/* HOW IT WORKS */}
-      <section className="border-t border-neutral-900 bg-zinc-900/50">
+      <section className="border-t border-neutral-900 bg-zinc-900/50 md:px-8 lg:px-0">
         <div className="mx-auto max-w-5xl px-6 md:px-0 py-24">
           <h2 className="text-3xl font-semibold tracking-tight">
             How Divisor works
           </h2>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-2">
+          <div className="mt-12 grid gap-8 sm:grid-cols-2">
             <Step
               index="01"
               title="Create a test"
@@ -72,7 +72,7 @@ export default function Home() {
       </section>
 
       {/* OPEN SOURCE */}
-      <section className="mx-auto max-w-5xl px-6 md:px-0 py-24 text-center">
+      <section className="mx-auto max-w-5xl px-6 md:px-8 lg:px-0 py-24 text-center">
         <h2 className="text-3xl font-semibold tracking-tight">
           Open source by default
         </h2>

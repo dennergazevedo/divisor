@@ -4,7 +4,7 @@ import { Button } from "../../atoms/Button";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
-      <div className="relative mx-auto max-w-5xl px-6 md:px-0 py-32 pt-40 text-center">
+      <div className="relative mx-auto max-w-5xl px-6 md:px-0 py-32 pt-40 md:pt-48 text-center">
         <h1 className="text-4xl md:text-6xl font-semibold tracking-tight">
           Edge-first A/B testing
           <br />
