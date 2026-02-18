@@ -72,3 +72,63 @@ COMMENT ON TABLE users IS 'Global users. One account per email.';
 COMMENT ON TABLE tenants IS 'Organizations / workspaces.';
 COMMENT ON TABLE tenant_members IS 'User membership and role per tenant.';
 COMMENT ON TABLE tenant_invites IS 'Pending invitations to tenants.';
+
+-- =========================
+-- Experiments
+-- =========================
+
+CREATE TABLE experiments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+  tenant_id UUID NOT NULL
+    REFERENCES tenants(id)
+    ON DELETE CASCADE,
+
+  name TEXT NOT NULL,
+
+  is_active BOOLEAN NOT NULL DEFAULT true,
+
+  -- Data de expiração automática do experimento
+  ends_at TIMESTAMP WITH TIME ZONE,
+
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+
+  -- Um experimento por nome dentro do tenant
+  CONSTRAINT experiments_unique_name_per_tenant
+    UNIQUE (tenant_id, name)
+);
+
+-- Índice para lookup rápido (SDK / Edge)
+CREATE INDEX idx_experiments_tenant_name
+  ON experiments (tenant_id, name);
+
+-- Índice para filtrar experimentos ativos
+CREATE INDEX idx_experiments_active
+  ON experiments (tenant_id, is_active, ends_at);
+
+-- =========================
+-- Experiment Variants
+-- =========================
+
+CREATE TABLE experiment_variants (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+  experiment_id UUID NOT NULL
+    REFERENCES experiments(id)
+    ON DELETE CASCADE,
+
+  value TEXT NOT NULL,
+
+  percent INTEGER NOT NULL
+    CHECK (percent >= 0 AND percent <= 100),
+
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+
+  -- Não permitir variantes duplicadas
+  CONSTRAINT variants_unique_per_experiment
+    UNIQUE (experiment_id, value)
+);
+
+-- Índice para buscar variantes rápido
+CREATE INDEX idx_variants_experiment
+  ON experiment_variants (experiment_id);

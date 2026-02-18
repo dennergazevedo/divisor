@@ -9,7 +9,7 @@ export function signJwt(payload: JwtPayload) {
   const secret = process.env.JWT_SECRET;
 
   if (!secret) {
-    throw new Error("JWT_SECRET não definido");
+    throw new Error("JWT_SECRET not defined");
   }
 
   const options: SignOptions = {

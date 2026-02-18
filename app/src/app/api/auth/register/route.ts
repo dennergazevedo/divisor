@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     const { email, password, name } = await req.json();
 
     if (!email || !password) {
-      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
 
     const normalizedEmail = email.trim().toLowerCase();
@@ -48,14 +48,14 @@ export async function POST(req: Request) {
   } catch (error: any) {
     if (error.code === "23505") {
       return NextResponse.json(
-        { error: "Email já cadastrado" },
+        { error: "Email already registered" },
         { status: 409 },
       );
     }
 
     console.error(error);
     return NextResponse.json(
-      { error: "Erro ao cadastrar usuário" },
+      { error: "Error registering user." },
       { status: 500 },
     );
   }

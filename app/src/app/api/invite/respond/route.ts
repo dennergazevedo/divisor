@@ -23,11 +23,11 @@ export async function POST(req: Request) {
     const { inviteId, accept } = await req.json();
 
     if (!inviteId || typeof inviteId !== "string") {
-      return NextResponse.json({ error: "inviteId inválido" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid inviteId" }, { status: 400 });
     }
 
     if (typeof accept !== "boolean") {
-      return NextResponse.json({ error: "accept inválido" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid accept" }, { status: 400 });
     }
 
     const invites = await sql`
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     if (invites.length === 0) {
       return NextResponse.json(
-        { error: "Convite não encontrado ou já processado" },
+        { error: "Invitation not found or already processed." },
         { status: 404 },
       );
     }
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Erro ao processar convite" },
+      { error: "Error processing invitation." },
       { status: 500 },
     );
   }

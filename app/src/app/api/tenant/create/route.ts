@@ -34,14 +34,14 @@ export async function POST(req: Request) {
 
     if (!name || typeof name !== "string") {
       return NextResponse.json(
-        { error: "Nome do tenant inválido" },
+        { error: "Invalid tenant name" },
         { status: 400 },
       );
     }
 
     if (!url || typeof url !== "string") {
       return NextResponse.json(
-        { error: "URL do tenant é obrigatória" },
+        { error: "Invalid tenant URL" },
         { status: 400 },
       );
     }
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
 
     if (!isValidDomain(normalizedUrl)) {
       return NextResponse.json(
-        { error: "URL do tenant inválida" },
+        { error: "Invalid tenant URL" },
         { status: 400 },
       );
     }
@@ -78,14 +78,14 @@ export async function POST(req: Request) {
   } catch (error: any) {
     if (error.code === "23505") {
       return NextResponse.json(
-        { error: "Já existe um tenant com essa URL" },
+        { error: "A tenant with this URL already exists." },
         { status: 409 },
       );
     }
 
     console.error(error);
     return NextResponse.json(
-      { error: "Erro ao criar tenant" },
+      { error: "Error creating tenant." },
       { status: 500 },
     );
   }

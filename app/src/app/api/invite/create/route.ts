@@ -24,15 +24,15 @@ export async function POST(req: Request) {
     const { tenantId, email, role } = await req.json();
 
     if (!tenantId || typeof tenantId !== "string") {
-      return NextResponse.json({ error: "tenantId inválido" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid tenantId" }, { status: 400 });
     }
 
     if (!email || typeof email !== "string") {
-      return NextResponse.json({ error: "Email inválido" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
     if (!["admin", "member"].includes(role)) {
-      return NextResponse.json({ error: "Role inválida" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid role" }, { status: 400 });
     }
 
     const normalizedEmail = email.trim().toLowerCase();
@@ -65,14 +65,14 @@ export async function POST(req: Request) {
   } catch (error: any) {
     if (error.code === "23505") {
       return NextResponse.json(
-        { error: "Já existe um convite pendente para esse email" },
+        { error: "There is already an open invitation for this email." },
         { status: 409 },
       );
     }
 
     console.error(error);
     return NextResponse.json(
-      { error: "Erro ao criar convite" },
+      { error: "Error creating invitation." },
       { status: 500 },
     );
   }

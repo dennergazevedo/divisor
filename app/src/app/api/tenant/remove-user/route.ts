@@ -23,12 +23,12 @@ export async function POST(req: Request) {
     const { tenantId, userId } = await req.json();
 
     if (!tenantId || !userId) {
-      return NextResponse.json({ error: "Payload inválido" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
     if (userId === payload.userId) {
       return NextResponse.json(
-        { error: "Não é permitido remover a si mesmo" },
+        { error: "You cannot remove yourself." },
         { status: 400 },
       );
     }
@@ -58,14 +58,14 @@ export async function POST(req: Request) {
 
     if (target.length === 0) {
       return NextResponse.json(
-        { error: "Usuário não pertence ao tenant" },
+        { error: "User does not belong to the tenant." },
         { status: 404 },
       );
     }
 
     if (target[0].role === "owner") {
       return NextResponse.json(
-        { error: "Não é permitido remover um owner" },
+        { error: "You cannot remove an owner." },
         { status: 400 },
       );
     }
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Erro ao remover usuário do tenant" },
+      { error: "Error removing user from tenant." },
       { status: 500 },
     );
   }

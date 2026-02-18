@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     const { email, password } = await req.json();
 
     if (!email || !password) {
-      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
 
     const normalizedEmail = email.trim().toLowerCase();
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     if (users.length === 0) {
       return NextResponse.json(
-        { error: "Credenciais inválidas" },
+        { error: "Invalid credentials" },
         { status: 401 },
       );
     }
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 
     if (!passwordValid) {
       return NextResponse.json(
-        { error: "Credenciais inválidas" },
+        { error: "Invalid credentials" },
         { status: 401 },
       );
     }
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
 
     const secret = process.env.JWT_SECRET;
     if (!secret) {
-      throw new Error("JWT_SECRET não definido");
+      throw new Error("JWT_SECRET not defined");
     }
 
     const token = signJwt({
@@ -93,6 +93,6 @@ export async function POST(req: Request) {
     return response;
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Erro ao fazer login" }, { status: 500 });
+    return NextResponse.json({ error: "Error logging in" }, { status: 500 });
   }
 }

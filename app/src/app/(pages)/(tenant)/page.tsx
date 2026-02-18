@@ -1,8 +1,7 @@
 import { Separator } from "@/app/ui/atoms/Separator";
 import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import TenantList from "./list";
-import { Button } from "@/app/ui/atoms/Button";
-import { Plus } from "lucide-react";
+import CreateTenant from "./create";
 
 export default function Home() {
   return (
@@ -17,10 +16,7 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <Button variant="secondary">
-              <span className="md:flex hidden">Create</span>
-              <Plus />
-            </Button>
+            <CreateTenant />
           </div>
         </div>
         <Separator />
