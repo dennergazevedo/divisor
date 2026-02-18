@@ -46,7 +46,7 @@ export default function MembersPage() {
     try {
       const res = await fetch(
         `/api/tenant/list-users?tenantId=${selectedTenant.id}`,
-        { credentials: "include" },
+        { credentials: "include", next: { revalidate: 60 } },
       );
 
       if (!res.ok) {

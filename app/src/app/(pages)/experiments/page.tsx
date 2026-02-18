@@ -29,7 +29,7 @@ export default function ExperimentsPage() {
     try {
       const res = await fetch(
         `/api/experiments/list?tenantId=${selectedTenant.id}&active=${active}`,
-        { credentials: "include" },
+        { credentials: "include", next: { revalidate: 60 } },
       );
 
       if (!res.ok) {

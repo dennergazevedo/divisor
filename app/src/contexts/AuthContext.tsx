@@ -21,7 +21,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // 🆕 Cadastro (usuário sem tenant)
   async function register(payload: RegisterPayload) {
     setLoading(true);
     try {
@@ -37,7 +36,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // 🔑 Login
   async function login(email: string, password: string) {
     setLoading(true);
     try {
@@ -56,7 +54,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // 🚪 Logout
   async function logout() {
     setLoading(true);
     try {
@@ -73,13 +70,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // 🔄 Carregar sessão (/me)
   useEffect(() => {
     async function loadSession() {
       setLoading(true);
       try {
         const res = await fetch("/api/auth/me", {
           credentials: "include",
+          next: { revalidate: 60 },
         });
 
         if (!res.ok) {
