@@ -3,11 +3,6 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { sql } from "@/lib/db";
 
-type JwtPayload = {
-  userId: string;
-  email: string;
-};
-
 function normalizeDomain(input: string): string {
   return input
     .trim()

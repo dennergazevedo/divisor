@@ -3,11 +3,6 @@ import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 import { sql } from "@/lib/db";
 
-type JwtPayload = {
-  userId: string;
-  email: string;
-};
-
 export async function GET() {
   const token = (await cookies()).get("auth_token")?.value;
 

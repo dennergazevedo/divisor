@@ -3,8 +3,6 @@ import bcrypt from "bcryptjs";
 import { sql } from "@/lib/db";
 import { signJwt } from "@/lib/auth";
 
-export const runtime = "nodejs";
-
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();

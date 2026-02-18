@@ -13,6 +13,7 @@ import CreateExperiment from "./create";
 import EditExperiment from "./edit";
 import ArchiveExperimentDialog from "./archive";
 import ViewExperimentDialog from "./view";
+import { Separator } from "@/app/ui/atoms/Separator";
 
 export default function ExperimentsPage() {
   const { selectedTenant } = useAuth();
@@ -64,6 +65,8 @@ export default function ExperimentsPage() {
             </div>
           </div>
 
+          <Separator />
+
           <Tabs
             value={activeTab}
             onValueChange={(v) => setActiveTab(v as "active" | "archived")}
@@ -94,7 +97,7 @@ export default function ExperimentsPage() {
                         <th className="px-4 py-3 text-left font-medium">
                           Name
                         </th>
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left font-medium hidden md:table-cell">
                           Ends at
                         </th>
                         <th className="px-4 py-3 text-right font-medium">
@@ -110,7 +113,7 @@ export default function ExperimentsPage() {
                           className="border-b border-neutral-800 last:border-b-0"
                         >
                           <td className="px-4 py-3">{experiment.name}</td>
-                          <td className="px-4 py-3 text-muted-foreground">
+                          <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
                             {experiment.ends_at
                               ? new Date(experiment.ends_at).toLocaleDateString(
                                   "pt-BR",

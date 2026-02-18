@@ -3,11 +3,6 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { sql } from "@/lib/db";
 
-type JwtPayload = {
-  userId: string;
-  email: string;
-};
-
 type VariantInput = {
   value: string;
   percent: number;
@@ -21,8 +16,6 @@ type UpdateExperimentBody = {
   endsAt?: string | null;
   variants: VariantInput[];
 };
-
-export const runtime = "nodejs";
 
 export async function PUT(req: Request) {
   const token = (await cookies()).get("auth_token")?.value;

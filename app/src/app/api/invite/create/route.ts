@@ -4,13 +4,6 @@ import jwt from "jsonwebtoken";
 import { sql } from "@/lib/db";
 import crypto from "crypto";
 
-type JwtPayload = {
-  userId: string;
-  email: string;
-};
-
-export const runtime = "nodejs";
-
 export async function POST(req: Request) {
   const token = (await cookies()).get("auth_token")?.value;
 

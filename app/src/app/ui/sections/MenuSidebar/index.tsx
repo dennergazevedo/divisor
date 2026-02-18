@@ -43,9 +43,9 @@ export function MenuSidebar() {
                 icon={FlaskConical}
                 label="Experiments"
               />
-              <MenuLink href="#" icon={Gauge} label="Performance" />
-              <MenuLink href="#" icon={Info} label="Logs" />
-              <MenuLink href="#" icon={Clock} label="History" />
+              <MenuLink href="#" icon={Gauge} label="Performance" disabled />
+              <MenuLink href="#" icon={Info} label="Logs" disabled />
+              <MenuLink href="#" icon={Clock} label="History" disabled />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -53,9 +53,9 @@ export function MenuSidebar() {
           <AccordionItem value="item-1">
             <AccordionTrigger>management</AccordionTrigger>
             <AccordionContent>
-              <MenuLink href="#" icon={ChartPie} label="Analytics" />
-              <MenuLink href="#" icon={Users} label="Members" />
-              <MenuLink href="#" icon={Settings} label="Settings" />
+              <MenuLink href="/members" icon={Users} label="Members" />
+              <MenuLink href="#" icon={ChartPie} label="Analytics" disabled />
+              <MenuLink href="#" icon={Settings} label="Settings" disabled />
             </AccordionContent>
           </AccordionItem>
         </Accordion>

@@ -7,7 +7,7 @@ export default function TenantList() {
   const { tenants, selectedTenant, setSelectedTenant } = useAuth();
 
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <ul className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
       {tenants.map((tenant) => (
         <li
           key={tenant.id}
