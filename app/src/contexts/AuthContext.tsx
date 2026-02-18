@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       setUser({ email: user.email });
 
-      router.push("/dashboard");
+      router.push("/");
     } finally {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
       setTenants(tenants);
 
-      router.push("/dashboard");
+      router.push("/");
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await authService.selectTenant(user.email, tenantId);
 
-      router.push("/dashboard");
+      router.push("/");
     } finally {
       setLoading(false);
     }

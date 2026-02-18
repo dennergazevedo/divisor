@@ -1,13 +1,9 @@
-"use client";
-
 import Logo from "../../atoms/Logo";
 import Link from "next/link";
 import { Button } from "../../atoms/Button";
-import { useAuth } from "@/contexts/AuthContext";
+import { Album } from "lucide-react";
 
 export default function Header() {
-  const { user } = useAuth();
-
   return (
     <header
       className="
@@ -32,15 +28,16 @@ export default function Header() {
         </span>
       </Link>
       <div className="flex flex-row items-center gap-2">
-        {user ? (
-          <Link href="/dashboard" className="text-sm text-neutral-100">
-            <Button variant="secondary">Dashboard</Button>
-          </Link>
-        ) : (
-          <Link href="/auth" className="text-sm text-neutral-100">
-            <Button variant="secondary">Login or Register</Button>
-          </Link>
-        )}
+        <Link
+          href="https://docs.divisor.dev"
+          target="_blank"
+          className="text-sm text-neutral-100"
+        >
+          <Button variant="ghost" className="text-neutral-100">
+            <Album />
+            Documentation
+          </Button>
+        </Link>
       </div>
     </header>
   );

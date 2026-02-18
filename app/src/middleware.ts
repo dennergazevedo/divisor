@@ -3,14 +3,17 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("auth_token");
+  const { pathname } = req.nextUrl;
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/", req.url));
+  // Se não estiver logado e não estiver na rota de auth → redireciona
+  if (!token && !pathname.startsWith("/auth")) {
+    const loginUrl = new URL("/auth", req.url);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/((?!_next|favicon.ico|api).*)"],
 };
