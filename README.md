@@ -43,6 +43,7 @@ This repository follows a **monorepo** structure.
 
 ```txt
 ├─ app/                  # Admin panel (Next.js)
+├─ lp/                   # Landing Page (Next.js)
 │
 ├─ packages/
 │  ├─ sdk-js/             # JavaScript SDK
