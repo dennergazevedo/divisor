@@ -12,19 +12,19 @@ const OpenSourceSection = () => (
       </p>
       <div className="flex flex-wrap items-center justify-center gap-8 mb-12 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
-          <Scale className="h-4 w-4 text-primary" />
+          <Scale className="h-4 w-4 text-purple-600" />
           MIT License
         </div>
         <div className="flex items-center gap-2">
-          <Github className="h-4 w-4 text-primary" />
+          <Github className="h-4 w-4 text-purple-600" />
           Public Repository
         </div>
         <div className="flex items-center gap-2">
-          <Users className="h-4 w-4 text-primary" />
+          <Users className="h-4 w-4 text-purple-600" />
           Community-driven
         </div>
         <div className="flex items-center gap-2">
-          <Puzzle className="h-4 w-4 text-primary" />
+          <Puzzle className="h-4 w-4 text-purple-600" />
           Extensible
         </div>
       </div>
@@ -32,7 +32,7 @@ const OpenSourceSection = () => (
         href="https://github.com/dennergazevedo/divisor"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground hover:border-primary/50 transition-colors"
+        className="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground hover:border-purple-600/50 transition-colors"
       >
         <Github className="h-4 w-4" />
         Explore the repository

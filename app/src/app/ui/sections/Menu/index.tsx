@@ -27,7 +27,7 @@ export function MenuSidebar() {
   return (
     <Sidebar>
       <SidebarContent className="pt-10 md:pt-20 px-2">
-        <MenuLink href="/dashboard" icon={Gauge} label="Dashboard" />
+        <MenuLink href="/" icon={Gauge} label="Dashboard" />
         <MenuLink
           href="https://docs.divisor.dev"
           icon={Album}

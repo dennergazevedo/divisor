@@ -42,10 +42,10 @@ const ValueCards = () => (
         {cards.map((card) => (
           <div
             key={card.title}
-            className="group rounded-xl border border-border bg-card p-6 hover:border-primary/40 hover:glow-purple-sm transition-all duration-300"
+            className="group rounded-xl border border-border bg-card p-6 hover:border-purple-600/40 hover:glow-purple-sm transition-all duration-300"
           >
-            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <card.icon className="h-5 w-5 text-primary" />
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-600/10">
+              <card.icon className="h-5 w-5 text-purple-600" />
             </div>
             <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">

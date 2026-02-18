@@ -24,8 +24,8 @@ const DeveloperFocus = () => (
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 gap-x-12">
           {features.map((f) => (
             <li key={f} className="flex items-center gap-3 text-sm">
-              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                <Check className="h-3 w-3 text-primary" />
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-600/10">
+                <Check className="h-3 w-3 text-purple-600" />
               </div>
               <span className="text-foreground">{f}</span>
             </li>

@@ -18,15 +18,19 @@ export default function LoggedHeader() {
         </div>
       </div>
       <div className="flex flex-row items-center gap-8">
-        <Button variant="ghost" className="py-0 px-0 has-[>svg]:px-0">
+        <Button variant="ghost" className="py-0 px-0 has-[>svg]:px-0 w-fit">
           <Bell className="w-4 h-4" />
         </Button>
         <Button
           onClick={logout}
           variant="ghost"
-          className="py-0 px-0 has-[>svg]:px-0"
+          className="py-0 px-0 has-[>svg]:px-0 w-fit"
         >
-          {loading ? <LoaderCircle className="animate-spin" /> : "Logout"}
+          {loading ? (
+            <LoaderCircle className="animate-spin text-neutral-100" />
+          ) : (
+            "Logout"
+          )}
         </Button>
       </div>
     </div>

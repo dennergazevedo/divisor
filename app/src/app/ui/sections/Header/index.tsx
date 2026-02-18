@@ -1,44 +1,28 @@
+import { Github } from "lucide-react";
 import Logo from "../../atoms/Logo";
-import Link from "next/link";
-import { Button } from "../../atoms/Button";
-import { Album } from "lucide-react";
 
-export default function Header() {
-  return (
-    <header
-      className="
-        fixed top-4 z-50 left-1/2 -translate-x-1/2
-        flex items-center justify-between
-        rounded-full
-        backdrop-blur-lg bg-purple-400/10
-        px-8 py-2 pr-4
-        border-b-2
-        border-b-purple-100/20
-        max-w-[90%]
-        md:max-w-5xl
-        w-full
-      "
-    >
-      <Link href="/">
-        <Logo color="#F5F5F5" size={24} />
-      </Link>
-      <Link href="/" className="hidden md:flex flex-row items-center gap-2">
-        <span className="[font-variant:small-caps] text-xl font-bold cursor-pointer">
-          divisor
+const Navbar = () => (
+  <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+    <div className="container mx-auto flex h-16 items-center justify-between px-6">
+      <div className="flex items-center gap-2">
+        <div className="h-7 w-7 rounded-md bg-purple-600 flex items-center justify-center">
+          <Logo color="#FFF" size={16} />
+        </div>
+        <span className="text-lg font-bold text-foreground tracking-tight">
+          Divisor
         </span>
-      </Link>
-      <div className="flex flex-row items-center gap-2">
-        <Link
-          href="https://docs.divisor.dev"
-          target="_blank"
-          className="text-sm text-neutral-100"
-        >
-          <Button variant="ghost" className="text-neutral-100">
-            <Album />
-            Documentation
-          </Button>
-        </Link>
       </div>
-    </header>
-  );
-}
+      <a
+        href="https://github.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all"
+      >
+        <Github className="h-4 w-4" />
+        <span className="hidden sm:inline">GitHub</span>
+      </a>
+    </div>
+  </nav>
+);
+
+export default Navbar;

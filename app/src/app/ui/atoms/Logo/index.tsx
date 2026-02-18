@@ -11,7 +11,6 @@ export default function Logo({ color = "#8200db", size = 160 }: LogoProps) {
       width={size}
       height="auto"
       style={{ display: "block" }}
-      className="mt-1"
     >
       <path
         fill={color}

@@ -39,7 +39,7 @@ const ArchitectureSection = () => (
                 </p>
               </div>
               {i < flowSteps.length - 1 && (
-                <div className="h-6 w-px bg-gradient-to-b from-primary/60 to-border" />
+                <div className="h-6 w-px bg-gradient-to-b from-purple-600/60 to-border" />
               )}
             </div>
           ))}
@@ -61,7 +61,7 @@ const ArchitectureSection = () => (
                 {"// Deterministic variant assignment"}
               </span>
               {"\n"}
-              <span className="text-primary">const</span>{" "}
+              <span className="text-purple-600">const</span>{" "}
               <span className="text-foreground">bucket</span>{" "}
               <span className="text-muted-foreground">=</span>{" "}
               <span className="text-foreground">hash</span>
@@ -71,7 +71,7 @@ const ArchitectureSection = () => (
               <span className="text-foreground">testName</span>
               <span className="text-muted-foreground">)</span>{" "}
               <span className="text-muted-foreground">%</span>{" "}
-              <span className="text-primary">100</span>
+              <span className="text-purple-600">100</span>
             </code>
           </pre>
         </div>
