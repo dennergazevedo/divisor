@@ -8,6 +8,20 @@ type JwtPayload = {
   email: string;
 };
 
+type ExperimentRow = {
+  id: string;
+  name: string;
+  is_active: boolean;
+  ends_at: string | null;
+  created_at: string;
+};
+
+type VariantRow = {
+  experiment_id: string;
+  value: string;
+  percent: number;
+};
+
 export const runtime = "nodejs";
 
 export async function GET(req: Request) {
@@ -60,33 +74,66 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const experiments =
+    const experimentsResult =
       isActiveFilter === null
         ? await sql`
-          SELECT
-            id,
-            name,
-            is_active,
-            ends_at,
-            created_at
-          FROM experiments
-          WHERE tenant_id = ${tenantId}
-          ORDER BY created_at DESC
-        `
+      SELECT
+        id,
+        name,
+        is_active,
+        ends_at,
+        created_at
+      FROM experiments
+      WHERE tenant_id = ${tenantId}
+      ORDER BY created_at DESC
+    `
         : await sql`
-          SELECT
-            id,
-            name,
-            is_active,
-            ends_at,
-            created_at
-          FROM experiments
-          WHERE tenant_id = ${tenantId}
-            AND is_active = ${isActiveFilter}
-          ORDER BY created_at DESC
-        `;
+      SELECT
+        id,
+        name,
+        is_active,
+        ends_at,
+        created_at
+      FROM experiments
+      WHERE tenant_id = ${tenantId}
+        AND is_active = ${isActiveFilter}
+      ORDER BY created_at DESC
+    `;
 
-    return NextResponse.json({ experiments });
+    const experiments = experimentsResult as ExperimentRow[];
+
+    if (experiments.length === 0) {
+      return NextResponse.json({ experiments: [] });
+    }
+
+    const experimentIds = experiments.map((e) => e.id);
+
+    const variantsResult = await sql`
+  SELECT
+    experiment_id,
+    value,
+    percent
+  FROM experiment_variants
+  WHERE experiment_id = ANY(${experimentIds})
+  ORDER BY value ASC
+`;
+
+    const variants = variantsResult as VariantRow[];
+
+    const variantsByExperiment = new Map<string, VariantRow[]>();
+
+    for (const variant of variants) {
+      const list = variantsByExperiment.get(variant.experiment_id) ?? [];
+      list.push(variant);
+      variantsByExperiment.set(variant.experiment_id, list);
+    }
+
+    const result = experiments.map((experiment) => ({
+      ...experiment,
+      variants: variantsByExperiment.get(experiment.id) ?? [],
+    }));
+
+    return NextResponse.json({ experiments: result });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

@@ -38,7 +38,11 @@ export function MenuSidebar() {
           <AccordionItem value="item-1">
             <AccordionTrigger>tests</AccordionTrigger>
             <AccordionContent>
-              <MenuLink href="#" icon={FlaskConical} label="Experiments" />
+              <MenuLink
+                href="/experiments"
+                icon={FlaskConical}
+                label="Experiments"
+              />
               <MenuLink href="#" icon={Gauge} label="Performance" />
               <MenuLink href="#" icon={Info} label="Logs" />
               <MenuLink href="#" icon={Clock} label="History" />
