@@ -45,7 +45,7 @@ const ArchitectureSection = () => (
           ))}
         </div>
       </div>
-      <div className="max-w-lg mx-auto">
+      {/* <div className="max-w-lg mx-auto">
         <div className="rounded-xl border border-border bg-card overflow-hidden">
           <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border">
             <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/30" />
@@ -75,6 +75,43 @@ const ArchitectureSection = () => (
             </code>
           </pre>
         </div>
+      </div> */}
+      <div className="rounded-xl border border-border bg-card p-6 max-w-lg mx-auto">
+        <div className="mb-4 flex items-center gap-2">
+          <span className="size-3 rounded-full bg-muted-foreground/30" />
+          <span className="size-3 rounded-full bg-muted-foreground/30" />
+          <span className="size-3 rounded-full bg-muted-foreground/30" />
+        </div>
+        <pre className="overflow-x-auto font-mono text-sm leading-relaxed text-neutral-400">
+          <code>
+            <span className="text-neutral-600">{"// "}</span>
+            <span className="text-neutral-600">divisor.config.ts</span>
+            {"\n"}
+            <span className="text-purple-600">import</span>
+            {" { Divisor } "}
+            <span className="text-purple-600">from</span>{" "}
+            <span className="text-amber-200">{'"@divisor/sdk"'}</span>
+            {"\n\n"}
+            <span className="text-purple-600">const</span>
+            {" client = "}
+            <span className="text-purple-600">new</span>
+            {" Divisor({\n"}
+            {"  edgeUrl: "}
+            <span className="text-amber-200">
+              {'"https://edge.divisor.dev"'}
+            </span>
+            {",\n"}
+            {"  apiKey: process.env.DIVISOR_TENANT_KEY,\n"}
+            {"})\n\n"}
+            <span className="text-purple-600">const</span>
+            {" variant = client.getVariant({\n"}
+            {"  testName: "}
+            <span className="text-amber-200">{'"checkout-flow"'}</span>
+            {",\n"}
+            {"  userId: user.id,\n"}
+            {"})"}
+          </code>
+        </pre>
       </div>
     </div>
   </section>

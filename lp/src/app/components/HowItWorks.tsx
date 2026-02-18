@@ -37,10 +37,10 @@ const HowItWorks = () => (
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {steps.map((step, i) => (
-          <div key={step.number} className="relative">
-            {i < steps.length - 1 && (
-              <div className="hidden md:block absolute top-6 left-full w-full h-px bg-gradient-to-r from-border to-transparent z-0" />
-            )}
+          <div
+            key={step.number}
+            className="relative border-l-2 border-purple-600 rounded-md pl-8 py-4"
+          >
             <div className="relative z-10">
               <span className="text-xs font-mono text-purple-600 mb-3 block">
                 {step.number}

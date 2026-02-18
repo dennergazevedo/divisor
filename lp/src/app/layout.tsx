@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.variable} antialiased bg-zinc-900 max-w-screen overflow-x-hidden text-neutral-100`}
+        className={`${montserrat.variable} antialiased bg-background max-w-screen overflow-x-hidden text-neutral-100`}
       >
         <div className="flex flex-col h-full w-full">
           <div className="absolute -z-10 inset-0 bg-gradient-to-b from-purple-500/10 via-transparent to-transparent" />

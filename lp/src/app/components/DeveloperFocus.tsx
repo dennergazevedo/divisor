@@ -6,7 +6,7 @@ const features = [
   "Transparent architecture",
   "Fully self-hostable",
   "Minimal dependencies",
-  "TypeScript-first",
+  "Zero-friction setup",
 ];
 
 const DeveloperFocus = () => (

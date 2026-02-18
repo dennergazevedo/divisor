@@ -9,9 +9,8 @@ const cards = [
   },
   {
     icon: Fingerprint,
-    title: "Stateless by design",
-    description:
-      "Sticky sessions without sessions. No per-user storage required.",
+    title: "Consistent user experience",
+    description: "The same user always sees the same variant across sessions.",
   },
   {
     icon: Hash,
