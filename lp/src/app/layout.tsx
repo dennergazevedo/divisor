@@ -13,7 +13,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "Welcome",
+    default: "Divisor | A/B Testing",
     template: "%s • Divisor",
   },
   description:

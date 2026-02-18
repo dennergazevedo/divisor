@@ -117,7 +117,6 @@ html {
   }
 }
 
-/* Utilities migradas do Vite */
 @layer utilities {
   .glow-purple {
     box-shadow: 0 0 80px 20px oklch(0.62 0.22 275 / 0.15);

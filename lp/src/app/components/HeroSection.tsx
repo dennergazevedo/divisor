@@ -22,7 +22,7 @@ const HeroSection = () => (
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <Link href="https://app.divisor.dev">
-          <button className="group cursor-pointer flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">
+          <button className="group cursor-pointer flex items-center gap-2 rounded-lg bg-purple-600 px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">
             Get Started
             <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
           </button>
