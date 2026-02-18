@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setInvites([]);
       setSelectedTenant(null);
 
-      router.push("/");
+      router.push("/auth");
     } finally {
       setLoading(false);
     }
