@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Header from "@/app/ui/sections/Header";
-import Footer from "@/app/ui/sections/Footer";
+import "./globals.css";
 
 import { Montserrat } from "next/font/google";
-import "./globals.css";
+
+import Navbar from "./components/Navbar";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -48,9 +48,14 @@ export default function RootLayout({
       >
         <div className="flex flex-col h-full w-full">
           <div className="absolute -z-10 inset-0 bg-gradient-to-b from-purple-500/10 via-transparent to-transparent" />
-          <Header />
+          <Navbar />
           {children}
-          <Footer />
+          <footer className="border-t border-border py-8">
+            <div className="container mx-auto px-6 text-center text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Divisor. Open source under MIT
+              License.
+            </div>
+          </footer>
         </div>
       </body>
     </html>
