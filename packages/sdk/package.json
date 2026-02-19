@@ -1,0 +1,17 @@
+{
+  "name": "@divisor.dev/sdk",
+  "version": "0.0.2",
+  "description": "Divisor A/B testing SDK",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs",
+    "dev": "tsup src/index.ts --watch",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}
