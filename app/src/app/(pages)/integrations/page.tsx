@@ -11,9 +11,9 @@ import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import { Separator } from "@/app/ui/atoms/Separator";
 
 export default function IntegrationsPage() {
-  const [activeTab, setActiveTab] = useState<"javascript" | "react">(
-    "javascript",
-  );
+  const [activeTab, setActiveTab] = useState<
+    "javascript" | "react" | "angular" | "vue"
+  >("javascript");
 
   return (
     <main className="relative flex flex-col h-full w-full">
@@ -32,11 +32,15 @@ export default function IntegrationsPage() {
 
           <Tabs
             value={activeTab}
-            onValueChange={(v) => setActiveTab(v as "javascript" | "react")}
+            onValueChange={(v) =>
+              setActiveTab(v as "javascript" | "react" | "angular" | "vue")
+            }
           >
             <TabsList>
               <TabsTrigger value="javascript">JavaScript</TabsTrigger>
               <TabsTrigger value="react">React</TabsTrigger>
+              <TabsTrigger value="angular">Angular</TabsTrigger>
+              <TabsTrigger value="vue">Vue</TabsTrigger>
             </TabsList>
 
             {/* ===================== JavaScript ===================== */}
@@ -105,6 +109,76 @@ export function Checkout() {
                   Tip: cache the client instance and avoid calling
                   <code className="mx-1">getVariant</code>
                   on every render.
+                </p>
+              </div>
+            </TabsContent>
+
+            {/* ===================== Angular ===================== */}
+            <TabsContent value="angular">
+              <div className="rounded-lg border border-neutral-800 p-6 space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  Create a service to provide the Divisor client in Angular.
+                </p>
+
+                <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
+                  <code>{`import { Injectable } from '@angular/core';
+import { Divisor } from "@divisor.dev/sdk";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DivisorService {
+  private client = new Divisor({
+    tenantId: 'your-tenant-id'
+  });
+
+  async getVariant(name: string, userId: string) {
+    const result = await this.client.getVariant({
+      testName: name,
+      userId: userId
+    });
+    return result;
+  }
+}`}</code>
+                </pre>
+
+                <p className="text-xs text-neutral-500">
+                  Inject the service into your components to fetch variants.
+                </p>
+              </div>
+            </TabsContent>
+
+            {/* ===================== Vue ===================== */}
+            <TabsContent value="vue">
+              <div className="rounded-lg border border-neutral-800 p-6 space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  Use the Composition API for experiment logic in Vue.
+                </p>
+
+                <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
+                  <code>{`<script setup>
+import { ref, onMounted } from 'vue'
+import { Divisor } from "@divisor.dev/sdk"
+
+const client = new Divisor({
+  tenantId: 'your-tenant-id'
+})
+
+const variant = ref(null)
+
+onMounted(async () => {
+  const res = await client.getVariant({
+    testName: 'checkout-flow',
+    userId: 'user-123'
+  })
+  variant.value = res
+})
+</script>`}</code>
+                </pre>
+
+                <p className="text-xs text-neutral-500">
+                  The SDK can be used within life-cycle hooks like
+                  <code className="mx-1">onMounted</code>.
                 </p>
               </div>
             </TabsContent>

@@ -42,6 +42,18 @@ export async function handleExperiment(request: Request, env: Env): Promise<Resp
 		return jsonResponse({ experiment: experimentName, variant: null });
 	}
 
+	const isExpired = experiment.endsAt && new Date(experiment.endsAt) < new Date();
+
+	if (isExpired) {
+		const sortedVariants = [...experiment.variants].sort((a, b) => b.percent - a.percent);
+		const variant = sortedVariants[0].value;
+
+		return jsonResponse({
+			experiment: experimentName,
+			variant,
+		});
+	}
+
 	const variant = resolveByPercentage(uid, tenantId + experimentName, experiment.variants);
 
 	return jsonResponse({
