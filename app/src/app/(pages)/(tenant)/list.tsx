@@ -1,10 +1,17 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { Building, Plug } from "lucide-react";
+import { Building, Copy, Plug } from "lucide-react";
+import { toast } from "sonner";
 
 export default function TenantList() {
   const { tenants, selectedTenant, setSelectedTenant } = useAuth();
+
+  const copyToClipboard = (e: React.MouseEvent, text: string) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(text);
+    toast.success("Tenant ID copied to clipboard");
+  };
 
   return (
     <ul className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
@@ -27,6 +34,15 @@ export default function TenantList() {
               {tenant.name}
             </span>
           </div>
+
+          <div
+            onClick={(e) => copyToClipboard(e, tenant.id)}
+            className="group/copy flex items-center justify-between gap-2 px-3 py-1.5 bg-neutral-900/50 border border-neutral-400/10 rounded font-mono text-[10px] text-neutral-400 hover:text-white hover:border-neutral-400/30 transition-all"
+          >
+            <span className="truncate">{tenant.id}</span>
+            <Copy className="size-3 shrink-0 opacity-50 group-hover/copy:opacity-100 transition-opacity" />
+          </div>
+
           <span className="[font-variant:small-caps] mt-2 lowercase text-sm text-neutral-400 px-4 py-0 bg-purple-600/10 rounded-full w-fit">
             {tenant.role}
           </span>
