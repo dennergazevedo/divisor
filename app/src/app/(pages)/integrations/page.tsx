@@ -52,15 +52,16 @@ export default function IntegrationsPage() {
                 </p>
 
                 <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
-                  <code>{`import { Divisor } from "@divisor.dev/sdk"
+                  <code>{`import { DivisorClient } from "@divisor.dev/sdk"
 
-const client = new Divisor({
-  tenantId: process.env.DIVISOR_TENANT_ID,
+const client = new DivisorClient({
+  tenantId: 'your-tenant-id',
 })
 
 const variant = client.getVariant({
-  testName: "checkout-flow",
-  userId: user.id,
+  experimentName: "checkout-flow",
+  userId: userId // optional,
+  variantFallback: "default" // optional
 })
 
 console.log(variant)
@@ -82,18 +83,19 @@ console.log(variant)
                 </p>
 
                 <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
-                  <code>{`import { Divisor } from "@divisor.dev/sdk"
+                  <code>{`import { DivisorClient } from "@divisor.dev/sdk"
 import { useMemo } from "react"
 
-const client = new Divisor({
-  tenantId: import.meta.env.VITE_DIVISOR_TENANT_ID,
+const client = new DivisorClient({
+  tenantId: 'your-tenant-id',
 })
 
 export function Checkout() {
   const variant = useMemo(() => {
     return client.getVariant({
-      testName: "checkout-flow",
-      userId: "user-123",
+      experimentName: "checkout-flow",
+      userId: userId // optional,
+      variantFallback: "default" // optional
     })
   }, [])
 
@@ -122,20 +124,21 @@ export function Checkout() {
 
                 <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
                   <code>{`import { Injectable } from '@angular/core';
-import { Divisor } from "@divisor.dev/sdk";
+import { DivisorClient } from "@divisor.dev/sdk";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DivisorService {
-  private client = new Divisor({
+  private client = new DivisorClient({
     tenantId: 'your-tenant-id'
   });
 
   async getVariant(name: string, userId: string) {
     const result = await this.client.getVariant({
-      testName: name,
-      userId: userId
+      experimentName: name,
+      userId: userId // optional,
+      variantFallback: "default" // optional
     });
     return result;
   }

@@ -1,33 +1,7 @@
-"use client";
-
 import { ArrowRight, Github } from "lucide-react";
 import Link from "next/link";
-import { DivisorClient } from "@divisor.dev/sdk";
-import { useCallback, useEffect, useState } from "react";
-
-const divisor = new DivisorClient({
-  tenantId: "c7bd228f-aa9a-43c0-b1d9-e8338af89c59",
-});
 
 const HeroSection = () => {
-  const [variant, setVariant] = useState<string | null>(null);
-
-  const loadVariant = useCallback(async () => {
-    try {
-      const res = await divisor.getVariant({
-        experimentName: "hello_world",
-        variantFallback: "old",
-      });
-      setVariant(res.variant);
-    } catch (error) {
-      console.log("[x] Falha ao localizar variant", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadVariant();
-  }, []);
-
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
       <div className="absolute inset-0 hero-glow" />
@@ -64,13 +38,6 @@ const HeroSection = () => {
             View on GitHub
           </Link>
         </div>
-        {variant && (
-          <div className="mt-8">
-            <p className="text-sm text-muted-foreground">
-              Current variant: <span className="font-semibold">{variant}</span>
-            </p>
-          </div>
-        )}
       </div>
     </section>
   );
