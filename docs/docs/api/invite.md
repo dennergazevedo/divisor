@@ -17,7 +17,7 @@ Invite a user to join a tenant.
 | :--- | :--- | :--- |
 | `tenantId` | `string` | ID of the tenant |
 | `email` | `string` | User's email to invite |
-| `role` | `string` | `admin` or `member` |
+| `role` | `string` | Role assigned: `admin` or `member` |
 
 ### Response
 
@@ -43,7 +43,7 @@ List pending invitations for the authenticated user.
 - **Method**: `GET`
 - **Auth Required**: Yes
 
-### Response
+### Response (My Invites)
 
 ```json
 {
@@ -67,14 +67,14 @@ Accept or decline an invitation.
 - **Method**: `POST`
 - **Auth Required**: Yes
 
-### Request Body
+### Request Body (Respond)
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `inviteId` | `string` | ID of the invite |
 | `accept` | `boolean` | `true` to accept, `false` to decline |
 
-### Response
+### Response (Respond)
 
 ```json
 {
@@ -91,13 +91,13 @@ Cancel a pending invitation sent by the tenant.
 - **Auth Required**: Yes
 - **Role Required**: `owner` or `admin`
 
-### Request Body
+### Request Body (Cancel)
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `inviteId` | `string` | ID of the invite to cancel |
 
-### Response
+### Response (Cancel)
 
 ```json
 {

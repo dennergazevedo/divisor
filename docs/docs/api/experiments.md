@@ -59,7 +59,7 @@ List experiments for a tenant.
 | `tenantId` | `string` | Yes | ID of the tenant |
 | `active` | `boolean` | No | Filter by active status (`true` or `false`) |
 
-### Response
+### Response (List)
 
 Returns a list of experiments with their variants.
 
@@ -85,18 +85,18 @@ Update an existing experiment.
 - **Auth Required**: Yes
 - **Role Required**: `owner` or `admin`
 
-### Request Body
+### Request Body (Update)
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `experimentId` | `string` | ID of the experiment to update |
 | `tenantId` | `string` | ID of the tenant |
 | `name` | `string` | New name of the experiment |
-| `isActive` | `boolean` | Active status |
-| `endsAt` | `string` \| `null` | ISO date string for end date |
-| `variants` | `VariantInput[]` | List of variants (replaces existing) |
+| `isActive` | `boolean` | Active status of the experiment |
+| `endsAt` | `string` \| `null` | ISO date string for end date, or `null` for no expiration |
+| `variants` | `VariantInput[]` | List of variants (replaces all existing variants) |
 
-### Response
+### Response (Update)
 
 ```json
 {

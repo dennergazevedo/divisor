@@ -74,11 +74,36 @@ const config: Config = {
     footer: {
       links: [
         {
-          title: "Docs",
+          title: "Learn",
           items: [
             {
-              label: "Tutorial",
-              to: "/docs/intro",
+              label: "Get Started",
+              to: "/docs/get-started",
+            },
+            {
+              label: "Concepts",
+              to: "/docs/Concepts/ab-testing",
+            },
+            {
+              label: "SDK",
+              to: "/docs/SDK/intro",
+            },
+            {
+              label: "API",
+              to: "/docs/api/intro",
+            },
+          ],
+        },
+        {
+          title: "Platform",
+          items: [
+            {
+              label: "Divisor",
+              href: "https://divisor.dev",
+            },
+            {
+              label: "Create your experiment",
+              href: "https://app.divisor.dev",
             },
           ],
         },

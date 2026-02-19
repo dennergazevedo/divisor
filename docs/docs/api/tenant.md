@@ -2,6 +2,10 @@
 
 Manage tenants and their members.
 
+:::note
+Individual tenants are typically discovered via the [Auth Me](../api/auth#get-current-user) endpoint, which returns all tenants the user belongs to.
+:::
+
 ## Create Tenant
 
 Create a new tenant organization.
@@ -10,14 +14,14 @@ Create a new tenant organization.
 - **Method**: `POST`
 - **Auth Required**: Yes
 
-### Request Body
+### Request Body (Create)
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `name` | `string` | Name of the tenant |
 | `url` | `string` | Unique URL slug for the tenant |
 
-### Response
+### Response (Create)
 
 Returns the created tenant details.
 
@@ -46,7 +50,7 @@ List all pending invitations for a specific tenant.
 | :--- | :--- | :--- | :--- |
 | `tenantId` | `string` | Yes | ID of the tenant |
 
-### Response
+### Response (Invites)
 
 ```json
 {
@@ -69,13 +73,13 @@ List all members of a tenant.
 - **Method**: `GET`
 - **Auth Required**: Yes
 
-### Query Parameters
+### Query Parameters (Members)
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `tenantId` | `string` | Yes | ID of the tenant |
 
-### Response
+### Response (Members)
 
 ```json
 {
@@ -99,7 +103,7 @@ Update a member's role within the tenant.
 - **Auth Required**: Yes
 - **Role Required**: `owner`
 
-### Request Body
+### Request Body (Permissions)
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
@@ -107,7 +111,7 @@ Update a member's role within the tenant.
 | `userId` | `string` | ID of the user to update |
 | `role` | `string` | New role (`admin` or `member`) |
 
-### Response
+### Response (Permissions)
 
 ```json
 {
@@ -124,14 +128,14 @@ Remove a user from the tenant.
 - **Auth Required**: Yes
 - **Role Required**: `owner` or `admin` (cannot remove owner)
 
-### Request Body
+### Request Body (Remove)
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `tenantId` | `string` | ID of the tenant |
 | `userId` | `string` | ID of the user to remove |
 
-### Response
+### Response (Remove)
 
 ```json
 {
