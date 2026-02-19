@@ -85,12 +85,12 @@ const ArchitectureSection = () => (
         <pre className="overflow-x-auto font-mono text-sm leading-relaxed text-neutral-400">
           <code>
             <span className="text-neutral-600">{"// "}</span>
-            <span className="text-neutral-600">divisor.config.ts</span>
+            <span className="text-neutral-600">your-file.ts</span>
             {"\n"}
             <span className="text-purple-600">import</span>
             {" { Divisor } "}
             <span className="text-purple-600">from</span>{" "}
-            <span className="text-amber-200">{'"@divisor/sdk"'}</span>
+            <span className="text-amber-200">{'"@divisor.dev/sdk"'}</span>
             {"\n\n"}
             <span className="text-purple-600">const</span>
             {" client = "}
@@ -100,10 +100,16 @@ const ArchitectureSection = () => (
             {"})\n\n"}
             <span className="text-purple-600">const</span>
             {" variant = client.getVariant({\n"}
-            {"  testName: "}
+            {"  experimentName: "}
             <span className="text-amber-200">{'"checkout-flow"'}</span>
             {",\n"}
-            {"  userId: user.id,\n"}
+            {"  userId: user.id,"}
+            <span className="text-neutral-600">{" // optional"}</span>
+            {",\n"}
+            {"  variantFallback: "}
+            <span className="text-amber-200">{'"default"'}</span>
+            <span className="text-neutral-600">{" // optional"}</span>
+            {",\n"}
             {"})"}
           </code>
         </pre>

@@ -1,5 +1,5 @@
 import { getUid } from "./uid";
-import type { DivisorConfig, ExperimentResult } from "./types";
+import type { DivisorConfig, ExperimentResult, GetVariant } from "./types";
 
 export class DivisorClient {
   private tenantId: string;
@@ -10,8 +10,12 @@ export class DivisorClient {
     this.edgeUrl = "https://divisor-edge.dennergazevedo.workers.dev";
   }
 
-  async get(experimentName: string): Promise<ExperimentResult> {
-    const uid = getUid();
+  async getVariant({
+    experimentName,
+    userId,
+    variantFallback,
+  }: GetVariant): Promise<ExperimentResult> {
+    const uid = userId ?? getUid();
 
     const url = new URL(`${this.edgeUrl}/experiment`);
     url.searchParams.set("tenantId", this.tenantId);
@@ -21,7 +25,7 @@ export class DivisorClient {
     const res = await fetch(url.toString());
 
     if (!res.ok) {
-      return { experiment: experimentName, variant: null };
+      return { experiment: experimentName, variant: variantFallback ?? null };
     }
 
     return res.json();

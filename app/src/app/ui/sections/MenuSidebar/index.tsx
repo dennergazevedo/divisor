@@ -12,6 +12,7 @@ import {
   FlaskConical,
   Gauge,
   Info,
+  Plug,
   Settings,
   Users,
 } from "lucide-react";
@@ -28,6 +29,7 @@ export function MenuSidebar() {
     <Sidebar>
       <SidebarContent className="pt-10 md:pt-20 px-2">
         <MenuLink href="/" icon={Briefcase} label="Tenants" />
+        <MenuLink href="/integrations" icon={Plug} label="SDKs" />
         <MenuLink
           href="https://docs.divisor.dev"
           icon={Album}

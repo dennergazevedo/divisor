@@ -1,6 +1,6 @@
 {
   "name": "@divisor.dev/sdk",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Divisor A/B testing SDK",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

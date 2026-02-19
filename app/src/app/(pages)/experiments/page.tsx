@@ -55,9 +55,9 @@ export default function ExperimentsPage() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-row justify-between w-full gap-8">
             <div>
-              <h1 className="text-lg font-bold">Tenants</h1>
+              <h1 className="text-lg font-bold">Experiments</h1>
               <p className="text-sm text-neutral-400">
-                Select a tenant to manage it
+                Manage your experiments
               </p>
             </div>
             <div>

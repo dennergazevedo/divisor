@@ -3,7 +3,7 @@
 import { ArrowRight, Github } from "lucide-react";
 import Link from "next/link";
 import { DivisorClient } from "@divisor.dev/sdk";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const divisor = new DivisorClient({
   tenantId: "c7bd228f-aa9a-43c0-b1d9-e8338af89c59",
@@ -12,10 +12,20 @@ const divisor = new DivisorClient({
 const HeroSection = () => {
   const [variant, setVariant] = useState<string | null>(null);
 
-  useEffect(() => {
-    divisor.get("hello_world").then((res: any) => {
+  const loadVariant = useCallback(async () => {
+    try {
+      const res = await divisor.getVariant({
+        experimentName: "hello_world",
+        variantFallback: "old",
+      });
       setVariant(res.variant);
-    });
+    } catch (error) {
+      console.log("[x] Falha ao localizar variant", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadVariant();
   }, []);
 
   return (
