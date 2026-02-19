@@ -31,9 +31,6 @@ export async function redisSet(env: Env, key: string, value: unknown, ttlSeconds
 			Authorization: `Bearer ${env.UPSTASH_REDIS_REST_TOKEN}`,
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({
-			value: JSON.stringify(value),
-			ex: ttlSeconds,
-		}),
+		body: JSON.stringify(value),
 	});
 }
