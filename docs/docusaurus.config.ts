@@ -82,11 +82,11 @@ const config: Config = {
             },
             {
               label: "Concepts",
-              to: "/docs/Concepts/ab-testing",
+              to: "/docs/concepts/ab-testing",
             },
             {
               label: "SDK",
-              to: "/docs/SDK/intro",
+              to: "/docs/sdk/intro",
             },
             {
               label: "API",

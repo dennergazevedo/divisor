@@ -3,7 +3,7 @@
 Manage tenants and their members.
 
 :::note
-Individual tenants are typically discovered via the [Auth Me](../api/auth#get-current-user) endpoint, which returns all tenants the user belongs to.
+Individual tenants are typically discovered via the [Get Current User](../api/auth#get-current-user-me) endpoint, which returns all tenants the user belongs to.
 :::
 
 ## Create Tenant
