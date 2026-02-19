@@ -10,7 +10,18 @@ export async function redisGet<T>(env: Env, key: string): Promise<T | null> {
 	if (!res.ok) return null;
 
 	const data: any = await res.json();
-	return data.result ?? null;
+
+	if (!data.result) return null;
+
+	if (typeof data.result === 'string') {
+		try {
+			return JSON.parse(data.result) as T;
+		} catch {
+			return null;
+		}
+	}
+
+	return data.result as T;
 }
 
 export async function redisSet(env: Env, key: string, value: unknown, ttlSeconds: number): Promise<void> {
@@ -21,7 +32,7 @@ export async function redisSet(env: Env, key: string, value: unknown, ttlSeconds
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			value,
+			value: JSON.stringify(value),
 			ex: ttlSeconds,
 		}),
 	});
