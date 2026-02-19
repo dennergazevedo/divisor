@@ -3,20 +3,6 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { sql } from "@/lib/db";
 
-type ExperimentRow = {
-  id: string;
-  name: string;
-  is_active: boolean;
-  ends_at: string | null;
-  created_at: string;
-};
-
-type VariantRow = {
-  experiment_id: string;
-  value: string;
-  percent: number;
-};
-
 export async function GET(req: Request) {
   const token = (await cookies()).get("auth_token")?.value;
 
