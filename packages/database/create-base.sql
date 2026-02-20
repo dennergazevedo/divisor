@@ -132,3 +132,92 @@ CREATE TABLE experiment_variants (
 -- Índice para buscar variantes rápido
 CREATE INDEX idx_variants_experiment
   ON experiment_variants (experiment_id);
+
+-- ============================
+-- ROW LEVEL SECURITY (RLS)
+-- ============================
+
+-- =========================
+-- Helper Functions
+-- =========================
+
+-- Function to set the current tenant context
+CREATE OR REPLACE FUNCTION set_current_tenant(tenant_id UUID)
+RETURNS void AS $$
+BEGIN
+  PERFORM set_config('app.current_tenant_id', tenant_id::TEXT, false);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to get the current tenant context
+CREATE OR REPLACE FUNCTION get_current_tenant()
+RETURNS UUID AS $$
+BEGIN
+  RETURN current_setting('app.current_tenant_id', true)::UUID;
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION set_current_tenant(UUID) IS 'Sets the current tenant context for RLS policies';
+COMMENT ON FUNCTION get_current_tenant() IS 'Gets the current tenant context (returns NULL if not set)';
+
+-- =========================
+-- Enable RLS
+-- =========================
+
+ALTER TABLE tenant_members ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tenant_invites ENABLE ROW LEVEL SECURITY;
+ALTER TABLE experiments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE experiment_variants ENABLE ROW LEVEL SECURITY;
+
+-- =========================
+-- RLS Policies
+-- =========================
+
+-- Tenant Members Policies
+CREATE POLICY tenant_members_isolation_policy ON tenant_members
+  FOR ALL
+  USING (tenant_id = current_setting('app.current_tenant_id', true)::UUID)
+  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', true)::UUID);
+
+-- Tenant Invites Policies
+CREATE POLICY tenant_invites_isolation_policy ON tenant_invites
+  FOR ALL
+  USING (tenant_id = current_setting('app.current_tenant_id', true)::UUID)
+  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', true)::UUID);
+
+-- Experiments Policies
+CREATE POLICY experiments_isolation_policy ON experiments
+  FOR ALL
+  USING (tenant_id = current_setting('app.current_tenant_id', true)::UUID)
+  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', true)::UUID);
+
+-- Experiment Variants Policies
+-- Uses a subquery to check the parent experiment's tenant_id
+CREATE POLICY experiment_variants_isolation_policy ON experiment_variants
+  FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM experiments
+      WHERE experiments.id = experiment_variants.experiment_id
+        AND experiments.tenant_id = current_setting('app.current_tenant_id', true)::UUID
+    )
+  )
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM experiments
+      WHERE experiments.id = experiment_variants.experiment_id
+        AND experiments.tenant_id = current_setting('app.current_tenant_id', true)::UUID
+    )
+  );
+
+-- =========================
+-- Comments
+-- =========================
+
+COMMENT ON POLICY tenant_members_isolation_policy ON tenant_members IS 'Ensures users can only access tenant_members for their current tenant';
+COMMENT ON POLICY tenant_invites_isolation_policy ON tenant_invites IS 'Ensures users can only access tenant_invites for their current tenant';
+COMMENT ON POLICY experiments_isolation_policy ON experiments IS 'Ensures users can only access experiments for their current tenant';
+COMMENT ON POLICY experiment_variants_isolation_policy ON experiment_variants IS 'Ensures users can only access experiment_variants through their parent experiment tenant';
