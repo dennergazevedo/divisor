@@ -39,9 +39,9 @@ const Navbar = () => (
         </a>
       </div>
       <a
-        href="https://github.com"
+        href="https://github.com/dennergazevedo/divisor"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener no referver"
         className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-purple-600/50 transition-all"
       >
         <Github className="h-4 w-4" />
