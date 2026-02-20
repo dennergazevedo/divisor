@@ -179,20 +179,20 @@ ALTER TABLE experiment_variants ENABLE ROW LEVEL SECURITY;
 -- Tenant Members Policies
 CREATE POLICY tenant_members_isolation_policy ON tenant_members
   FOR ALL
-  USING (tenant_id = current_setting('app.current_tenant_id', true)::UUID)
-  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', true)::UUID);
+  USING (tenant_id = get_current_tenant())
+  WITH CHECK (tenant_id = get_current_tenant());
 
 -- Tenant Invites Policies
 CREATE POLICY tenant_invites_isolation_policy ON tenant_invites
   FOR ALL
-  USING (tenant_id = current_setting('app.current_tenant_id', true)::UUID)
-  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', true)::UUID);
+  USING (tenant_id = get_current_tenant())
+  WITH CHECK (tenant_id = get_current_tenant());
 
 -- Experiments Policies
 CREATE POLICY experiments_isolation_policy ON experiments
   FOR ALL
-  USING (tenant_id = current_setting('app.current_tenant_id', true)::UUID)
-  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', true)::UUID);
+  USING (tenant_id = get_current_tenant())
+  WITH CHECK (tenant_id = get_current_tenant());
 
 -- Experiment Variants Policies
 -- Uses a subquery to check the parent experiment's tenant_id
@@ -202,14 +202,14 @@ CREATE POLICY experiment_variants_isolation_policy ON experiment_variants
     EXISTS (
       SELECT 1 FROM experiments
       WHERE experiments.id = experiment_variants.experiment_id
-        AND experiments.tenant_id = current_setting('app.current_tenant_id', true)::UUID
+        AND experiments.tenant_id = get_current_tenant()
     )
   )
   WITH CHECK (
     EXISTS (
       SELECT 1 FROM experiments
       WHERE experiments.id = experiment_variants.experiment_id
-        AND experiments.tenant_id = current_setting('app.current_tenant_id', true)::UUID
+        AND experiments.tenant_id = get_current_tenant()
     )
   );
 
