@@ -106,6 +106,10 @@ CREATE INDEX idx_experiments_tenant_name
 CREATE INDEX idx_experiments_active
   ON experiments (tenant_id, is_active, ends_at);
 
+-- Índice para otimizar RLS policies em experiment_variants
+CREATE INDEX idx_experiments_id_tenant
+  ON experiments (id, tenant_id);
+
 -- =========================
 -- Experiment Variants
 -- =========================
@@ -152,10 +156,18 @@ $$ LANGUAGE plpgsql;
 -- Function to get the current tenant context
 CREATE OR REPLACE FUNCTION get_current_tenant()
 RETURNS UUID AS $$
+DECLARE
+  tenant_id_str TEXT;
 BEGIN
-  RETURN current_setting('app.current_tenant_id', true)::UUID;
+  tenant_id_str := current_setting('app.current_tenant_id', true);
+  IF tenant_id_str IS NULL OR tenant_id_str = '' THEN
+    RETURN NULL;
+  END IF;
+  RETURN tenant_id_str::UUID;
 EXCEPTION
-  WHEN OTHERS THEN
+  WHEN invalid_parameter_value THEN
+    RETURN NULL;
+  WHEN invalid_text_representation THEN
     RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
