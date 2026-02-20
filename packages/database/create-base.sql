@@ -133,7 +133,7 @@ CREATE TABLE experiment_variants (
     UNIQUE (experiment_id, value)
 );
 
--- Índice para buscar variantes rápido
+-- Index to search variants quickly
 CREATE INDEX idx_variants_experiment
   ON experiment_variants (experiment_id);
 
