@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Script from "next/script";
+
 import "./globals.css";
 
 import { Montserrat } from "next/font/google";
@@ -46,6 +48,19 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} antialiased bg-background max-w-screen overflow-x-hidden text-neutral-100`}
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-8D11FXVVB1"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8D11FXVVB1');
+          `}
+        </Script>
         <div className="flex flex-col h-full w-full">
           <div className="absolute -z-10 inset-0 bg-gradient-to-b from-purple-500/10 via-transparent to-transparent" />
           <Navbar />
