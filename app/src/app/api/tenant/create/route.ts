@@ -50,6 +50,35 @@ export async function POST(req: Request) {
       );
     }
 
+    // --- Plan Limit Check ---
+    const user = await sql`
+      SELECT current_plan, plan_status
+      FROM users
+      WHERE id = ${payload.userId}
+      LIMIT 1
+    `;
+
+    const { getPlanLimits } = await import("@/lib/plans");
+    const limits = getPlanLimits(user[0]?.current_plan);
+
+    const ownedTenants = await sql`
+      SELECT count(*) as count
+      FROM tenant_members
+      WHERE user_id = ${payload.userId}
+        AND role = 'owner'
+    `;
+
+    if (Number(ownedTenants[0].count) >= limits.tenants) {
+      return NextResponse.json(
+        {
+          error: "Tenant limit reached",
+          details: `Your current plan allows up to ${limits.tenants} tenant(s). Upgrade to create more.`,
+        },
+        { status: 403 },
+      );
+    }
+    // -------------------------
+
     const results = await sql.transaction((tx) => [
       tx`
         INSERT INTO tenants (name, url)

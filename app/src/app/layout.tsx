@@ -46,6 +46,8 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} antialiased bg-zinc-900 max-w-screen overflow-x-hidden text-neutral-100`}
       >
+        <div className="absolute inset-0 hero-glow bottom-0 rotate-180" />
+        <div className="absolute inset-0 bg-grid opacity-30" />
         <Toaster />
         <AuthProvider>
           <SidebarProvider>{children}</SidebarProvider>

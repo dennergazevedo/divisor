@@ -1,8 +1,9 @@
 import HeroSection from "./components/HeroSection";
 import ValueCards from "./components/ValueCards";
 import HowItWorks from "./components/HowItWorks";
+import Pricing from "./components/Pricing";
 import DeveloperFocus from "./components/DeveloperFocus";
-import ArchitectureSection from "./components/ArchitectureSection";
+import FAQ from "./components/FAQ";
 import OpenSourceSection from "./components/OpenSourceSection";
 import FinalCTA from "./components/FinalCTA";
 
@@ -11,8 +12,9 @@ const Home = () => (
     <HeroSection />
     <ValueCards />
     <HowItWorks />
+    <Pricing />
     <DeveloperFocus />
-    <ArchitectureSection />
+    <FAQ />
     <OpenSourceSection />
     <FinalCTA />
   </div>

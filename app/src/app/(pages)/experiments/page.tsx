@@ -61,7 +61,11 @@ export default function ExperimentsPage() {
               </p>
             </div>
             <div>
-              <CreateExperiment />
+              <CreateExperiment
+                activeCount={
+                  activeTab === "active" ? experiments.length : undefined
+                }
+              />
             </div>
           </div>
 

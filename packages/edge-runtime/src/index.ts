@@ -3,7 +3,7 @@ import { Env } from './types';
 import { corsHeaders } from './utils/cors';
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const url = new URL(request.url);
 
 		if (request.method === 'OPTIONS') {
@@ -14,7 +14,7 @@ export default {
 		}
 
 		if (url.pathname === '/experiment') {
-			const response = await handleExperiment(request, env);
+			const response = await handleExperiment(request, env, ctx);
 
 			const headers = new Headers(response.headers);
 			const origin = request.headers.get('Origin') ?? '*';

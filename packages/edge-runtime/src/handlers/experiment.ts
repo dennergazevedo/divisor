@@ -1,11 +1,12 @@
 import { cache, DEFAULT_TTL_MS } from '../cache';
 import { fetchExperimentFromAPI } from '../services/experiments';
 import { redisGet, redisSet } from '../services/redis';
+import { trackSession } from '../services/sessions';
 import { Env, ExperimentResponse } from '../types';
 import { jsonResponse } from '../utils/response';
 import { resolveByPercentage } from '../utils/variant';
 
-export async function handleExperiment(request: Request, env: Env): Promise<Response> {
+export async function handleExperiment(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 	const url = new URL(request.url);
 
 	const tenantId = url.searchParams.get('tenantId');
@@ -36,17 +37,17 @@ export async function handleExperiment(request: Request, env: Env): Promise<Resp
 
 	const isExpired = experiment.endsAt && new Date(experiment.endsAt) < new Date();
 
+	let variant: string;
+
 	if (isExpired) {
 		const sortedVariants = [...experiment.variants].sort((a, b) => b.percent - a.percent);
-		const variant = sortedVariants[0].value;
-
-		return jsonResponse({
-			experiment: experimentName,
-			variant,
-		});
+		variant = sortedVariants[0].value;
+	} else {
+		variant = resolveByPercentage(uid, tenantId + experimentName, experiment.variants);
 	}
 
-	const variant = resolveByPercentage(uid, tenantId + experimentName, experiment.variants);
+	// Track session in the background
+	ctx.waitUntil(trackSession(env, experiment.id, experimentName, variant));
 
 	return jsonResponse({
 		experiment: experimentName,

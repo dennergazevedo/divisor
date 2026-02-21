@@ -34,3 +34,12 @@ export async function redisSet(env: Env, key: string, value: unknown, ttlSeconds
 		body: JSON.stringify(value),
 	});
 }
+
+export async function redisIncr(env: Env, key: string): Promise<void> {
+	await fetch(`${env.UPSTASH_REDIS_REST_URL}/incr/${key}`, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${env.UPSTASH_REDIS_REST_TOKEN}`,
+		},
+	});
+}

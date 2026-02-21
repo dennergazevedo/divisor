@@ -14,7 +14,7 @@ export async function GET() {
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
     const [user] = await sql`
-      SELECT id, email, name
+      SELECT id, email, name, plan_status, current_plan
       FROM users
       WHERE id = ${payload.userId}
       LIMIT 1
@@ -28,7 +28,15 @@ export async function GET() {
       SELECT
         t.id,
         t.name,
-        tm.role
+        t.url,
+        tm.role,
+        (
+          SELECT u2.current_plan 
+          FROM tenant_members tm2 
+          JOIN users u2 ON u2.id = tm2.user_id 
+          WHERE tm2.tenant_id = t.id AND tm2.role = 'owner' 
+          LIMIT 1
+        ) as owner_plan
       FROM tenant_members tm
       INNER JOIN tenants t ON t.id = tm.tenant_id
       WHERE tm.user_id = ${user.id}
@@ -52,6 +60,8 @@ export async function GET() {
         id: user.id,
         email: user.email,
         name: user.name,
+        plan_status: user.plan_status,
+        current_plan: user.current_plan,
       },
       tenants,
       invites,

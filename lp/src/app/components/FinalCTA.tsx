@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const FinalCTA = () => (
   <section className="relative py-32 border-t border-border overflow-hidden">
-    <div className="absolute inset-0 hero-glow" />
+    <div className="absolute inset-0 hero-glow rotate" />
     <div className="relative container mx-auto px-6 text-center">
       <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6">
         Experiment at the edge.

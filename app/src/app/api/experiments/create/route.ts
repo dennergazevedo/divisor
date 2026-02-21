@@ -76,6 +76,38 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // --- Plan Limit Check ---
+    // Fetch the owner of the tenant to determine the plan limits
+    const owner = await sql`
+      SELECT u.current_plan
+      FROM users u
+      JOIN tenant_members tm ON tm.user_id = u.id
+      WHERE tm.tenant_id = ${tenantId}
+        AND tm.role = 'owner'
+      LIMIT 1
+    `;
+
+    const { getPlanLimits } = await import("@/lib/plans");
+    const limits = getPlanLimits(owner[0]?.current_plan);
+
+    const activeExperiments = await sql`
+      SELECT count(*) as count
+      FROM experiments
+      WHERE tenant_id = ${tenantId}
+        AND is_active = true
+    `;
+
+    if (Number(activeExperiments[0].count) >= limits.activeTests) {
+      return NextResponse.json(
+        {
+          error: "Experiment limit reached",
+          details: `Your current plan allows up to ${limits.activeTests} active test(s) per tenant. Archive one to create a new one, or upgrade.`,
+        },
+        { status: 403 },
+      );
+    }
+    // -------------------------
+
     const results = await sql.transaction((tx) => [
       tx`
         INSERT INTO experiments (tenant_id, name, ends_at)
