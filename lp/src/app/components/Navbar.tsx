@@ -25,17 +25,17 @@ const Navbar = () => (
         >
           How it works
         </a>
-        <a
-          href="#architecture"
-          className="hover:text-foreground transition-colors"
-        >
-          Architecture
+        <a href="#pricing" className="hover:text-foreground transition-colors">
+          Pricing
         </a>
         <a
-          href="#open-source"
+          href="#implementation"
           className="hover:text-foreground transition-colors"
         >
-          Open Source
+          Implementation
+        </a>
+        <a href="#faq" className="hover:text-foreground transition-colors">
+          FAQ
         </a>
       </div>
       <a

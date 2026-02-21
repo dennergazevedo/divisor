@@ -1,21 +1,24 @@
 import { Check } from "lucide-react";
 
 const features = [
+  "SDK for major web frameworks",
   "Open source by default",
   "No vendor lock-in",
   "Transparent architecture",
-  "Fully self-hostable",
   "Minimal dependencies",
   "Zero-friction setup",
 ];
 
 const DeveloperFocus = () => (
-  <section className="py-24 border-t border-border w-full mx-auto">
+  <section
+    id="implementation"
+    className="py-24 border-t border-border w-full mx-auto"
+  >
     <div className="flex flex-row justify-center container mx-auto px-6">
       <div className="flex flex-col items-center justify-center max-w-2xl mx-auto text-center md:text-left md:mx-0">
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-          Built from developers{" "}
-          <span className="text-gradient-purple">to developers</span>
+          Developer-friendly{" "}
+          <span className="text-gradient-purple">implementation</span>
         </h2>
         <p className="text-muted-foreground mb-10 max-w-lg">
           Divisor is designed with the same principles you apply to your own
