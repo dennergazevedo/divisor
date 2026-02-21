@@ -61,7 +61,7 @@ export default async function PaymentPage({ searchParams }: PageProps) {
 
         <div className="relative w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Plan Details - Left (Desktop) / Bottom (Mobile) */}
-          <div className="lg:col-span-5 space-y-8 order-2 lg:order-1">
+          <div className="lg:col-span-5  space-y-8 order-2 lg:order-1">
             <div className="space-y-4">
               <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
                 You’ve chosen{" "}
@@ -100,7 +100,7 @@ export default async function PaymentPage({ searchParams }: PageProps) {
           </div>
 
           {/* Checkout - Right (Desktop) / Top (Mobile) */}
-          <div className="lg:col-span-7 w-full order-1 lg:order-2">
+          <div className="lg:col-span-7 w-full flex justify-center order-1 lg:order-2">
             <Suspense
               fallback={
                 <div className="h-[600px] w-full bg-neutral-900/50 animate-pulse rounded-2xl border border-border" />

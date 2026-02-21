@@ -10,6 +10,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import Link from "next/link";
+import { headers } from "next/headers";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -18,6 +19,11 @@ interface PageProps {
 export default async function ReturnPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const sessionId = params.session_id as string;
+
+  const headerList = await headers();
+  const host = headerList.get("host");
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  const apiUrl = `${protocol}://${host}/api/stripe/invoice`;
 
   if (!sessionId) {
     redirect("/");
@@ -32,9 +38,19 @@ export default async function ReturnPage({ searchParams }: PageProps) {
     const customerEmail = session.customer_details?.email;
     const isSuccess = status === "complete";
 
-    // Attempt to extract plan details from session or metadata
-    // In our implementation, we could have added metadata to the session creator
-    // For now, we'll try to get it from the line items or just use the session data
+    if (customerEmail) {
+      await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          status,
+          email: customerEmail,
+          stripeId: sessionId,
+        }),
+      }).catch((err) => console.error("Failed to call invoice API:", err));
+    }
+
     const lineItem = session.line_items?.data[0];
     const productName = lineItem?.description || "Subscription";
     const amount = lineItem?.amount_total

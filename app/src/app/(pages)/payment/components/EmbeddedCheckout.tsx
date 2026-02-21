@@ -34,7 +34,7 @@ export default function StripeEmbeddedCheckout({ plan, billingCycle }: Props) {
   return (
     <div
       id="checkout"
-      className="w-full min-h-[600px] bg-neutral-900/50 rounded-2xl overflow-hidden border border-border shadow-xl"
+      className="w-full min-h-[600px] max-w-[412px] bg-neutral-900/50 rounded-2xl overflow-hidden border border-border shadow-xl"
     >
       <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
         <EmbeddedCheckout />

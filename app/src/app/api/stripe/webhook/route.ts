@@ -24,6 +24,22 @@ export async function POST(req: NextRequest) {
 
   try {
     switch (event.type) {
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const sessionId = session.id;
+        const status = session.status === "complete" ? "paid" : session.status;
+        const email = session.customer_details?.email;
+
+        if (email) {
+          await sql`
+            UPDATE invoice 
+            SET status = ${status}
+            WHERE stripe_id = ${sessionId}
+          `;
+        }
+        break;
+      }
+
       case "customer.subscription.created":
       case "customer.subscription.updated": {
         const subscription = event.data.object as any;
