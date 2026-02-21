@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { Github, User } from "lucide-react";
 import Logo from "./ui/logo";
 
 const Navbar = () => (
@@ -38,15 +38,23 @@ const Navbar = () => (
           FAQ
         </a>
       </div>
-      <a
-        href="https://github.com/dennergazevedo/divisor"
-        target="_blank"
-        rel="noopener no referver"
-        className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-purple-600/50 transition-all"
-      >
-        <Github className="h-4 w-4" />
-        <span className="hidden sm:inline">GitHub</span>
-      </a>
+      <div className="flex flex-row items-center gap-2">
+        <a
+          href="https://app.divisor.dev/"
+          className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm text-muted-foreground transition-all hover:text-neutral-100 hover:drop-shadow-md hover:drop-shadow-purple-900"
+        >
+          <span>Login</span>
+        </a>
+        <a
+          href="https://github.com/dennergazevedo/divisor"
+          target="_blank"
+          rel="noopener no referver"
+          className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-purple-600/50 transition-all"
+        >
+          <Github className="h-4 w-4" />
+          <span className="hidden sm:inline">GitHub</span>
+        </a>
+      </div>
     </div>
   </nav>
 );

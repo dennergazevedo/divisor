@@ -7,8 +7,6 @@ export async function GET(req: Request) {
   try {
     const edgeSecret = req.headers.get("x-edge-secret");
 
-    console.log("edgeSecret", edgeSecret);
-
     if (!edgeSecret || edgeSecret !== process.env.EDGE_INTERNAL_SECRET) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -27,14 +25,20 @@ export async function GET(req: Request) {
 
     const experimentsResult = await sql`
       SELECT
-        id,
-        name,
-        is_active,
-        ends_at,
-        created_at
-      FROM experiments
-      WHERE tenant_id = ${tenantId}
-        AND name = ${name}
+        e.id,
+        e.name,
+        e.is_active,
+        e.ends_at,
+        e.created_at,
+        u.plan_status,
+        u.current_plan,
+        u.expiration_date,
+        u.id as user_id
+      FROM experiments e
+      JOIN tenant_members tm ON e.tenant_id = tm.tenant_id AND tm.role = 'owner'
+      JOIN users u ON tm.user_id = u.id
+      WHERE e.tenant_id = ${tenantId}
+        AND e.name = ${name}
       LIMIT 1
     `;
 
@@ -82,6 +86,12 @@ export async function GET(req: Request) {
         value: v.value,
         percent: v.percent,
       })),
+      owner: {
+        plan_status: experiment.plan_status,
+        current_plan: experiment.current_plan,
+        expiration_date: experiment.expiration_date,
+        user_id: experiment.user_id,
+      },
     });
   } catch (error) {
     console.error(error);
