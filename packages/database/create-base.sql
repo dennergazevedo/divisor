@@ -14,6 +14,9 @@ CREATE TABLE users (
   email TEXT NOT NULL UNIQUE,
   name TEXT,
   password_hash TEXT,
+  plan_status TEXT DEFAULT 'inactive',
+  current_plan TEXT DEFAULT 'free',
+  expiration_date TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
