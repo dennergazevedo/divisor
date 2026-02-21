@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { sql } from "@/lib/db";
+import { resetSessions } from "@/lib/redis";
 import Stripe from "stripe";
 
 export async function POST(req: NextRequest) {
@@ -36,6 +37,12 @@ export async function POST(req: NextRequest) {
             SET status = ${status}
             WHERE stripe_id = ${sessionId}
           `;
+
+          const user =
+            await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;
+          if (user.length > 0) {
+            await resetSessions(user[0].id);
+          }
         }
         break;
       }
@@ -99,13 +106,18 @@ export async function POST(req: NextRequest) {
         const email = customer.email;
 
         if (email) {
-          await sql`
+          const updatedUser = await sql`
             UPDATE users 
             SET 
               plan_status = 'inactive',
               current_plan = 'free'
             WHERE email = ${email}
+            RETURNING id
           `;
+
+          if (updatedUser.length > 0) {
+            await resetSessions(updatedUser[0].id);
+          }
         }
         break;
       }
