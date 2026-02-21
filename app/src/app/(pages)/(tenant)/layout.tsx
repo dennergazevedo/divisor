@@ -35,7 +35,7 @@ export default function DashboardLayout({
   return (
     <div className="flex flex-col w-full">
       <LoggedHeader />
-      <div className="flex flex-row z-0 md:mt-10 z-50 md:z-0">
+      <div className="flex flex-row z-0 md:mt-12 z-20">
         <MenuSidebar />
         {children}
       </div>
