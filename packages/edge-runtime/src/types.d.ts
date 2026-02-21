@@ -14,4 +14,10 @@ export type ExperimentResponse = {
 		value: string;
 		percent: number;
 	}[];
+	owner: {
+		plan_status: string;
+		current_plan: string;
+		expiration_date: string;
+		user_id: string;
+	};
 };
