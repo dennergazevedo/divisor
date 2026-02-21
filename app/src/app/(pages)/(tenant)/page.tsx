@@ -1,9 +1,25 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Separator } from "@/app/ui/atoms/Separator";
 import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import TenantList from "./list";
 import CreateTenant from "./create";
 
 export default function Home() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const plan = searchParams.get("plan");
+    const billingCycle = searchParams.get("billingCycle");
+
+    if (plan && plan !== "free" && billingCycle) {
+      router.push(`/payment?plan=${plan}&billingCycle=${billingCycle}`);
+    }
+  }, [searchParams, router]);
+
   return (
     <main className="relative flex flex-col h-full w-full">
       <SidebarTrigger className="fixed top-2 left-4 md:relative md:top-0 md:left-0 p-5 md:p-8 md:pt-12" />

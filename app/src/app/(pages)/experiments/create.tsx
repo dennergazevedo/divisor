@@ -19,8 +19,17 @@ import { Input } from "@/app/ui/atoms/Input";
 import { Separator } from "@/app/ui/atoms/Separator";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function CreateExperiment() {
+import { getPlanLimits } from "@/lib/plans";
+
+export default function CreateExperiment({
+  activeCount,
+}: {
+  activeCount?: number;
+}) {
   const { selectedTenant } = useAuth();
+
+  const limits = getPlanLimits(selectedTenant?.owner_plan);
+  const isLimitReached = (activeCount ?? 0) >= limits.activeTests;
 
   const [name, setName] = useState("");
   const [endsAt, setEndsAt] = useState("");
@@ -200,6 +209,13 @@ export default function CreateExperiment() {
             </div>
           </div>
 
+          {isLimitReached && (
+            <p className="text-xs text-red-500 mt-4 bg-red-500/10 p-2 rounded-md font-medium border border-red-500/20">
+              You have reached your limit of {limits.activeTests} active test(s)
+              for this tenant. Archive one to create a new one, or upgrade.
+            </p>
+          )}
+
           <DialogFooter className="mt-6 grid grid-cols-2">
             <DialogClose asChild>
               <Button variant="outline" type="button">
@@ -207,7 +223,10 @@ export default function CreateExperiment() {
               </Button>
             </DialogClose>
 
-            <Button type="submit" disabled={loading || totalPercent !== 100}>
+            <Button
+              type="submit"
+              disabled={loading || totalPercent !== 100 || isLimitReached}
+            >
               {loading ? "Creating..." : "Create experiment"}
             </Button>
           </DialogFooter>

@@ -30,7 +30,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setTenants([]);
       setSelectedTenant(null);
 
-      router.push("/");
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get("plan");
+      const billingCycle = params.get("billingCycle");
+
+      if (plan && plan !== "free" && billingCycle) {
+        router.push(`/payment?plan=${plan}&billingCycle=${billingCycle}`);
+      } else {
+        router.push("/");
+      }
     } finally {
       setLoading(false);
     }
@@ -48,7 +56,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setTenants(tenants);
       setSelectedTenant(tenants[0] ?? null);
 
-      router.push("/");
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get("plan");
+      const billingCycle = params.get("billingCycle");
+
+      if (plan && plan !== "free" && billingCycle) {
+        router.push(`/payment?plan=${plan}&billingCycle=${billingCycle}`);
+      } else {
+        router.push("/");
+      }
     } finally {
       setLoading(false);
     }

@@ -17,10 +17,18 @@ import {
 import { Input } from "@/app/ui/atoms/Input";
 import { Separator } from "@/app/ui/atoms/Separator";
 
+import { useAuth } from "@/contexts/AuthContext";
+import { getPlanLimits } from "@/lib/plans";
+
 export default function CreateTenant() {
+  const { user, tenants } = useAuth();
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const limits = getPlanLimits(user?.current_plan);
+  const ownedCount = tenants.filter((t) => t.role === "owner").length;
+  const isLimitReached = ownedCount >= limits.tenants;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -102,6 +110,13 @@ export default function CreateTenant() {
             </div>
           </div>
 
+          {isLimitReached && (
+            <p className="text-xs text-red-500 mt-4 bg-red-500/10 p-2 rounded-md font-medium border border-red-500/20">
+              You have reached your limit of {limits.tenants} tenant(s). Upgrade
+              to create more.
+            </p>
+          )}
+
           <DialogFooter className="mt-6 grid grid-cols-2">
             <DialogClose asChild>
               <Button variant="outline" type="button">
@@ -109,7 +124,7 @@ export default function CreateTenant() {
               </Button>
             </DialogClose>
 
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading || isLimitReached}>
               {loading ? "Creating..." : "Create tenant"}
             </Button>
           </DialogFooter>

@@ -4,6 +4,8 @@ type User = {
   id: string;
   email: string;
   name?: string | null;
+  plan_status?: "active" | "inactive";
+  current_plan?: string;
 };
 
 type Tenant = {
@@ -11,6 +13,7 @@ type Tenant = {
   name: string;
   url: string;
   role: Role;
+  owner_plan?: string;
 };
 
 type TenantInvite = {
