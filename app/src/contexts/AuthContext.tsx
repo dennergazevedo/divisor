@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function login(email: string, password: string) {
     setLoading(true);
     try {
-      const { user, tenants } = await authService.login({
+      const { user, tenants, invites } = await authService.login({
         email,
         password,
       });
@@ -55,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
       setTenants(tenants);
       setSelectedTenant(tenants[0] ?? null);
+      setInvites(invites);
 
       const params = new URLSearchParams(window.location.search);
       const plan = params.get("plan");
