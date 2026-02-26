@@ -4,6 +4,7 @@ import "./globals.css";
 import { SidebarProvider } from "@/app/ui/organisms/Sidebar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Toaster } from "@/app/ui/molecules/Sonner";
+import Script from "next/script";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -46,6 +47,19 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} antialiased bg-zinc-900 max-w-screen overflow-x-hidden text-neutral-100`}
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NDGX2TLGCG"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NDGX2TLGCG');
+          `}
+        </Script>
         <div className="fixed inset-0 hero-glow bottom-0 rotate-180" />
         <div className="fixed inset-0 bg-grid opacity-30" />
         <Toaster />
