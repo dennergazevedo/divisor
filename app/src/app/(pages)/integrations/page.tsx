@@ -19,12 +19,13 @@ export default function IntegrationsPage() {
     <main className="relative flex flex-col h-full w-full">
       <SidebarTrigger className="fixed top-2 left-4 md:relative md:top-0 md:left-0 p-5 md:p-8 md:pt-12" />
 
-      <section className="flex flex-col gap-4 p-8 py-4 mt-20 md:mt-0">
+      <section className="flex flex-col gap-4 p-8 py-4 mt-20 md:mt-0 max-w-6xl mx-auto w-full">
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-lg font-bold">Integrations</h1>
+            <h1 className="text-xl font-bold">Integrations</h1>
             <p className="text-sm text-neutral-400">
-              Examples on how to integrate Divisor into your application
+              Learn how to integrate Divisor and start tracking results in
+              minutes.
             </p>
           </div>
 
@@ -36,7 +37,7 @@ export default function IntegrationsPage() {
               setActiveTab(v as "javascript" | "react" | "angular" | "vue")
             }
           >
-            <TabsList>
+            <TabsList className="mb-8">
               <TabsTrigger value="javascript">JavaScript</TabsTrigger>
               <TabsTrigger value="react">React</TabsTrigger>
               <TabsTrigger value="angular">Angular</TabsTrigger>
@@ -45,144 +46,201 @@ export default function IntegrationsPage() {
 
             {/* ===================== JavaScript ===================== */}
             <TabsContent value="javascript">
-              <div className="rounded-lg border border-neutral-800 p-6 space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Use the Divisor SDK in any JavaScript environment (Node.js,
-                  Edge, Workers, etc).
-                </p>
-
-                <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
-                  <code>{`import { DivisorClient } from "@divisor.dev/sdk"
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">
+                    1. Initialization & Get Variant
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Initialize the client and determination which variant to
+                    show.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
+                    <code>{`import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
   tenantId: 'your-tenant-id',
+  userId: 'user-123' // Optional
 })
 
-const variant = client.getVariant({
+async function checkExperiment() {
+  const result = await client.getVariant({
+    experimentName: "checkout-flow",
+    variantFallback: "default"
+  })
+  
+  console.log(result.variant) // "A", "B", or "default"
+}`}</code>
+                  </pre>
+                </div>
+
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">2. Track Conversion</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Record conversion events like purchases or signups.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
+                    <code>{`// After a successful action:
+await client.conversion({
   experimentName: "checkout-flow",
-  userId: userId // optional,
-  variantFallback: "default" // optional
-})
-
-console.log(variant)
-// { value: "A", payload?: {...} }`}</code>
-                </pre>
-
-                <p className="text-xs text-neutral-500">
-                  The SDK automatically resolves the correct variant based on
-                  traffic distribution.
-                </p>
+  variant: "B",
+  value: 150.00,
+  itensCount: 2
+})`}</code>
+                  </pre>
+                </div>
               </div>
             </TabsContent>
 
             {/* ===================== React ===================== */}
             <TabsContent value="react">
-              <div className="rounded-lg border border-neutral-800 p-6 space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Example using Divisor inside a React component.
-                </p>
-
-                <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
-                  <code>{`import { DivisorClient } from "@divisor.dev/sdk"
-import { useMemo } from "react"
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">1. Get Variant Hook</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Determination the variant using React state and effects.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
+                    <code>{`import { useState, useEffect } from 'react'
+import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
   tenantId: 'your-tenant-id',
+  userId: 'user-123'
 })
 
-export function Checkout() {
-  const variant = useMemo(() => {
-    return client.getVariant({
-      experimentName: "checkout-flow",
-      userId: userId // optional,
-      variantFallback: "default" // optional
-    })
-  }, [])
+export function useExperiment(name, fallback) {
+  const [variant, setVariant] = useState(fallback)
 
-  if (variant.value === "A") {
-    return <CheckoutV1 />
+  useEffect(() => {
+    client.getVariant({ experimentName: name, variantFallback: fallback })
+      .then(res => setVariant(res.variant ?? fallback))
+  }, [name, fallback])
+
+  return variant
+}`}</code>
+                  </pre>
+                </div>
+
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">
+                    2. Trigger Conversion
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Call the conversion method from your event handlers.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
+                    <code>{`function CheckoutButton({ variant }) {
+  const handlePurchase = () => {
+    client.conversion({
+      experimentName: "checkout-flow",
+      variant: variant,
+      value: 199.99,
+      itensCount: 1
+    })
   }
 
-  return <CheckoutV2 />
+  return <button onClick={handlePurchase}>Buy Now</button>
 }`}</code>
-                </pre>
-
-                <p className="text-xs text-neutral-500">
-                  Tip: cache the client instance and avoid calling
-                  <code className="mx-1">getVariant</code>
-                  on every render.
-                </p>
+                  </pre>
+                </div>
               </div>
             </TabsContent>
 
             {/* ===================== Angular ===================== */}
             <TabsContent value="angular">
-              <div className="rounded-lg border border-neutral-800 p-6 space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Create a service to provide the Divisor client in Angular.
-                </p>
-
-                <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
-                  <code>{`import { Injectable } from '@angular/core';
-import { DivisorClient } from "@divisor.dev/sdk";
-
-@Injectable({
-  providedIn: 'root'
-})
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">1. Service Setup</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Inject the Divisor service across your application.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
+                    <code>{`@Injectable({ providedIn: 'root' })
 export class DivisorService {
   private client = new DivisorClient({
-    tenantId: 'your-tenant-id'
+    tenantId: 'your-tenant-id',
+    userId: 'user-123'
   });
 
-  async getVariant(name: string, userId: string) {
-    const result = await this.client.getVariant({
-      experimentName: name,
-      userId: userId // optional,
-      variantFallback: "default" // optional
+  async getVariant(name: string, fallback: string) {
+    const res = await this.client.getVariant({
+      experimentName: name, variantFallback: fallback
     });
-    return result;
+    return res.variant;
   }
 }`}</code>
-                </pre>
+                  </pre>
+                </div>
 
-                <p className="text-xs text-neutral-500">
-                  Inject the service into your components to fetch variants.
-                </p>
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">2. Event Tracking</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Add tracking logic to your service or components.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
+                    <code>{`// In your DivisorService:
+async track(experiment: string, variant: string) {
+  await this.client.conversion({
+    experimentName: experiment,
+    variant: variant,
+    value: 50,
+    itensCount: 1
+  });
+}`}</code>
+                  </pre>
+                </div>
               </div>
             </TabsContent>
 
             {/* ===================== Vue ===================== */}
             <TabsContent value="vue">
-              <div className="rounded-lg border border-neutral-800 p-6 space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Use the Composition API for experiment logic in Vue.
-                </p>
-
-                <pre className="bg-neutral-900 rounded-md p-4 overflow-x-auto text-sm">
-                  <code>{`<script setup>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">1. Composition API</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Use lifecycle hooks to fetch variants.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
+                    <code>{`<script setup>
 import { ref, onMounted } from 'vue'
-import { Divisor } from "@divisor.dev/sdk"
+import { DivisorClient } from "@divisor.dev/sdk"
 
-const client = new Divisor({
-  tenantId: 'your-tenant-id'
+const client = new DivisorClient({
+  tenantId: 'your-tenant-id',
+  userId: 'user-123'
 })
 
-const variant = ref(null)
-
+const variant = ref('default')
 onMounted(async () => {
   const res = await client.getVariant({
-    testName: 'checkout-flow',
-    userId: 'user-123'
+    experimentName: 'hero-test',
+    variantFallback: 'default'
   })
-  variant.value = res
+  variant.value = res.variant
 })
 </script>`}</code>
-                </pre>
+                  </pre>
+                </div>
 
-                <p className="text-xs text-neutral-500">
-                  The SDK can be used within life-cycle hooks like
-                  <code className="mx-1">onMounted</code>.
-                </p>
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
+                  <h3 className="font-bold text-white">
+                    2. Conversion Example
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Track events directly from Vue templates.
+                  </p>
+                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
+                    <code>{`async function onPurchase() {
+  await client.conversion({
+    experimentName: 'hero-test',
+    variant: variant.value,
+    value: 100,
+    itensCount: 1
+  })
+}`}</code>
+                  </pre>
+                </div>
               </div>
             </TabsContent>
           </Tabs>

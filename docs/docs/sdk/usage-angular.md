@@ -22,7 +22,8 @@ export class DivisorService {
 
   constructor() {
     this.client = new DivisorClient({
-      tenantId: 'your-tenant-id'
+      tenantId: 'your-tenant-id',
+      userId: 'user-123' // Optional
     });
   }
 
@@ -32,6 +33,15 @@ export class DivisorService {
       variantFallback: fallback
     });
     return result.variant;
+  }
+
+  async trackConversion(experimentName: string, variant: string, value: number, count: number) {
+    await this.client.conversion({
+      experimentName,
+      variant,
+      value,
+      itensCount: count
+    });
   }
 }
 ```
@@ -48,6 +58,7 @@ import { DivisorService } from './divisor.service';
   template: `
     <div *ngIf="variant === 'v1'">
       <h1>Special Launch Offer!</h1>
+      <button (click)="buy()">Buy Now</button>
     </div>
     <div *ngIf="variant !== 'v1'">
       <h1>Welcome to our website</h1>
@@ -61,6 +72,11 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     this.variant = await this.divisor.getVariant('home-hero-test', 'control');
+  }
+
+  async buy() {
+    await this.divisor.trackConversion('home-hero-test', 'v1', 99, 1);
+    console.log('Conversion tracked!');
   }
 }
 ```

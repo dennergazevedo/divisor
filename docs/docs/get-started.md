@@ -39,15 +39,14 @@ yarn add @divisor.dev/sdk
 pnpm add @divisor.dev/sdk
 ```
 
-## Step 3: Initialize the Client
-
-In your application, you need to initialize the `DivisorClient` with your `tenantId`.
+In your application, you need to initialize the `DivisorClient` with your `tenantId`. You can also optionally provide a `userId`.
 
 ```typescript
 import { DivisorClient } from '@divisor.dev/sdk';
 
 const client = new DivisorClient({
-  tenantId: 'your-tenant-id-here' // You can find this in your Divisor dashboard settings
+  tenantId: 'your-tenant-id-here', // You can find this in your Divisor dashboard settings
+  userId: 'user-123' // Optional: provide a unique ID for the user
 });
 ```
 

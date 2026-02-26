@@ -53,7 +53,11 @@ export function MenuSidebar() {
                 icon={FlaskConical}
                 label="Experiments"
               />
-              <MenuLink href="#" icon={Gauge} label="Performance" disabled />
+              <MenuLink
+                href="/experiments/performance"
+                icon={Gauge}
+                label="Performance"
+              />
               <MenuLink href="#" icon={Info} label="Logs" disabled />
               <MenuLink href="#" icon={Clock} label="History" disabled />
             </AccordionContent>

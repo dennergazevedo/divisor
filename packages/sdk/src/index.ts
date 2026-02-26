@@ -1,3 +1,3 @@
 import { DivisorClient } from "./client";
 export { DivisorClient };
-export type { DivisorConfig, ExperimentResult } from "./types";
+export type { ConversionData, DivisorConfig, ExperimentResult } from "./types";

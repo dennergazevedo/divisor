@@ -23,30 +23,43 @@ pnpm add @divisor.dev/sdk
 
 ### DivisorClient
 
-The `DivisorClient` is the main class for interacting with the Divisor service. It manages communication with our Edge API to retrieve experiment variants.
+The `DivisorClient` is the main class for interacting with the Divisor service. It manages communication with our Edge API to retrieve experiment variants and our Analytics API to track conversions.
 
 ### Configuration
 
-To instantiate the client, you will need your `tenantId`:
+To instantiate the client, you will need your `tenantId`. You can also provide an optional `userId`.
 
 ```typescript
 import { DivisorClient } from '@divisor.dev/sdk';
 
 const client = new DivisorClient({
-  tenantId: 'your-tenant-id'
+  tenantId: 'your-tenant-id',
+  userId: 'user-123' // Optional
 });
 ```
 
 ### Retrieving Variants
 
-The main method is `getVariant`, which decides which version of the experiment the user should see.
+The `getVariant` method determines which version of the experiment the user should see.
 
 ```typescript
-const result = await client.getVariant({
+const { variant } = await client.getVariant({
   experimentName: 'my-experiment',
-  userId: 'user-id', // Optional
   variantFallback: 'control' // Optional
 });
 
-console.log(result.variant); // Ex: 'v1', 'v2' or 'control'
+console.log(variant); // Ex: 'v1', 'v2' or 'control'
+```
+
+### Tracking Conversions
+
+Track user actions (e.g., purchases) using the `conversion` method.
+
+```typescript
+await client.conversion({
+  experimentName: 'my-experiment',
+  variant: 'v1',
+  value: 100,
+  itensCount: 1
+});
 ```

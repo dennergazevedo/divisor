@@ -1,7 +1,25 @@
+"use client";
+
 import { ArrowRight, Github } from "lucide-react";
 import Link from "next/link";
+// import { DivisorClient } from "@divisor.dev/sdk";
+
+// const client = new DivisorClient({
+//   tenantId: "c7bd228f-aa9a-43c0-b1d9-e8338af89c59",
+// });
 
 const HeroSection = () => {
+  // function triggerEvent() {
+  //   client.conversion({
+  //     userId: "test-user-id",
+  //     tenantId: "c7bd228f-aa9a-43c0-b1d9-e8338af89c59",
+  //     experimentName: "hello_world",
+  //     variant: "new",
+  //     value: 2000,
+  //     itensCount: 7,
+  //   });
+  // }
+
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
       <div className="absolute inset-0 hero-glow" />
@@ -38,6 +56,12 @@ const HeroSection = () => {
             View on GitHub
           </Link>
         </div>
+        {/* <button
+          className="flex cursor-pointer items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground hover:border-purple-600/50 transition-colors"
+          onClick={triggerEvent}
+        >
+          Trigger Event
+        </button> */}
       </div>
     </section>
   );
