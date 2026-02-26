@@ -1,5 +1,6 @@
 export type DivisorConfig = {
   tenantId: string;
+  userId?: string;
 };
 
 export type ExperimentResult = {
@@ -9,6 +10,12 @@ export type ExperimentResult = {
 
 export type GetVariant = {
   experimentName: string;
-  userId?: string;
   variantFallback?: string;
+};
+
+export type ConversionData = {
+  experimentName: string;
+  variant: string;
+  value: number;
+  itensCount: number;
 };

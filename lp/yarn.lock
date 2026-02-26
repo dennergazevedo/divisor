@@ -262,10 +262,10 @@
   resolved "https://registry.yarnpkg.com/@date-fns/tz/-/tz-1.4.1.tgz#2d905f282304630e07bef6d02d2e7dbf3f0cc4e4"
   integrity sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==
 
-"@divisor.dev/sdk@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@divisor.dev/sdk/-/sdk-0.0.4.tgz#7d912588311e143ad9fec95603cf5e562f9a0718"
-  integrity sha512-uFSfhXLTPYVYMxPEDwMUVZrzVMpf9IPq8+Gjl5XOYzI1nvFKYnVj/jF1ybhFu9SpdPt73Aiw0Me8apviZk9Yug==
+"@divisor.dev/sdk@^0.0.6-beta":
+  version "0.0.6-beta"
+  resolved "https://registry.yarnpkg.com/@divisor.dev/sdk/-/sdk-0.0.6-beta.tgz#5b3ef604d25af604921b5ca6ec5acf2d4e4c4062"
+  integrity sha512-JatSyz1sIWGDbcI5zMDNb1hWZceNmuDuBFy5QU50Nvx+aU8CWIfCqICxK0fCRxyCvPsxIe1Bh6UjdrY+jOirAw==
 
 "@dotenvx/dotenvx@^1.48.4":
   version "1.52.0"

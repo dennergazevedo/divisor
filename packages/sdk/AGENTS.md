@@ -1,20 +1,34 @@
 # Divisor SDK Instructions
 
-The `@divisor.dev/sdk` is a lightweight library to fetch experiment variants.
+The `@divisor.dev/sdk` is a lightweight library to fetch experiment variants and track conversions.
 
-## Basic Usage (JavaScript/TypeScript)
+## Installation
+
+```bash
+npm install @divisor.dev/sdk
+```
+
+## Initialization
+
+Initialize the `DivisorClient` with your `tenantId`. You can also optionally provide a `userId`. If not provided, a unique ID will be generated and stored in a cookie.
 
 ```typescript
 import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
-  tenantId: process.env.DIVISOR_TENANT_ID!,
+  tenantId: "your-tenant-id",
+  userId: "user-123" // optional
 })
+```
 
+## Fetching a Variant
+
+Use `getVariant` to receive the variant for a given experiment.
+
+```typescript
 async function checkExperiment() {
   const result = await client.getVariant({
     experimentName: "checkout-flow",
-    userId: "user-123", // optional
     variantFallback: "default" // optional
   })
   
@@ -22,11 +36,24 @@ async function checkExperiment() {
 }
 ```
 
+## Tracking Conversions
+
+Use the `conversion` method to track user events, such as completed purchases.
+
+```typescript
+async function trackConversion() {
+  await client.conversion({
+    experimentName: "checkout-flow",
+    variant: "B",
+    value: 150.00,
+    itensCount: 2
+  })
+}
+```
+
 ---
 
 ## React
-
-Use a hook to manage the variant state.
 
 ```tsx
 import { useState, useEffect } from 'react'
@@ -34,6 +61,7 @@ import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
   tenantId: process.env.NEXT_PUBLIC_DIVISOR_TENANT_ID!,
+  userId: 'user-123' // Get this from your auth system
 })
 
 export function useExperiment(name: string, fallback: string) {
@@ -46,13 +74,21 @@ export function useExperiment(name: string, fallback: string) {
 
   return variant
 }
+
+// Tracking example
+const handlePurchase = () => {
+  client.conversion({
+    experimentName: "checkout-flow",
+    variant: "B",
+    value: 200,
+    itensCount: 1
+  })
+}
 ```
 
 ---
 
 ## Angular
-
-Create a service to provide the Divisor client.
 
 ```typescript
 import { Injectable } from '@angular/core';
@@ -63,7 +99,8 @@ import { DivisorClient } from "@divisor.dev/sdk";
 })
 export class DivisorService {
   private client = new DivisorClient({
-    tenantId: 'your-tenant-id'
+    tenantId: 'your-tenant-id',
+    userId: 'user-123'
   });
 
   async getVariant(name: string, fallback: string) {
@@ -73,6 +110,10 @@ export class DivisorService {
     });
     return result.variant;
   }
+
+  async trackConversion(data: any) {
+    await this.client.conversion(data);
+  }
 }
 ```
 
@@ -80,15 +121,14 @@ export class DivisorService {
 
 ## Vue
 
-Use the Composition API for experiment logic.
-
 ```vue
 <script setup>
 import { ref, onMounted } from 'vue'
 import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
-  tenantId: 'your-tenant-id'
+  tenantId: 'your-tenant-id',
+  userId: 'user-123'
 })
 
 const variant = ref('default')
@@ -100,5 +140,14 @@ onMounted(async () => {
   })
   variant.value = res.variant
 })
+
+const track = () => {
+  client.conversion({
+    experimentName: 'checkout-flow',
+    variant: variant.value,
+    value: 50,
+    itensCount: 1
+  })
+}
 </script>
 ```

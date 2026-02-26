@@ -16,7 +16,8 @@ import { DivisorClient } from '@divisor.dev/sdk';
 
 // Initial configuration
 const config = {
-  tenantId: 'your-tenant-id'
+  tenantId: 'your-tenant-id',
+  userId: 'user-123' // Optional: provide a unique ID for the user
 };
 
 const divisor = new DivisorClient(config);
@@ -30,7 +31,6 @@ The `getVariant` method is asynchronous and returns the assigned variant for a s
 async function handleExperiment() {
   const result = await divisor.getVariant({
     experimentName: 'contact-button-text',
-    userId: 'user_123', // Optional: Recommended for cross-session consistency
     variantFallback: 'original' // Optional: Value returned in case of error
   });
 
@@ -42,6 +42,21 @@ async function handleExperiment() {
 }
 ```
 
+## Tracking Conversions
+
+Record events such as sales, clicks, or signups using the `conversion` method.
+
+```typescript
+async function onOrderPlaced() {
+  await divisor.conversion({
+    experimentName: 'contact-button-text',
+    variant: 'get-help', // The variant the user saw
+    value: 49.90, // Value of the transaction
+    itensCount: 1 // Number of items
+  });
+}
+```
+
 ## Type Reference
 
 ### `DivisorConfig`
@@ -49,13 +64,13 @@ async function handleExperiment() {
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `tenantId` | `string` | The unique identifier for your workspace/tenant. |
+| `userId` | `string` | Optional: provide a unique ID for the user. |
 
 ### `GetVariant` (Parameters)
 
 | Property | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `experimentName` | `string` | Yes | The name of the experiment configured in the dashboard. |
-| `userId` | `string` | No | Unique user ID. If not provided, a persistent ID will be generated automatically. |
 | `variantFallback` | `string` | No | Variant to be used if something goes wrong (e.g., offline network). |
 
 ### `ExperimentResult`

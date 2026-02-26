@@ -18,11 +18,16 @@ import { DivisorClient } from '@divisor.dev/sdk';
 
 const DivisorContext = createContext<DivisorClient | null>(null);
 
-export const DivisorProvider: React.FC<{ tenantId: string; children: React.ReactNode }> = ({ 
+export const DivisorProvider: React.FC<{ 
+  tenantId: string; 
+  userId?: string; 
+  children: React.ReactNode 
+}> = ({ 
   tenantId, 
+  userId,
   children 
 }) => {
-  const client = useMemo(() => new DivisorClient({ tenantId }), [tenantId]);
+  const client = useMemo(() => new DivisorClient({ tenantId, userId }), [tenantId, userId]);
 
   return (
     <DivisorContext.Provider value={client}>
@@ -60,7 +65,19 @@ const HeroSection = () => {
   }, [divisor]);
 
   if (variant === 'v1') {
-    return <h1>Increase your sales today!</h1>;
+    return (
+      <div>
+        <h1>Increase your sales today!</h1>
+        <button onClick={() => divisor.conversion({ 
+          experimentName: 'hero-title-test', 
+          variant: 'v1', 
+          value: 100, 
+          itensCount: 1 
+        })}>
+          Buy Now
+        </button>
+      </div>
+    );
   }
 
   return <h1>Welcome to Divisor</h1>;
@@ -76,7 +93,10 @@ If you are using Next.js with App Router, you can initialize the client directly
 import { DivisorClient } from '@divisor.dev/sdk';
 
 export default async function Page() {
-  const divisor = new DivisorClient({ tenantId: process.env.DIVISOR_TENANT_ID! });
+  const divisor = new DivisorClient({ 
+    tenantId: process.env.DIVISOR_TENANT_ID!,
+    userId: 'server-user-id' // Optional
+  });
   const { variant } = await divisor.getVariant({ experimentName: 'home-test' });
 
   return (

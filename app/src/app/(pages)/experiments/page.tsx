@@ -14,6 +14,8 @@ import EditExperiment from "./edit";
 import ArchiveExperimentDialog from "./archive";
 import ViewExperimentDialog from "./view";
 import { Separator } from "@/app/ui/atoms/Separator";
+import Link from "next/link";
+import { ChartArea } from "lucide-react";
 
 export default function ExperimentsPage() {
   const { selectedTenant } = useAuth();
@@ -124,7 +126,12 @@ export default function ExperimentsPage() {
                                 )
                               : "—"}
                           </td>
-                          <td className="px-4 py-3 text-right flex-row items-center gap-2">
+                          <td className="px-4 py-3 text-right flex flex-row items-center justify-end gap-2">
+                            <Link
+                              href={`/experiments/performance/${experiment.name}`}
+                            >
+                              <ChartArea className="w-4 h-4 mr-2 text-neutral-400 hover:text-neutral-200" />
+                            </Link>
                             <ViewExperimentDialog experiment={experiment} />
                             {activeTab === "active" && (
                               <>
