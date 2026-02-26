@@ -4,7 +4,6 @@ import { Bell, Check, X } from "lucide-react";
 import { Button } from "../../atoms/Button";
 import Logo from "../../atoms/Logo";
 import { useAuth } from "@/contexts/AuthContext";
-import Link from "next/link";
 import {
   Popover,
   PopoverContent,
@@ -38,16 +37,13 @@ export default function LoggedHeader() {
   return (
     <div className="z-50 fixed top-0 w-full p-2 px-8 bg-zinc-900 border-b border-neutral-800 flex flex-row items-center justify-between gap-2">
       <SidebarTrigger className="md:hidden px-0! left-4 px-0 md:relative md:top-0 md:left-0 p-5 md:p-8 md:pt-12" />
-      <div className="flex flex-row items-center gap-2">
-        <Link
-          href="/"
-          className="flex flex-row items-center gap-2 opacity-80 hover:opacity-100 transition-opacity hover:cursor-pointer"
-        >
-          <Logo color="#A1A1A1" size={20} />
-          <span className="[font-variant:small-caps] text-neutral-400 cursor-default">
-            divisor
-          </span>
-        </Link>
+      <div className="flex items-center gap-2">
+        <div className="h-7 w-7 rounded-md bg-purple-600 flex items-center justify-center">
+          <Logo color="#FFF" size={16} />
+        </div>
+        <span className="text-lg font-bold text-foreground tracking-tight">
+          Divisor
+        </span>
       </div>
       <div className="flex flex-row items-center gap-8">
         <Popover>

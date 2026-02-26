@@ -4,6 +4,7 @@ import TenantList from "./list";
 import CreateTenant from "./create";
 import { Suspense } from "react";
 import RedirectByPlan from "./redirectByPlan";
+import { Briefcase } from "lucide-react";
 
 export default function Home() {
   return (
@@ -15,7 +16,10 @@ export default function Home() {
       <section className="flex flex-col gap-4 p-8 py-4 mt-20 md:mt-0">
         <div className="flex flex-row justify-between w-full gap-8">
           <div>
-            <h1 className="text-lg font-bold">Tenants</h1>
+            <h1 className="text-lg font-bold flex flex-row items-center gap-2">
+              <Briefcase className="w-5 h-5 text-purple-400" />
+              Tenants
+            </h1>
             <p className="text-sm text-neutral-400">
               Select a tenant to manage it
             </p>

@@ -15,7 +15,7 @@ import ArchiveExperimentDialog from "./archive";
 import ViewExperimentDialog from "./view";
 import { Separator } from "@/app/ui/atoms/Separator";
 import Link from "next/link";
-import { ChartArea } from "lucide-react";
+import { ChartArea, FlaskConical } from "lucide-react";
 
 export default function ExperimentsPage() {
   const { selectedTenant } = useAuth();
@@ -57,7 +57,10 @@ export default function ExperimentsPage() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-row justify-between w-full gap-8">
             <div>
-              <h1 className="text-lg font-bold">Experiments</h1>
+              <h1 className="text-lg font-bold flex flex-row items-center gap-2">
+                <FlaskConical className="w-5 h-5 text-purple-400" />
+                Experiments
+              </h1>
               <p className="text-sm text-neutral-400">
                 Manage your experiments
               </p>
@@ -127,19 +130,20 @@ export default function ExperimentsPage() {
                               : "—"}
                           </td>
                           <td className="px-4 py-3 text-right flex flex-row items-center justify-end gap-2">
-                            <Link
-                              href={`/experiments/performance/${experiment.name}`}
-                            >
-                              <ChartArea className="w-4 h-4 mr-2 text-neutral-400 hover:text-neutral-200" />
-                            </Link>
-                            <ViewExperimentDialog experiment={experiment} />
-                            {activeTab === "active" && (
+                            {activeTab === "active" ? (
                               <>
+                                <Link
+                                  href={`/experiments/performance/${experiment.name}`}
+                                >
+                                  <ChartArea className="w-4 h-4 mr-2 text-neutral-400 hover:text-neutral-200" />
+                                </Link>
                                 <EditExperiment experiment={experiment} />
                                 <ArchiveExperimentDialog
                                   experiment={experiment}
                                 />
                               </>
+                            ) : (
+                              <ViewExperimentDialog experiment={experiment} />
                             )}
                           </td>
                         </tr>

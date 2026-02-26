@@ -11,9 +11,11 @@ import {
   Briefcase,
   ChartPie,
   Clock,
+  Crown,
   FlaskConical,
   Gauge,
   Info,
+  LifeBuoy,
   LogOut,
   Plug,
   Settings,
@@ -29,6 +31,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { Avatar } from "../../atoms/Avatar";
 import { Button } from "../../atoms/Button";
+import Link from "next/link";
 
 export function MenuSidebar() {
   const { user, logout, loading } = useAuth();
@@ -36,7 +39,6 @@ export function MenuSidebar() {
   return (
     <Sidebar>
       <SidebarContent className="pt-10 md:pt-20 px-2 pb-24">
-        <MenuLink href="/" icon={Briefcase} label="Tenants" />
         <MenuLink href="/integrations" icon={Plug} label="SDKs" />
         <MenuLink
           href="https://docs.divisor.dev"
@@ -48,6 +50,7 @@ export function MenuSidebar() {
           <AccordionItem value="item-1">
             <AccordionTrigger>tests</AccordionTrigger>
             <AccordionContent>
+              <MenuLink href="/" icon={Briefcase} label="Tenants" />
               <MenuLink
                 href="/experiments"
                 icon={FlaskConical}
@@ -68,12 +71,21 @@ export function MenuSidebar() {
             <AccordionTrigger>management</AccordionTrigger>
             <AccordionContent>
               <MenuLink href="/members" icon={Users} label="Members" />
+              <MenuLink href="/support" icon={LifeBuoy} label="Support" />
               <MenuLink href="#" icon={ChartPie} label="Analytics" disabled />
               <MenuLink href="#" icon={Settings} label="Settings" disabled />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </SidebarContent>
+      {user?.current_plan === "free" && (
+        <Link href="https://www.divisor.dev/#pricing" className="p-4">
+          <Button>
+            <Crown />
+            Upgrade your plan
+          </Button>
+        </Link>
+      )}
       <SidebarFooter className="p-4 border-t border-neutral-800 bg-zinc-900/50 backdrop-blur-md">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">

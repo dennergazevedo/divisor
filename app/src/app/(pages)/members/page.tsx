@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/app/ui/molecules/Select";
 import { useAuth } from "@/contexts/AuthContext";
-import { CircleSmall, Trash } from "lucide-react";
+import { CircleSmall, Trash, Users } from "lucide-react";
 import InviteMemberDialog from "./invite";
 
 type Role = "owner" | "admin" | "member";
@@ -152,7 +152,10 @@ export default function MembersPage() {
       <section className="flex flex-col gap-6 p-8 py-4 mt-20 md:mt-0">
         <div className="flex flex-row justify-between w-full gap-8">
           <div>
-            <h1 className="text-lg font-bold">Members</h1>
+            <h1 className="text-lg font-bold flex flex-row items-center gap-2">
+              <Users className="w-5 h-5 text-purple-400" />
+              Members
+            </h1>
             <p className="text-sm text-neutral-400">
               Manage access and roles for this workspace
             </p>

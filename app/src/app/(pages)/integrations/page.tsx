@@ -9,6 +9,7 @@ import {
 } from "@/app/ui/molecules/Tabs";
 import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import { Separator } from "@/app/ui/atoms/Separator";
+import { Plug } from "lucide-react";
 
 export default function IntegrationsPage() {
   const [activeTab, setActiveTab] = useState<
@@ -22,7 +23,10 @@ export default function IntegrationsPage() {
       <section className="flex flex-col gap-4 p-8 py-4 mt-20 md:mt-0 max-w-6xl mx-auto w-full">
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-xl font-bold">Integrations</h1>
+            <h1 className="text-lg font-bold flex flex-row items-center gap-2">
+              <Plug className="w-5 h-5 text-purple-400" />
+              Integrations
+            </h1>
             <p className="text-sm text-neutral-400">
               Learn how to integrate Divisor and start tracking results in
               minutes.

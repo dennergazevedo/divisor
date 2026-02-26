@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import { Separator } from "@/app/ui/atoms/Separator";
 import Link from "next/link";
-import { ChevronRight, BarChart3 } from "lucide-react";
+import { ChevronRight, BarChart3, Gauge } from "lucide-react";
 
 export default function PerformancePage() {
   const { selectedTenant } = useAuth();
@@ -44,7 +46,10 @@ export default function PerformancePage() {
       <section className="flex flex-col gap-4 p-8 py-4 mt-20 md:mt-0">
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-lg font-bold">Performance</h1>
+            <h1 className="text-lg font-bold flex flex-row items-center gap-2">
+              <Gauge className="w-5 h-5 text-purple-400" />
+              Performance
+            </h1>
             <p className="text-sm text-neutral-400">
               Analyze the performance of your active experiments
             </p>

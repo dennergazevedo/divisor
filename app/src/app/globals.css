@@ -15,9 +15,9 @@
   --foreground: oklch(0.96 0 0);
 
   /* Card / Popover */
-  --card: oklch(0.10 0 0);
+  --card: oklch(0.1 0 0);
   --card-foreground: oklch(0.96 0 0);
-  --popover: oklch(0.10 0 0);
+  --popover: oklch(0.1 0 0);
   --popover-foreground: oklch(0.96 0 0);
 
   /* Primary (roxo) */
@@ -57,12 +57,37 @@
 }
 
 body {
-  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, sans-serif;
+  font-family:
+    var(--font-sans),
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }
 
 * {
   box-sizing: border-box;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    border-radius: 40px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--fs-color-neutral-3);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #707070;
+  }
 }
 
 html {
@@ -130,7 +155,7 @@ html {
     @apply bg-clip-text text-transparent bg-gradient-to-r;
     background-image: linear-gradient(
       to right,
-      oklch(0.70 0.22 275),
+      oklch(0.7 0.22 275),
       oklch(0.72 0.25 295)
     );
   }
