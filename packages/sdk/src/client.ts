@@ -64,26 +64,63 @@ export class DivisorClient {
   }
 
   async conversion(data: ConversionData): Promise<void> {
-    const url = `${this.divisorUrl}/api/conversion`;
+    if (!this.tenantId) {
+      console.error("Divisor: tenantId is required for conversion");
+      return;
+    }
 
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...data,
-          tenantId: this.tenantId,
-          userId: this.userId,
-        }),
-      });
+    const { experimentName, variant: sentVariant } = data;
+    const cookieName = `__divisor_${this.tenantId}_${experimentName}`;
 
-      if (!res.ok) {
-        console.error("Divisor: Error sending conversion", await res.text());
+    // 1. Check if we have a cached variant in cookies
+    let variant = getCookie(cookieName);
+
+    // 2. If no cookie, fetch from edge
+    if (!variant) {
+      const url = new URL(`${this.edgeUrl}/experiment`);
+      url.searchParams.set("tenantId", this.tenantId);
+      url.searchParams.set("name", experimentName);
+      url.searchParams.set("uid", this.userId);
+
+      try {
+        const res = await fetch(url.toString());
+        if (res.ok) {
+          const result: ExperimentResult = await res.json();
+          if (result.variant === sentVariant) {
+            variant = result.variant;
+            // Cache the result for 1 hour
+            setCookie(cookieName, variant, 1);
+          }
+        }
+      } catch (error) {
+        console.error("Divisor: Error validating conversion via edge", error);
+        return;
       }
-    } catch (error) {
-      console.error("Divisor: Error sending conversion", error);
+    }
+
+    // 3. If variant matches (either from cookie or edge), send the conversion
+    if (variant === sentVariant) {
+      const url = `${this.divisorUrl}/api/conversion`;
+
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...data,
+            tenantId: this.tenantId,
+            userId: this.userId,
+          }),
+        });
+
+        if (!res.ok) {
+          console.error("Divisor: Error sending conversion", await res.text());
+        }
+      } catch (error) {
+        console.error("Divisor: Error sending conversion", error);
+      }
     }
   }
 }
