@@ -2,7 +2,7 @@
 
 import { Separator } from "@/app/ui/atoms/Separator";
 import { useAuth } from "@/contexts/AuthContext";
-import { Building, Check, Copy, Earth, Plug } from "lucide-react";
+import { Briefcase, Building, Check, Copy, Earth, Plug } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -17,6 +17,22 @@ export default function TenantList() {
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
   };
+
+  if (!tenants?.length) {
+    return (
+      <div className="rounded-lg border border-neutral-800 bg-neutral-900/50 overflow-hidden">
+        <div className="p-12 text-center">
+          <Briefcase className="mx-auto h-12 w-12 text-neutral-600 mb-4" />
+          <h3 className="text-md font-medium text-white mb-1">
+            No tenants yet
+          </h3>
+          <p className="text-sm text-neutral-400">
+            Add your first tenant to get started.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ul className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">

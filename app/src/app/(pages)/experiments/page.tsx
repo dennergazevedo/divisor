@@ -94,8 +94,16 @@ export default function ExperimentsPage() {
                 )}
 
                 {!loading && experiments.length === 0 && (
-                  <div className="p-6 text-sm text-muted-foreground">
-                    No experiments found
+                  <div className="rounded-lg border border-neutral-800 bg-neutral-900/50 overflow-hidden">
+                    <div className="p-12 text-center">
+                      <FlaskConical className="mx-auto h-12 w-12 text-neutral-600 mb-4" />
+                      <h3 className="text-md font-medium text-white mb-1">
+                        No experiments yet
+                      </h3>
+                      <p className="text-sm text-neutral-400">
+                        Add your first experiment to get started.
+                      </p>
+                    </div>
                   </div>
                 )}
 

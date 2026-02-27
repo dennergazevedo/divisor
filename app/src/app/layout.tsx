@@ -4,6 +4,7 @@ import "./globals.css";
 import { SidebarProvider } from "@/app/ui/organisms/Sidebar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Toaster } from "@/app/ui/molecules/Sonner";
+import { Background } from "@/app/ui/atoms/Background";
 import Script from "next/script";
 
 const montserrat = Montserrat({
@@ -60,8 +61,7 @@ export default function RootLayout({
             gtag('config', 'G-NDGX2TLGCG');
           `}
         </Script>
-        <div className="fixed inset-0 hero-glow bottom-0 rotate-180" />
-        <div className="fixed inset-0 bg-grid opacity-30" />
+        <Background glowClassName="bottom-0 rotate-180" />
         <Toaster />
         <AuthProvider>
           <SidebarProvider>{children}</SidebarProvider>

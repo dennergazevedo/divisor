@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Background } from "@/app/ui/atoms/Background";
 import { stripe } from "@/lib/stripe";
 import SimpleNavbar from "@/app/ui/sections/Header/simple";
 import {
@@ -63,8 +64,7 @@ export default async function ReturnPage({ searchParams }: PageProps) {
         <SimpleNavbar />
 
         <main className="flex-1 relative flex items-center justify-center py-12 px-6 mt-16">
-          <div className="absolute inset-0 hero-glow pointer-events-none" />
-          <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
+          <Background />
 
           <div className="relative w-full max-w-2xl">
             <div className="p-8 md:p-12 rounded-3xl border border-white/10 bg-card/50 backdrop-blur-2xl shadow-2xl space-y-8 text-center">

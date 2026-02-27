@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import AuthHeader from "@/app/ui/sections/Header/logged";
 import StripeEmbeddedCheckout from "./components/EmbeddedCheckout";
+import { Background } from "@/app/ui/atoms/Background";
 import { Check } from "lucide-react";
 
 interface PageProps {
@@ -56,8 +57,7 @@ export default async function PaymentPage({ searchParams }: PageProps) {
       <AuthHeader />
 
       <main className="flex-1 relative flex items-center justify-center py-12 px-6 mt-12">
-        <div className="absolute inset-0 hero-glow pointer-events-none" />
-        <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
+        <Background />
 
         <div className="relative w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Plan Details - Left (Desktop) / Bottom (Mobile) */}

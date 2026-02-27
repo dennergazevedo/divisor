@@ -1,10 +1,10 @@
+import { Background } from "@/app/ui/atoms/Background";
 import AuthForm from "./forms/auth";
 
 export default function Auth() {
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
-      <div className="absolute inset-0 hero-glow" />
-      <div className="absolute inset-0 bg-grid opacity-30" />
+      <Background />
       <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center md:p-16">
         <div className="relative container mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-1.5 text-sm text-muted-foreground mb-8">

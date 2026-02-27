@@ -9,6 +9,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import * as authService from "@/services/auth";
+import { LoadingPage } from "@/app/ui/molecules/LoadingPage";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -131,6 +132,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
       }}
     >
+      {loading && <LoadingPage />}
       {children}
     </AuthContext.Provider>
   );
