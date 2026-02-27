@@ -3,6 +3,7 @@
 import { useState } from "react";
 import LoginForm from "./login";
 import RegisterForm from "./register";
+import GoogleOAuth from "./google";
 
 export default function AuthForm() {
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -12,6 +13,7 @@ export default function AuthForm() {
       {mode === "login" ? (
         <>
           <LoginForm />
+          <GoogleOAuth />
           <p className="w-full mt-8 text-center w-full text-sm">
             Don&apos;t have an account?{" "}
             <span
@@ -25,6 +27,7 @@ export default function AuthForm() {
       ) : (
         <>
           <RegisterForm />
+          <GoogleOAuth />
           <p className="w-full mt-8 text-center w-full text-sm">
             Already have an account?{" "}
             <span
