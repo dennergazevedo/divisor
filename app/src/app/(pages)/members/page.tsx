@@ -227,7 +227,15 @@ export default function MembersPage() {
           )}
 
           {!loadingMembers && members.length === 0 && (
-            <div className="p-6 text-sm text-neutral-400">No members found</div>
+            <div className="p-12 text-center">
+              <Users className="mx-auto h-12 w-12 text-neutral-600 mb-4" />
+              <h3 className="text-md font-medium text-white mb-1">
+                No members yet
+              </h3>
+              <p className="text-sm text-neutral-400">
+                Add your first member to get started. events.
+              </p>
+            </div>
           )}
 
           {!loadingMembers && members.length > 0 && (
