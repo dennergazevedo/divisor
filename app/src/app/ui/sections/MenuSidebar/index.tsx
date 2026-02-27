@@ -9,12 +9,9 @@ import { MenuLink } from "./link";
 import {
   Album,
   Briefcase,
-  ChartPie,
-  Clock,
   Crown,
   FlaskConical,
   Gauge,
-  Info,
   LifeBuoy,
   LogOut,
   Plug,
@@ -61,8 +58,6 @@ export function MenuSidebar() {
                 icon={Gauge}
                 label="Performance"
               />
-              <MenuLink href="#" icon={Info} label="Logs" disabled />
-              <MenuLink href="#" icon={Clock} label="History" disabled />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -72,7 +67,6 @@ export function MenuSidebar() {
             <AccordionContent>
               <MenuLink href="/members" icon={Users} label="Members" />
               <MenuLink href="/support" icon={LifeBuoy} label="Support" />
-              <MenuLink href="#" icon={ChartPie} label="Analytics" disabled />
               <MenuLink href="#" icon={Settings} label="Settings" disabled />
             </AccordionContent>
           </AccordionItem>
