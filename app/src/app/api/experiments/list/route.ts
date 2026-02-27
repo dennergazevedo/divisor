@@ -53,6 +53,17 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const page = parseInt(searchParams.get("page") ?? "1");
+    const limit = parseInt(searchParams.get("limit") ?? "10");
+    const offset = (page - 1) * limit;
+
+    const totalResult =
+      isActiveFilter === null
+        ? await sql`SELECT COUNT(*) as count FROM experiments WHERE tenant_id = ${tenantId}`
+        : await sql`SELECT COUNT(*) as count FROM experiments WHERE tenant_id = ${tenantId} AND is_active = ${isActiveFilter}`;
+
+    const total = parseInt(totalResult[0].count);
+
     const experimentsResult =
       isActiveFilter === null
         ? await sql`
@@ -65,6 +76,7 @@ export async function GET(req: Request) {
       FROM experiments
       WHERE tenant_id = ${tenantId}
       ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
     `
         : await sql`
       SELECT
@@ -77,6 +89,7 @@ export async function GET(req: Request) {
       WHERE tenant_id = ${tenantId}
         AND is_active = ${isActiveFilter}
       ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
     `;
 
     const experiments = experimentsResult as ExperimentRow[];
@@ -112,7 +125,7 @@ export async function GET(req: Request) {
       variants: variantsByExperiment.get(experiment.id) ?? [],
     }));
 
-    return NextResponse.json({ experiments: result });
+    return NextResponse.json({ experiments: result, total });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

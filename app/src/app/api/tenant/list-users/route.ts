@@ -42,6 +42,18 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const page = parseInt(searchParams.get("page") ?? "1");
+    const limit = parseInt(searchParams.get("limit") ?? "10");
+    const offset = (page - 1) * limit;
+
+    const totalResult = await sql`
+      SELECT COUNT(*) as count
+      FROM tenant_members tm
+      WHERE tm.tenant_id = ${tenantId}
+    `;
+
+    const total = parseInt(totalResult[0].count);
+
     const membersResult = await sql`
       SELECT
         tm.user_id,
@@ -52,11 +64,12 @@ export async function GET(req: Request) {
       INNER JOIN users u ON u.id = tm.user_id
       WHERE tm.tenant_id = ${tenantId}
       ORDER BY tm.created_at ASC
+      LIMIT ${limit} OFFSET ${offset}
     `;
 
     const members = membersResult as TenantMember[];
 
-    return NextResponse.json({ members });
+    return NextResponse.json({ members, total });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

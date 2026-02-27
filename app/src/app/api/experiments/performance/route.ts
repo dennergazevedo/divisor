@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    const payload = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
     const { searchParams } = new URL(req.url);
     const tenantId = searchParams.get("tenantId");
@@ -38,6 +38,19 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const page = parseInt(searchParams.get("page") ?? "1");
+    const limit = parseInt(searchParams.get("limit") ?? "10");
+    const offset = (page - 1) * limit;
+
+    const totalResult = await sql`
+      SELECT COUNT(*) as count
+      FROM experiments
+      WHERE tenant_id = ${tenantId}
+        AND is_active = true
+    `;
+
+    const total = parseInt(totalResult[0].count);
+
     // Get active experiments from SQL database
     const experiments = await sql`
       SELECT
@@ -50,10 +63,12 @@ export async function GET(req: Request) {
       WHERE tenant_id = ${tenantId}
         AND is_active = true
       ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
     `;
 
     return NextResponse.json({
       experiments: experiments.map((e) => ({ experimentName: e.name })),
+      total,
     });
   } catch (error) {
     console.error(error);

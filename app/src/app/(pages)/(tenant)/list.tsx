@@ -3,12 +3,17 @@
 import { Separator } from "@/app/ui/atoms/Separator";
 import { useAuth } from "@/contexts/AuthContext";
 import { Briefcase, Building, Check, Copy, Earth, Plug } from "lucide-react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { Pagination } from "@/app/ui/molecules/Pagination";
 
 export default function TenantList() {
-  const { tenants, selectedTenant, setSelectedTenant } = useAuth();
+  const { selectedTenant, setSelectedTenant } = useAuth();
   const [copied, setCopied] = useState<boolean>(false);
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [total, setTotal] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const copyToClipboard = (e: React.MouseEvent, text: string) => {
     e.stopPropagation();
@@ -17,6 +22,35 @@ export default function TenantList() {
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
   };
+
+  const loadTenants = React.useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/tenant/list?page=${currentPage}&limit=8`, {
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to load tenants");
+      const data = await res.json();
+      setTenants(data.tenants);
+      setTotal(data.total);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    loadTenants();
+  }, [loadTenants]);
+
+  if (loading) {
+    return (
+      <div className="p-12 text-center text-neutral-400">
+        Loading tenants...
+      </div>
+    );
+  }
 
   if (!tenants?.length) {
     return (
@@ -35,50 +69,58 @@ export default function TenantList() {
   }
 
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
-      {tenants.map((tenant) => (
-        <li
-          key={tenant.id}
-          onClick={() => setSelectedTenant(tenant)}
-          className={`relative flex flex-col gap-2 cursor-pointer p-8 ${selectedTenant?.id === tenant.id ? "shadow-lg shadow-purple-600/50 border-b-purple-600" : "border-b-neutral-600 opacity-70"} hover:opacity-100 rounded-md border border-neutral-400/20 border-b-4 w-full hover:bg-purple-200/10" : ""}`}
-        >
-          <span className="absolute top-1 left-4 [font-variant:small-caps] mt-2 lowercase text-sm text-neutral-400 px-4 py-0 bg-purple-600/10 rounded-full w-fit">
-            {tenant.role}
-          </span>
-          {selectedTenant?.id === tenant.id && (
-            <span className="text-xs [font-variant:small-caps] absolute -top-2 right-2 text-purple-600">
-              <Plug />
-            </span>
-          )}
-          <div className="flex flex-row items-center gap-2 mt-4">
-            <Building
-              className={`w-5 h-5 ${selectedTenant?.id === tenant.id ? "text-purple-600" : "text-neutral-600"}`}
-            />
-            <span className="[font-variant:small-caps] lowercase text-lg font-bold">
-              {tenant.name}
-            </span>
-          </div>
-
-          <div
-            onClick={(e) => copyToClipboard(e, tenant.id)}
-            className="group/copy flex items-center justify-between gap-2 px-3 py-1.5 bg-neutral-900/50 border border-neutral-400/10 rounded font-mono text-[10px] text-neutral-400 hover:text-white hover:border-neutral-400/30 transition-all"
+    <div className="space-y-6">
+      <ul className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+        {tenants.map((tenant) => (
+          <li
+            key={tenant.id}
+            onClick={() => setSelectedTenant(tenant)}
+            className={`relative flex flex-col gap-2 cursor-pointer p-8 ${selectedTenant?.id === tenant.id ? "shadow-lg shadow-purple-600/50 border-b-purple-600" : "border-b-neutral-600 opacity-70"} hover:opacity-100 rounded-md border border-neutral-400/20 border-b-4 w-full hover:bg-purple-200/10 transition-all`}
           >
-            <span className="truncate">{tenant.id}</span>
-            {copied ? (
-              <Check className="size-3 shrink-0 opacity-50 group-hover/copy:opacity-100 transition-opacity" />
-            ) : (
-              <Copy className="size-3 shrink-0 opacity-50 group-hover/copy:opacity-100 transition-opacity" />
+            <span className="absolute top-1 left-4 [font-variant:small-caps] mt-2 lowercase text-sm text-neutral-400 px-4 py-0 bg-purple-600/10 rounded-full w-fit">
+              {tenant.role}
+            </span>
+            {selectedTenant?.id === tenant.id && (
+              <span className="text-xs [font-variant:small-caps] absolute -top-2 right-2 text-purple-600">
+                <Plug />
+              </span>
             )}
-          </div>
+            <div className="flex flex-row items-center gap-2 mt-4">
+              <Building
+                className={`w-5 h-5 ${selectedTenant?.id === tenant.id ? "text-purple-600" : "text-neutral-600"}`}
+              />
+              <span className="[font-variant:small-caps] lowercase text-lg font-bold">
+                {tenant.name}
+              </span>
+            </div>
 
-          <Separator />
+            <div
+              onClick={(e) => copyToClipboard(e, tenant.id)}
+              className="group/copy flex items-center justify-between gap-2 px-3 py-1.5 bg-neutral-900/50 border border-neutral-400/10 rounded font-mono text-[10px] text-neutral-400 hover:text-white hover:border-neutral-400/30 transition-all"
+            >
+              <span className="truncate">{tenant.id}</span>
+              {copied ? (
+                <Check className="size-3 shrink-0 opacity-50 group-hover/copy:opacity-100 transition-opacity" />
+              ) : (
+                <Copy className="size-3 shrink-0 opacity-50 group-hover/copy:opacity-100 transition-opacity" />
+              )}
+            </div>
 
-          <div className="text-sm text-neutral-400 flex flex-row justify-center w-full items-center gap-1">
-            <Earth className="w-3 h-3" />
-            <span className="[font-variant:small-caps]">{tenant.url}</span>
-          </div>
-        </li>
-      ))}
-    </ul>
+            <Separator />
+
+            <div className="text-sm text-neutral-400 flex flex-row justify-center w-full items-center gap-1">
+              <Earth className="w-3 h-3" />
+              <span className="[font-variant:small-caps]">{tenant.url}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <Pagination
+        currentPage={currentPage}
+        totalItems={total}
+        itemsPerPage={8}
+        onPageChange={setCurrentPage}
+      />
+    </div>
   );
 }
