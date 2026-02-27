@@ -14,7 +14,7 @@ export async function GET() {
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
     const [user] = await sql`
-      SELECT id, email, name, plan_status, current_plan
+      SELECT id, email, name, plan_status, current_plan, provider_id, expiration_date
       FROM users
       WHERE id = ${payload.userId}
       LIMIT 1
@@ -62,6 +62,8 @@ export async function GET() {
         name: user.name,
         plan_status: user.plan_status,
         current_plan: user.current_plan,
+        provider_id: user.provider_id,
+        expiration_date: user.expiration_date,
       },
       tenants,
       invites,

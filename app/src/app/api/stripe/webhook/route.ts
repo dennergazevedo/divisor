@@ -61,28 +61,39 @@ export async function POST(req: NextRequest) {
         if (email) {
           const planId = subscription.items.data[0].plan.product as string;
 
-          // User requested exactly 30 days from now
-          const expirationDate = new Date();
-          expirationDate.setDate(expirationDate.getDate() + 30);
-          const expirationDateIso = expirationDate.toISOString();
-
-          // Map product ID back to plan name
+          // Map product ID back to plan name and determine billing cycle
           let planName = "free";
+          let isAnnual = false;
+
           if (
             planId === "prod_U14XnrAq6orp30" ||
-            planId === "prod_U14YlyQiJclPkt" ||
-            planId === "prod_U14yb0BU7BGZZZ" ||
-            planId === "prod_U14zQzRPEogRFi"
+            planId === "prod_U14yb0BU7BGZZZ"
           ) {
             planName = "growth";
           } else if (
+            planId === "prod_U14YlyQiJclPkt" ||
+            planId === "prod_U14zQzRPEogRFi"
+          ) {
+            planName = "growth";
+            isAnnual = true;
+          } else if (
             planId === "prod_U14ZhlzNFVvyv5" ||
+            planId === "prod_U150kv1r2j8qdv"
+          ) {
+            planName = "pro";
+          } else if (
             planId === "prod_U14Zdl6c8Ew0Ii" ||
-            planId === "prod_U150kv1r2j8qdv" ||
             planId === "prod_U150uNV1zhQQHD"
           ) {
             planName = "pro";
+            isAnnual = true;
           }
+
+          const expirationDate = new Date();
+          expirationDate.setDate(
+            expirationDate.getDate() + (isAnnual ? 370 : 30),
+          );
+          const expirationDateIso = expirationDate.toISOString();
 
           await sql`
             UPDATE users 

@@ -6,6 +6,8 @@ type User = {
   name?: string | null;
   plan_status?: "active" | "inactive";
   current_plan?: string;
+  provider_id?: string | null;
+  expiration_date?: string | null;
 };
 
 type Tenant = {

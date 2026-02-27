@@ -67,7 +67,7 @@ export function MenuSidebar() {
             <AccordionContent>
               <MenuLink href="/members" icon={Users} label="Members" />
               <MenuLink href="/support" icon={LifeBuoy} label="Support" />
-              <MenuLink href="#" icon={Settings} label="Settings" disabled />
+              <MenuLink href="/settings" icon={Settings} label="Settings" />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
