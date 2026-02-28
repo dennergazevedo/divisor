@@ -149,7 +149,7 @@ const Pricing = () => {
                 className={`w-full py-3 px-4 rounded-lg font-semibold transition-all text-center ${
                   plan.highlight
                     ? "bg-purple-600 text-white hover:bg-purple-700"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    : "bg-secondary text-secondary-foreground hover:bg-purple-600"
                 }`}
               >
                 {plan.cta}
