@@ -1,12 +1,21 @@
+"use client";
+
 import { Separator } from "@/app/ui/atoms/Separator";
 import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import TenantList from "./list";
 import CreateTenant from "./create";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import RedirectByPlan from "./redirectByPlan";
 import { Briefcase } from "lucide-react";
+import InvitationList from "./invitations";
 
 export default function Home() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
+
   return (
     <main className="relative flex flex-col h-full w-full">
       <Suspense fallback={null}>
@@ -24,12 +33,15 @@ export default function Home() {
               Select a tenant to manage it
             </p>
           </div>
-          <div>
-            <CreateTenant />
+          <div className="flex items-center gap-4">
+            <CreateTenant onCreated={handleRefresh} />
           </div>
         </div>
         <Separator />
-        <TenantList />
+
+        <InvitationList onAction={handleRefresh} />
+
+        <TenantList key={refreshKey} />
       </section>
     </main>
   );

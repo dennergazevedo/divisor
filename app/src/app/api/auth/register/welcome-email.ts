@@ -26,7 +26,7 @@ export const getWelcomeEmailHtml = (userName: string) => `
     .logo {
       font-size: 24px;
       font-weight: bold;
-      color: #fff;
+      color: #fff !important;
       margin-bottom: 24px;
       display: inline-block;
       text-decoration: none;

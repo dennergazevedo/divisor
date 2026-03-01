@@ -1,4 +1,8 @@
-export const getRecoveryEmailHtml = (recoveryLink: string) => `
+export const getInvitationEmailHtml = (
+  inviterName: string,
+  tenantName: string,
+  inviteLink: string,
+) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,14 +80,14 @@ export const getRecoveryEmailHtml = (recoveryLink: string) => `
       <a href="https://divisor.dev" class="logo">
         <span class="logo-purple">Divisor</span>.dev
       </a>
-      <h1>Reset your password</h1>
+      <h1>You've been invited!</h1>
       <p>
-        We received a request to reset your password. Click the button below to choose a new one.
+        <strong>${inviterName}</strong> invited you to collaborate on the project <strong>${tenantName}</strong> at Divisor.
       </p>
-      <a href="${recoveryLink}" class="button">Reset Password</a>
+      <a href="${inviteLink}" class="button">Accept Invitation</a>
       <div class="divider"></div>
       <p style="margin-bottom: 0; font-size: 14px;">
-        If you didn't request a password reset, you can safely ignore this email.
+        If you weren't expecting this invitation, you can safely ignore this email.
       </p>
     </div>
     <div class="footer">

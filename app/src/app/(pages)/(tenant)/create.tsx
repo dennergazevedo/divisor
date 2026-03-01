@@ -20,7 +20,11 @@ import { Separator } from "@/app/ui/atoms/Separator";
 import { useAuth } from "@/contexts/AuthContext";
 import { getPlanLimits } from "@/lib/plans";
 
-export default function CreateTenant() {
+export default function CreateTenant({
+  onCreated,
+}: {
+  onCreated?: () => void;
+}) {
   const { user, tenants } = useAuth();
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
@@ -51,8 +55,7 @@ export default function CreateTenant() {
       setName("");
       setUrl("");
 
-      // opcional: recarregar dados / redirecionar
-      window.location.reload();
+      if (onCreated) onCreated();
     } catch (error) {
       console.error(error);
       alert("Error creating tenant");
