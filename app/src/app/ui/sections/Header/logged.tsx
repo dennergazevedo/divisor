@@ -32,8 +32,6 @@ export default function LoggedHeader() {
     }
   };
 
-  console.log("invites", invites);
-
   return (
     <div className="z-50 fixed top-0 w-full p-2 px-8 bg-zinc-900 border-b border-neutral-800 flex flex-row items-center justify-between gap-2">
       <SidebarTrigger className="md:hidden px-0! left-4 px-0 md:relative md:top-0 md:left-0 p-5 md:p-8 md:pt-12" />

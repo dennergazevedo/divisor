@@ -12,10 +12,12 @@ import CreateExperiment from "./create";
 import EditExperiment from "./edit";
 import ArchiveExperimentDialog from "./archive";
 import ViewExperimentDialog from "./view";
+import PreviewModal from "./PreviewModal";
 import { Separator } from "@/app/ui/atoms/Separator";
 import Link from "next/link";
 import { ChartArea, FlaskConical } from "lucide-react";
 import { Pagination } from "@/app/ui/molecules/Pagination";
+import { Button } from "@/app/ui/atoms/Button";
 
 export default function ExperimentsClient() {
   const { selectedTenant } = useAuth();
@@ -143,11 +145,15 @@ export default function ExperimentsClient() {
                         <td className="px-4 py-3 text-right flex flex-row items-center justify-end gap-2">
                           {activeTab === "active" ? (
                             <>
-                              <Link
-                                href={`/experiments/performance/${experiment.name}`}
-                              >
-                                <ChartArea className="w-4 h-4 mr-2 text-neutral-400 hover:text-neutral-200" />
-                              </Link>
+                              <PreviewModal experiment={experiment} />
+                              <Button size="sm" variant="ghost">
+                                <Link
+                                  href={`/experiments/performance/${experiment.name}`}
+                                >
+                                  <ChartArea className="w-4 h-4 text-neutral-400 hover:text-neutral-200" />
+                                </Link>
+                              </Button>
+
                               <EditExperiment experiment={experiment} />
                               <ArchiveExperimentDialog
                                 experiment={experiment}

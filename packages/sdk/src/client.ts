@@ -26,7 +26,22 @@ export class DivisorClient {
   }: GetVariant): Promise<ExperimentResult> {
     const cookieName = `__divisor_${this.tenantId}_${experimentName}`;
 
-    // 1. Check if we have a cached variant in cookies
+    // 1. Check for preview parameters in the URL
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const previewExperiment = params.get("divisor_experiment");
+      const previewVariant = params.get("divisor_variant");
+
+      if (previewExperiment === experimentName && previewVariant) {
+        setCookie(cookieName, previewVariant, 1);
+        return {
+          experiment: experimentName,
+          variant: previewVariant,
+        };
+      }
+    }
+
+    // 2. Check if we have a cached variant in cookies
     const cachedVariant = getCookie(cookieName);
     if (cachedVariant) {
       return {
