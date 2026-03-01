@@ -1,0 +1,253 @@
+{
+  "Navbar": {
+    "whyDivisor": "Por que Divisor",
+    "howItWorks": "Como funciona",
+    "pricing": "Preços",
+    "implementation": "Implementação",
+    "faq": "FAQ",
+    "login": "Entrar",
+    "github": "GitHub",
+    "language": "Idioma"
+  },
+  "Hero": {
+    "badge": "Open source · Edge-native · Stateless",
+    "title1": "Edge-native",
+    "title2": "Testes A/B sem complexidade",
+    "description": "Divisor é uma plataforma open-source, stateless de testes A/B e feature flags projetada para escalar para milhões de usuários com infraestrutura mínima.",
+    "getStarted": "Começar agora",
+    "tryForFree": "Teste grátis"
+  },
+  "ValueCards": {
+    "title": "Por que Divisor",
+    "subtitle": "Uma abordagem fundamentalmente diferente para infraestrutura de testes A/B.",
+    "edgeNative": {
+      "title": "Edge-native",
+      "description": "Decisões acontecem na borda (edge) usando hashing determinístico. Sem gargalos centralizados."
+    },
+    "consistentUX": {
+      "title": "Experiência de usuário consistente",
+      "description": "O mesmo usuário sempre vê a mesma variante entre as sessões."
+    },
+    "deterministicTraffic": {
+      "title": "Divisão de tráfego determinística",
+      "description": "Os usuários são atribuídos a variantes usando hashing matemático — sempre consistente."
+    },
+    "builtForScale": {
+      "title": "Feito para escala",
+      "description": "Projetado para lidar com milhões de usuários com Redis e edge functions."
+    }
+  },
+  "HowItWorks": {
+    "title": "Como funciona",
+    "subtitle": "Quatro passos. Sem complexidade.",
+    "step1": {
+      "title": "Crie um teste",
+      "description": "Defina seu experimento no dashboard com variantes e alocação de tráfego."
+    },
+    "step2": {
+      "title": "SDK busca config",
+      "description": "O SDK cliente recupera a configuração do teste diretamente da edge."
+    },
+    "step3": {
+      "title": "Hash determinístico",
+      "description": "Um hash matemático atribui o usuário a uma variante — sem aleatoriedade."
+    },
+    "step4": {
+      "title": "Variante retornada",
+      "description": "A variante correta é retornada instantaneamente na edge."
+    }
+  },
+  "Pricing": {
+    "title": "Preços simples e transparentes",
+    "subtitle": "Escolha o plano que melhor se adapta ao momento da sua empresa.",
+    "monthly": "Mensal",
+    "annually": "Anual",
+    "discount": "-25%",
+    "mostPopular": "Mais Popular",
+    "mo": "/mês",
+    "plans": {
+      "free": {
+        "name": "Grátis",
+        "description": "Perfeito para testar e explorar a ferramenta.",
+        "features": [
+          "1 teste ativo",
+          "1 tenant",
+          "1 domínio",
+          "1000 sessões de usuário /mês"
+        ],
+        "cta": "Começar agora"
+      },
+      "growth": {
+        "name": "Growth",
+        "description": "Para equipes em rápido crescimento.",
+        "features": [
+          "5 testes ativos",
+          "1 tenant",
+          "1 domínio",
+          "5M sessões mensais"
+        ],
+        "cta": "Escolher Growth"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Escala total com sessões ilimitadas.",
+        "features": [
+          "Testes ilimitados",
+          "3 tenants",
+          "3 domínios",
+          "Sessões ilimitadas"
+        ],
+        "cta": "Escolher Pro"
+      }
+    }
+  },
+  "DeveloperFocus": {
+    "title": "Implementação amigável para",
+    "titleHighlight": "desenvolvedores",
+    "description": "Divisor foi projetado com os mesmos princípios que você aplica em sua própria infraestrutura.",
+    "features": [
+      "SDK para os principais frameworks web",
+      "Open source por padrão",
+      "Sem dependência de fornecedor (no lock-in)",
+      "Arquitetura transparente",
+      "Dependências mínimas",
+      "Configuração sem atrito"
+    ]
+  },
+  "FAQ": {
+    "title": "Perguntas Frequentes",
+    "subtitle": "Tudo o que você precisa saber sobre o Divisor.",
+    "q1": {
+      "q": "Por que o Divisor é proporcionalmente muito mais barato que outros provedores?",
+      "a": "Ele é altamente otimizado para um caso de uso específico — testes A/B — evitando recursos desnecessários e custos de infraestrutura que a maioria dos players inclui mas você não usa."
+    },
+    "q2": {
+      "q": "Como integrar o Divisor no meu site?",
+      "a": "Com o SDK do Divisor, é plug-and-play. Fornecemos exemplos práticos dentro da plataforma para os principais frameworks web do mercado."
+    },
+    "q3": {
+      "q": "Posso testar o Divisor sem poluir meu site com código?",
+      "a": "Sim, temos um plano Grátis especificamente para esse cenário. O SDK é simples de usar e fácil de desinstalar, não deixando resíduos após o teste."
+    },
+    "q4": {
+      "q": "Como posso criar um teste A/B com o Divisor?",
+      "a": "Na página de experimentos, você pode criar seus testes e nomear suas variantes como desejar. Você também pode decidir o percentual de divisão para cada variante, o que é ideal para Canary Releases — começando com um percentual pequeno e aumentando gradualmente."
+    },
+    "q5": {
+      "q": "Como o Divisor afeta o carregamento do site?",
+      "a": "Nosso SDK tem apenas 10.3kb e carrega em aproximadamente 25ms — visualmente imperceptível. Além disso, é Edge First, garantindo performance em cada requisição."
+    },
+    "q6": {
+      "q": "O Divisor funciona em aplicações server-side?",
+      "a": "Sim, você pode se comunicar com nossos servidores antes de renderizar a tela para o usuário, com tempos de resposta rápidos entre 5ms e 20ms na maioria dos casos."
+    }
+  },
+  "OpenSource": {
+    "title": "Totalmente",
+    "titleHighlight": "open source",
+    "description": "Inspecione o código. Faça um fork. Hospede você mesmo. Divisor é construído para a comunidade.",
+    "license": "Licença MIT",
+    "repository": "Repositório Público",
+    "community": "Focado na comunidade",
+    "extensible": "Extensível",
+    "cta": "Explorar o repositório"
+  },
+  "FinalCTA": {
+    "title": "Experimente na borda.",
+    "subtitle": "Escale sem limites.",
+    "start": "Começar a Construir",
+    "docs": "Ler a Documentação"
+  },
+  "Footer": {
+    "description": "Plataforma open-source, edge-first de testes A/B e feature flags construída para performance e escala.",
+    "platform": "Plataforma",
+    "support": "Suporte",
+    "login": "Login e Registro",
+    "pricing": "Preços",
+    "documentation": "Documentação",
+    "github": "GitHub",
+    "contact": "Contato",
+    "tutorials": "Tutoriais",
+    "abTesting": "Testes A/B",
+    "copyright": "© {year} Divisor. Open source sob Licença MIT.",
+    "terms": "Termos de Serviço",
+    "privacy": "Política de Privacidade"
+  },
+  "Privacy": {
+    "back": "Voltar para o Início",
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização: {date}",
+    "s1": {
+      "title": "1. Compromisso com a Privacidade",
+      "p": "No Divisor, levamos a sério a privacidade dos seus dados e dos dados dos seus usuários finais. Esta política descreve como coletamos, usamos e protegemos as informações ao usar nossa plataforma."
+    },
+    "s2": {
+      "title": "2. Coleta de Informações",
+      "account": "Dados da Conta: Coletamos informações básicas como nome, e-mail e dados da organização para fornecer acesso à plataforma e suporte técnico.",
+      "usage": "Dados de Uso: Coletamos metadados sobre como a plataforma é utilizada para fins de melhoria contínua e faturamento.",
+      "experiment": "Dados de Experimento: O Divisor processa dados de segmentação enviados pelo seu SDK. Estes dados são utilizados estritamente para a execução de testes A/B e não são compartilhados com terceiros."
+    },
+    "s3": {
+      "title": "3. Política de Cookies",
+      "p": "Utilizamos cookies e tecnologias semelhantes para melhorar a experiência do usuário e garantir o funcionamento correto da plataforma.",
+      "note": "Nota Técnica: Salvamos cookies específicos para evitar requisições repetidas do lado do usuário e garantir que o mesmo usuário receba a mesma variante de um experimento de forma consistente durante sua sessão."
+    },
+    "s4": {
+      "title": "4. Segurança de Dados",
+      "p": "Implementamos medidas de segurança técnicas e organizacionais para proteger seus dados contra acesso não autorizado, alteração ou destruição. Isso inclui criptografia em repouso e em trânsito, bem como controles de acesso rigorosos."
+    },
+    "s5": {
+      "title": "5. Seus Direitos",
+      "p": "Você tem o direito de acessar, corrigir ou excluir seus dados pessoais armazenados em nossa plataforma a qualquer momento através das configurações da conta ou do suporte técnico."
+    },
+    "s6": {
+      "title": "6. Contato",
+      "p": "Para dúvidas relacionadas à privacidade ou proteção de dados, entre em contato conosco através do nosso canal de suporte em:"
+    }
+  },
+  "Terms": {
+    "back": "Voltar para o Início",
+    "title": "Termos de Serviço",
+    "lastUpdated": "Última atualização: {date}",
+    "s1": {
+      "title": "1. Descrição do Serviço",
+      "p": "O Divisor é uma plataforma de testes A/B e feature flags construída para performance e escala. Fornecemos ferramentas para segmentação de tráfego, análise de variantes e gerenciamento de experimentos em tempo real."
+    },
+    "s2": {
+      "title": "2. Planos e Disponibilidade",
+      "p": "Atualmente oferecemos três níveis de serviço:",
+      "free": "Grátis: Ideal para pequenos projetos e experimentação inicial.",
+      "growth": "Growth: Focado em equipes em crescimento com maior volume de tráfego.",
+      "pro": "Pro: Solução completa para grandes operações com suporte prioritário e recursos avançados."
+    },
+    "s3": {
+      "title": "3. Assinaturas e Reembolsos",
+      "monthly": "Assinatura Mensal: Não oferecemos reembolsos para assinaturas mensais, pois fornecemos uma opção de teste gratuito para avaliar a plataforma antes da compra.",
+      "annual": "Assinatura Anual: Reembolsos para planos anuais podem ser solicitados nos primeiros 30 dias da assinatura inicial ou renovação. Após este período, nenhum reembolso proporcional será emitido."
+    },
+    "s4": {
+      "title": "4. Cancelamento e Renovação",
+      "p": "Todas as assinaturas são renovadas automaticamente ao final do período contratado (mensal ou anual), a menos que um cancelamento seja solicitado através do painel de controle antes da data de renovação. O cancelamento interrompe a renovação futura, mas o acesso permanece ativo até o final do período já pago."
+    },
+    "s5": {
+      "title": "5. Suporte e SLA",
+      "p": "Comprometemo-nos com um tempo de resposta de suporte de até 24 horas para todos os nossos usuários pagos (Growth e Pro). O suporte é fornecido principalmente através dos canais digitais indicados na plataforma."
+    },
+    "s6": {
+      "title": "6. Limitação de Responsabilidade",
+      "p": "O Divisor é fornecido \"como está\". Não somos responsáveis por perda de receita, dados ou interrupções de negócios causadas pelo uso ou incapacidade de usar a plataforma, dentro dos limites permitidos por lei."
+    },
+    "s7": {
+      "title": "7. Propriedade Intelectual",
+      "p": "Todo o conteúdo, logotipos, design e código-fonte da plataforma Divisor (exceto partes explicitamente marcadas como Open Source sob a licença MIT) são de propriedade exclusiva do Divisor."
+    },
+    "s8": {
+      "title": "8. Cláusulas Técnicas",
+      "p": "O usuário é responsável pela implementação correta do SDK do Divisor em suas aplicações. Garantimos a integridade do serviço em nossa infraestrutura, mas não nos responsabilizamos por implementações incorretas que possam afetar a performance da aplicação final do usuário."
+    },
+    "s9": {
+      "title": "9. Mudanças nos Termos",
+      "p": "Reservamo-nos o direito de modificar estes termos a qualquer momento. Alterações significativas serão notificadas aos usuários via e-mail ou através de avisos na plataforma."
+    }
+  }
+}
