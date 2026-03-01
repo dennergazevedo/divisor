@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     });
 
     const mailOptions = {
-      from: `"Contato Divisor" <${email}>`,
+      from: `"Contato Divisor" <${process.env.SUPPORT_EMAIL_TO}>`,
       to: process.env.SUPPORT_EMAIL_TO,
       replyTo: email,
       subject: `[Support Request] ${subject}`,

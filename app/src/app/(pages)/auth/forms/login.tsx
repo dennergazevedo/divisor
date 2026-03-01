@@ -63,7 +63,7 @@ export default function LoginForm() {
         </Button>
       </form>
       <Link
-        href="#"
+        href="/auth/forgot-password"
         className="text-xs hover:underline w-full flex justify-end mt-4"
       >
         Forgot password?

@@ -18,6 +18,7 @@ CREATE TABLE users (
   plan_status TEXT DEFAULT 'inactive',
   current_plan TEXT DEFAULT 'free',
   expiration_date TIMESTAMP WITH TIME ZONE,
+  forgot_password_hash TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
