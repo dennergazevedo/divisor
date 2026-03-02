@@ -60,6 +60,14 @@ const Footer = () => {
                   {t("github")}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-sm text-muted-foreground hover:text-purple-400 transition-colors"
+                >
+                  {t("blog")}
+                </Link>
+              </li>
             </ul>
           </div>
 

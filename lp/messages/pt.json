@@ -7,7 +7,8 @@
     "faq": "FAQ",
     "login": "Entrar",
     "github": "GitHub",
-    "language": "Idioma"
+    "language": "Idioma",
+    "blog": "Blog"
   },
   "Hero": {
     "badge": "Open source · Edge-native · Stateless",
@@ -171,7 +172,8 @@
     "abTesting": "Testes A/B",
     "copyright": "© {year} Divisor. Open source sob Licença MIT.",
     "terms": "Termos de Serviço",
-    "privacy": "Política de Privacidade"
+    "privacy": "Política de Privacidade",
+    "blog": "Blog"
   },
   "Privacy": {
     "back": "Voltar para o Início",

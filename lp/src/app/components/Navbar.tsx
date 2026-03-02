@@ -54,6 +54,12 @@ const Navbar = () => {
             {t("implementation")}
           </Link>
           <Link
+            href="/blog"
+            className="hover:text-foreground transition-colors"
+          >
+            {t("blog")}
+          </Link>
+          <Link
             href="/#faq"
             className="hover:text-foreground transition-colors"
           >
@@ -119,6 +125,13 @@ const Navbar = () => {
                 className="hover:text-foreground transition-colors py-2"
               >
                 {t("implementation")}
+              </Link>
+              <Link
+                href="/blog"
+                onClick={toggleMenu}
+                className="hover:text-foreground transition-colors py-2"
+              >
+                {t("blog")}
               </Link>
               <Link
                 href="/#faq"
