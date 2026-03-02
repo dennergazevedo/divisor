@@ -2,7 +2,7 @@
 title: "How to Run Experiments in Production Without Impacting Performance (Core Web Vitals)"
 description: "Learn how poorly implemented experiments can harm LCP, CLS, and INP, affecting SEO and conversion. Understand how to avoid flicker, layout shift, and render-blocking scripts — comparing client-side vs server-side."
 date: "2026-03-02"
-author: "Denner Azevedo"
+author: "Divisor Team"
 ---
 
 # How to Run Experiments in Production Without Impacting Performance (Core Web Vitals)
