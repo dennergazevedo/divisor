@@ -72,5 +72,4 @@ async function showHomepage() {
 
 ## Next Steps
 
-- [Learn about A/B Testing](./concepts/ab-testing.md)
 - [Check SDK Usage Examples](./sdk/usage-js.md)

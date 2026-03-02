@@ -142,3 +142,37 @@ Remove a user from the tenant.
   "status": "removed"
 }
 ```
+
+## List Tenants
+
+List all tenants the authenticated user belongs to.
+
+- **URL**: `/api/tenant/list`
+- **Method**: `GET`
+- **Auth Required**: Yes
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `page` | `number` | No | Page number (default: 1) |
+| `limit` | `number` | No | Results per page (default: 10) |
+
+### Response
+
+Returns a list of tenants with the user's role and the owner's current plan.
+
+```json
+{
+  "tenants": [
+    {
+      "id": "tenant_id",
+      "name": "My Tenant",
+      "url": "my-tenant",
+      "role": "owner",
+      "owner_plan": "pro"
+    }
+  ],
+  "total": 1
+}
+```

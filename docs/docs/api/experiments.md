@@ -103,3 +103,103 @@ Update an existing experiment.
   "status": "updated"
 }
 ```
+
+## Find Experiment
+
+Internal endpoint to fetch experiment details for Edge functions. Requires a secret header.
+
+- **URL**: `/api/experiments/find`
+- **Method**: `GET`
+- **Auth Required**: No (Secret Header)
+
+### Headers
+
+| Header | Value | Description |
+| :--- | :--- | :--- |
+| `x-edge-secret` | `string` | Internal secret for verification |
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `tenantId` | `string` | Yes | ID of the tenant |
+| `name` | `string` | Yes | Name of the experiment |
+
+### Response
+
+```json
+{
+  "id": "exp_id",
+  "name": "Experiment Name",
+  "isActive": true,
+  "endsAt": "...",
+  "variants": [...],
+  "owner": {
+    "plan_status": "active",
+    "current_plan": "pro"
+  }
+}
+```
+
+## Get Experiment Performance
+
+Get performance metrics for a specific experiment.
+
+- **URL**: `/api/experiments/performance/:experimentName`
+- **Method**: `GET`
+- **Auth Required**: Yes
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `tenantId` | `string` | Yes | ID of the tenant |
+
+### Response
+
+```json
+{
+  "performance": [
+    {
+      "variant": "control",
+      "conversions": 150,
+      "visitors": 1000,
+      "conversion_rate": 0.15
+    },
+    {
+      "variant": "variant-a",
+      "conversions": 180,
+      "visitors": 1000,
+      "conversion_rate": 0.18
+    }
+  ]
+}
+```
+
+## List Performance Experiments
+
+List active experiments that have performance data available.
+
+- **URL**: `/api/experiments/performance`
+- **Method**: `GET`
+- **Auth Required**: Yes
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `tenantId` | `string` | Yes | ID of the tenant |
+| `page` | `number` | No | Page number (default: 1) |
+| `limit` | `number` | No | Results per page (default: 10) |
+
+### Response
+
+```json
+{
+  "experiments": [
+    { "experimentName": "Landing Page CTA" },
+    { "experimentName": "Pricing Table Color" }
+  ],
+  "total": 2
+}
+```

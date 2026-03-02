@@ -59,10 +59,24 @@ const config: Config = {
       },
       items: [
         {
-          type: "docSidebar",
-          sidebarId: "defaultSidebar",
+          to: "/docs/intro",
           position: "left",
-          label: "Docs",
+          label: "Introduction",
+        },
+        {
+          to: "/docs/get-started",
+          position: "left",
+          label: "Get started",
+        },
+        {
+          to: "/docs/api/intro",
+          position: "left",
+          label: "API",
+        },
+        {
+          to: "/docs/sdk/intro",
+          position: "left",
+          label: "SDK",
         },
         {
           href: "https://github.com/dennergazevedo/divisor",
@@ -79,10 +93,6 @@ const config: Config = {
             {
               label: "Get Started",
               to: "/docs/get-started",
-            },
-            {
-              label: "Concepts",
-              to: "/docs/concepts/ab-testing",
             },
             {
               label: "SDK",
