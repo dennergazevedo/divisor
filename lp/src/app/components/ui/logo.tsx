@@ -9,7 +9,7 @@ export default function Logo({ color = "#8200db", size = 160 }: LogoProps) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 157 89"
       width={size}
-      height="auto"
+      height={size}
       style={{ display: "block" }}
     >
       <path

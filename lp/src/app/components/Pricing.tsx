@@ -94,6 +94,7 @@ const Pricing = () => {
                   billingCycle === "monthly" ? "annually" : "monthly",
                 )
               }
+              aria-label="billing cycle toggle"
               className="relative w-12 h-6 bg-secondary rounded-full p-1 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-600"
             >
               <div
