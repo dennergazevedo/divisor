@@ -97,7 +97,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="lg:col-span-12 prose prose-invert prose-purple max-w-none prose-headings:font-bold prose-h2:text-4xl prose-h2:tracking-tight prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h3:text-2xl prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:border prose-img:border-border font-serif text-xl leading-relaxed">
             <ReactMarkdown
               components={{
-                p: ({ children }: { children: React.ReactNode }) => (
+                p: ({ children }: { children?: React.ReactNode }) => (
                   <p className="mb-6">{children}</p>
                 ),
               }}
