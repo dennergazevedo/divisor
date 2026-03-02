@@ -23,6 +23,21 @@ export async function GET(req: Request) {
       );
     }
 
+    const tenantResult = await sql`
+      SELECT active FROM tenants WHERE id = ${tenantId} LIMIT 1
+    `;
+
+    if (tenantResult.length === 0) {
+      return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
+    }
+
+    if (!tenantResult[0].active) {
+      return NextResponse.json(
+        { error: "Tenant is inactive" },
+        { status: 400 },
+      );
+    }
+
     const experimentsResult = await sql`
       SELECT
         e.id,

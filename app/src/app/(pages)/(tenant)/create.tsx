@@ -34,6 +34,8 @@ export default function CreateTenant({
   const ownedCount = tenants.filter((t) => t.role === "owner").length;
   const isLimitReached = ownedCount >= limits.tenants;
 
+  const [open, setOpen] = useState(false);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -51,7 +53,7 @@ export default function CreateTenant({
         throw await res.json();
       }
 
-      // reset
+      setOpen(false);
       setName("");
       setUrl("");
 
@@ -65,7 +67,7 @@ export default function CreateTenant({
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary">
           <span className="hidden md:flex">Create</span>

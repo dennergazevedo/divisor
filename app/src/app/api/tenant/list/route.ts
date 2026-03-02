@@ -31,6 +31,7 @@ export async function GET(req: Request) {
         t.id,
         t.name,
         t.url,
+        t.active,
         tm.role,
         (
           SELECT u2.current_plan 

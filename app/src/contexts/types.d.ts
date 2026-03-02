@@ -16,6 +16,7 @@ type Tenant = {
   url: string;
   role: Role;
   owner_plan?: string;
+  active: boolean;
 };
 
 type TenantInvite = {

@@ -17,9 +17,28 @@ export async function GET() {
       RETURNING id
     `;
 
-    // Reset sessions for each updated user
+    // Reset sessions and enforce tenant limits for each updated user
     for (const user of updatedUsers) {
       await resetSessions(user.id);
+
+      // Get all tenants owned by this user
+      const userTenants = await sql`
+        SELECT t.id
+        FROM tenants t
+        JOIN tenant_members tm ON tm.tenant_id = t.id
+        WHERE tm.user_id = ${user.id} AND tm.role = 'owner'
+        ORDER BY t.created_at ASC
+      `;
+
+      if (userTenants.length > 1) {
+        const otherTenantIds = userTenants.slice(1).map((t) => t.id);
+
+        await sql`
+          UPDATE tenants
+          SET active = false
+          WHERE id = ANY(${otherTenantIds})
+        `;
+      }
     }
 
     return NextResponse.json({
