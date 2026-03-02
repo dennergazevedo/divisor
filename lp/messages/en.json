@@ -66,6 +66,7 @@
     "discount": "-25%",
     "mostPopular": "Most Popular",
     "mo": "/mo",
+    "billedAnnually": "billed annually",
     "plans": {
       "free": {
         "name": "Free",

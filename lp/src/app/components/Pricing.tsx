@@ -137,11 +137,18 @@ const Pricing = () => {
               )}
               <div className="mb-8">
                 <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold transition-all duration-300">
-                    ${plan.price[billingCycle]}
-                  </span>
-                  <span className="text-muted-foreground">{t("mo")}</span>
+                <div className="flex flex-col">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-bold transition-all duration-300">
+                      ${plan.price[billingCycle]}
+                    </span>
+                    <span className="text-muted-foreground">{t("mo")}</span>
+                  </div>
+                  {billingCycle === "annually" && plan.id !== "free" && (
+                    <span className="text-xs text-muted-foreground mt-1">
+                      ${Number(plan.price.annually) * 12} {t("billedAnnually")}
+                    </span>
+                  )}
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground min-h-[40px]">
                   {plan.description}
