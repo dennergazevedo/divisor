@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { headers } from "next/headers";
+import OrderPlacedEvent from "./event";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -65,6 +66,7 @@ export default async function ReturnPage({ searchParams }: PageProps) {
 
         <main className="flex-1 relative flex items-center justify-center py-12 px-6 mt-16">
           <Background />
+          <OrderPlacedEvent />
 
           <div className="relative w-full max-w-2xl">
             <div className="p-8 md:p-12 rounded-3xl border border-white/10 bg-card/50 backdrop-blur-2xl shadow-2xl space-y-8 text-center">
