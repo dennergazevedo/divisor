@@ -1,10 +1,8 @@
-"use client";
-
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const Footer = () => {
-  const t = useTranslations("Footer");
+const Footer = async () => {
+  const t = await getTranslations("Footer");
 
   return (
     <footer className="border-t border-border bg-background/50 backdrop-blur-sm py-12">

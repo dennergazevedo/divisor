@@ -1,10 +1,8 @@
-"use client";
-
 import { Github, Scale, Users, Puzzle } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const OpenSourceSection = () => {
-  const t = useTranslations("OpenSource");
+const OpenSourceSection = async () => {
+  const t = await getTranslations("OpenSource");
 
   return (
     <section id="open-source" className="py-24 border-t border-border">

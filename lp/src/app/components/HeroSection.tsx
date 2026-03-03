@@ -1,11 +1,9 @@
-"use client";
-
 import { ArrowRight, TestTubeDiagonal } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const HeroSection = () => {
-  const t = useTranslations("Hero");
+const HeroSection = async () => {
+  const t = await getTranslations("Hero");
 
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">

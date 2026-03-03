@@ -1,9 +1,7 @@
-"use client";
+import { getTranslations } from "next-intl/server";
 
-import { useTranslations } from "next-intl";
-
-const HowItWorks = () => {
-  const t = useTranslations("HowItWorks");
+const HowItWorks = async () => {
+  const t = await getTranslations("HowItWorks");
 
   const steps = [
     {

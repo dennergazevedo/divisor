@@ -5,8 +5,6 @@ date: "2026-03-02"
 author: "Divisor Team"
 ---
 
-# Como Rodar Experimentos em Produção Sem Impactar Performance (Core Web Vitals)
-
 Testes A/B são fundamentais para o crescimento, mas se não forem bem implementados, podem ser um "tiro no pé". Um experimento que degrada a performance do site pode anular qualquer ganho de conversão e ainda prejudicar o seu posicionamento nos motores de busca (SEO) através das Core Web Vitals.
 
 Neste artigo, vamos explorar como rodar testes de forma invisível para as métricas de performance.

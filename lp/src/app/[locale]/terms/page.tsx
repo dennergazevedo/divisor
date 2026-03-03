@@ -1,12 +1,14 @@
-"use client";
-
 import { Link } from "@/i18n/routing";
 import { ArrowLeft } from "lucide-react";
-import { useTranslations, useLocale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export default function TermsOfService() {
-  const t = useTranslations("Terms");
-  const locale = useLocale();
+export default async function TermsOfService({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations("Terms");
 
   const formattedDate = new Date().toLocaleDateString(
     locale === "pt" ? "pt-BR" : "en-US",

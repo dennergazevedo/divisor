@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   Accordion,
@@ -7,10 +5,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const FAQ = () => {
-  const t = useTranslations("FAQ");
+const FAQ = async () => {
+  const t = await getTranslations("FAQ");
 
   const faqs = [
     {

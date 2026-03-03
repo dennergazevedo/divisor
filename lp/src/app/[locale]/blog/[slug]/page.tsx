@@ -1,6 +1,7 @@
 import { getPostBySlug } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 
@@ -94,13 +95,27 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-12 prose prose-invert prose-purple max-w-none prose-headings:font-bold prose-h2:text-4xl prose-h2:tracking-tight prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h3:text-2xl prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:border prose-img:border-border font-serif text-xl leading-relaxed">
+          <div className="lg:col-span-12 post-content prose prose-invert prose-purple max-w-none prose-headings:font-bold prose-h2:text-4xl prose-h2:tracking-tight prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h3:text-2xl prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:border prose-img:border-border font-serif text-xl leading-relaxed">
             <ReactMarkdown
               components={{
                 p: ({ children }: { children?: React.ReactNode }) => (
                   <p className="mb-6">{children}</p>
                 ),
+                input(props) {
+                  if (props.type === "checkbox") {
+                    return (
+                      <input
+                        type="checkbox"
+                        checked={props.checked}
+                        readOnly
+                        className="markdown-checkbox"
+                      />
+                    );
+                  }
+                  return <input {...props} />;
+                },
               }}
+              remarkPlugins={[remarkGfm]}
             >
               {post.content}
             </ReactMarkdown>

@@ -5,8 +5,6 @@ date: "2026-03-02"
 author: "Divisor Team"
 ---
 
-# How to Run Experiments in Production Without Impacting Performance (Core Web Vitals)
-
 A/B testing is essential for growth, but if poorly implemented, it can backfire. An experiment that degrades your site's performance can cancel out any conversion gains and even harm your search engine rankings (SEO) via Core Web Vitals.
 
 In this article, we'll explore how to run tests that are invisible to performance metrics.
@@ -38,10 +36,10 @@ If your test injects a banner, reserve that banner's height via CSS in the base 
 
 ## Technical Checklist for High-Performance Experiments
 
-- [ ] Is the variant decision made on the Server or at the Edge?
-- [ ] Is the testing script loaded asynchronously or deferred?
-- [ ] Is there space reservation (skeleton/min-height) for new elements?
-- [ ] Has the variant been tested on slow 3G connections?
-- [ ] Does CLS stay below 0.1 in both versions?
+- [x] Is the variant decision made on the Server or at the Edge?
+- [x] Is the testing script loaded asynchronously or deferred?
+- [x] Is there space reservation (skeleton/min-height) for new elements?
+- [x] Has the variant been tested on slow 3G connections?
+- [x] Does CLS stay below 0.1 in both versions?
 
 Running experiments doesn't have to be a trade-off with performance. Using the right tools and modern architecture, you get data without losing speed.

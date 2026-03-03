@@ -1,11 +1,9 @@
-"use client";
-
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const FinalCTA = () => {
-  const t = useTranslations("FinalCTA");
+const FinalCTA = async () => {
+  const t = await getTranslations("FinalCTA");
 
   return (
     <section className="relative py-32 border-t border-border overflow-hidden">

@@ -1,10 +1,8 @@
-"use client";
-
 import { Check } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const DeveloperFocus = () => {
-  const t = useTranslations("DeveloperFocus");
+const DeveloperFocus = async () => {
+  const t = await getTranslations("DeveloperFocus");
 
   const features = [
     t("features.0"),

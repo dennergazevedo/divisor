@@ -1,10 +1,8 @@
-"use client";
-
 import { Globe, Fingerprint, Hash, Zap } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const ValueCards = () => {
-  const t = useTranslations("ValueCards");
+const ValueCards = async () => {
+  const t = await getTranslations("ValueCards");
 
   const cards = [
     {
