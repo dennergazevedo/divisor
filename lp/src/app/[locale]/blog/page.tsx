@@ -2,10 +2,20 @@ import { getAllPosts } from "@/lib/blog";
 import { Link } from "@/i18n/routing";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Leia as últimas novidades e tutoriais sobre Testes A/B.",
-};
+import { getAlternates } from "@/lib/metadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Blog",
+    description: "Leia as últimas novidades e tutoriais sobre Testes A/B.",
+    alternates: getAlternates(locale, "/blog"),
+  };
+}
 
 type Props = {
   params: Promise<{ locale: string }>;

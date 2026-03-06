@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
 
-const BASE_URL = "https://divisor.dev";
+const BASE_URL = "https://www.divisor.dev";
 const LOCALES = ["en", "pt"];
 const STATIC_ROUTES = ["", "/blog", "/privacy", "/terms"];
 

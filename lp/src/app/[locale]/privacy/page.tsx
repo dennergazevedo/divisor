@@ -1,6 +1,22 @@
+import { Metadata } from "next";
+import { getAlternates } from "@/lib/metadata";
 import { Link } from "@/i18n/routing";
 import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Privacy" });
+
+  return {
+    title: t("title"),
+    alternates: getAlternates(locale, "/privacy"),
+  };
+}
 
 export default async function PrivacyPolicy({
   params,

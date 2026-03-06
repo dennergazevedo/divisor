@@ -18,30 +18,40 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Divisor | A/B Testing",
-    template: "%s • Divisor",
-  },
-  description:
-    "Divisor is an open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
-  metadataBase: new URL("https://divisor.dev"),
-  openGraph: {
-    title: "Welcome to Divisor",
+import { getAlternates } from "@/lib/metadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: {
+      default: "Divisor | A/B Testing",
+      template: "%s • Divisor",
+    },
     description:
-      "Welcome to Divisor, the open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
-    url: "https://divisor.dev",
-    siteName: "Divisor",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Welcome to Divisor",
-    description:
-      "Welcome to Divisor, the open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
-  },
-};
+      "Divisor is an open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
+    metadataBase: new URL("https://www.divisor.dev"),
+    alternates: getAlternates(locale),
+    openGraph: {
+      title: "Welcome to Divisor",
+      description:
+        "Welcome to Divisor, the open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
+      url: "https://www.divisor.dev",
+      siteName: "Divisor",
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Welcome to Divisor",
+      description:
+        "Welcome to Divisor, the open-source, edge-first A/B testing and feature flag platform built for performance and scale.",
+    },
+  };
+}
 
 export default async function RootLayout({
   children,

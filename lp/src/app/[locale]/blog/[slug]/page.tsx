@@ -9,6 +9,8 @@ type Props = {
   params: Promise<{ slug: string; locale: string }>;
 };
 
+import { getAlternates } from "@/lib/metadata";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = await params;
   const post = getPostBySlug(slug, locale);
@@ -22,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.description,
+    alternates: getAlternates(locale, `/blog/${slug}`),
     openGraph: {
       type: "article",
       title: post.title,
