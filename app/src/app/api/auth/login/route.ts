@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const normalizedEmail = email.trim().toLowerCase();
 
     const users = await sql`
-      SELECT id, email, password_hash
+      SELECT id, email, password_hash, first_access
       FROM users
       WHERE LOWER(email) = ${normalizedEmail}
       LIMIT 1
@@ -75,6 +75,7 @@ export async function POST(req: Request) {
       user: {
         id: user.id,
         email: user.email,
+        first_access: user.first_access,
       },
       tenants,
       invites,

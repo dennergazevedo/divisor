@@ -19,6 +19,7 @@ CREATE TABLE users (
   current_plan TEXT DEFAULT 'free',
   expiration_date TIMESTAMP WITH TIME ZONE,
   forgot_password_hash TEXT,
+  first_access BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 

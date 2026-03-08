@@ -37,6 +37,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (plan && plan !== "free" && billingCycle) {
         router.push(`/payment?plan=${plan}&billingCycle=${billingCycle}`);
+      } else if (user.first_access) {
+        router.push("/get-started");
       } else {
         router.push("/");
       }
@@ -64,6 +66,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (plan && plan !== "free" && billingCycle) {
         router.push(`/payment?plan=${plan}&billingCycle=${billingCycle}`);
+      } else if (user.first_access) {
+        router.push("/get-started");
       } else {
         router.push("/");
       }
@@ -85,6 +89,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       router.push("/auth");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function completeOnboarding() {
+    try {
+      await fetch("/api/auth/complete-onboarding", { method: "POST" });
+      if (user) {
+        setUser({ ...user, first_access: false });
+      }
+    } catch (error) {
+      console.error("Failed to complete onboarding:", error);
     }
   }
 
@@ -110,13 +125,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setTenants(data.tenants);
         setInvites(data.invites ?? []);
         setSelectedTenant(data.tenants?.[0] ?? null);
+
+        if (
+          data.user?.first_access &&
+          !window.location.pathname.startsWith("/get-started")
+        ) {
+          router.push("/get-started");
+        }
       } finally {
         setLoading(false);
       }
     }
 
     loadSession();
-  }, []);
+  }, [router]);
 
   return (
     <AuthContext.Provider
@@ -130,6 +152,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         login,
         logout,
+        completeOnboarding,
       }}
     >
       {loading && <LoadingPage />}

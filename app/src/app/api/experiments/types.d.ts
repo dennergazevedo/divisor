@@ -13,4 +13,5 @@ type ExperimentRow = {
   current_plan: string;
   expiration_date: string;
   user_id: string;
+  first_access: boolean;
 };

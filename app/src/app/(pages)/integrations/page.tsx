@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Tabs,
   TabsList,
@@ -11,10 +12,15 @@ import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import { Separator } from "@/app/ui/atoms/Separator";
 import { Plug } from "lucide-react";
 
-export default function IntegrationsPage() {
+function IntegrationsContent() {
+  const searchParams = useSearchParams();
+  const initialTab =
+    (searchParams.get("tab") as "javascript" | "react" | "angular" | "vue") ??
+    "javascript";
+
   const [activeTab, setActiveTab] = useState<
     "javascript" | "react" | "angular" | "vue"
-  >("javascript");
+  >(initialTab);
 
   return (
     <main className="relative flex flex-col h-full w-full">
@@ -251,5 +257,13 @@ onMounted(async () => {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function IntegrationsPage() {
+  return (
+    <Suspense>
+      <IntegrationsContent />
+    </Suspense>
   );
 }

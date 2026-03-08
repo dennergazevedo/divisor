@@ -8,6 +8,7 @@ type User = {
   current_plan?: string;
   provider_id?: string | null;
   expiration_date?: string | null;
+  first_access?: boolean;
 };
 
 type Tenant = {
@@ -41,6 +42,8 @@ type AuthContextType = {
   login: (email: string, password: string) => Promise<void>;
 
   logout: () => Promise<void>;
+
+  completeOnboarding: () => Promise<void>;
 
   // UI-only
   setSelectedTenant: (tenant: Tenant | null) => void;
