@@ -6,8 +6,9 @@ import TenantList from "./list";
 import CreateTenant from "./create";
 import { Suspense, useState } from "react";
 import RedirectByPlan from "./redirectByPlan";
-import { Briefcase } from "lucide-react";
+import { Briefcase, Info } from "lucide-react";
 import InvitationList from "./invitations";
+import { InformationBlock } from "@/app/ui/molecules/InformationBlock";
 
 export default function Home() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -37,6 +38,13 @@ export default function Home() {
             <CreateTenant onCreated={handleRefresh} />
           </div>
         </div>
+
+        <InformationBlock
+          icon={Info}
+          title="What are Tenants?"
+          description="Tenants are isolated workspaces representing organizations or projects. Here you can create and manage different environments, each with its own members, integrations, and experiments."
+        />
+
         <Separator />
 
         <InvitationList onAction={handleRefresh} />

@@ -15,9 +15,10 @@ import ViewExperimentDialog from "./view";
 import PreviewModal from "./PreviewModal";
 import { Separator } from "@/app/ui/atoms/Separator";
 import Link from "next/link";
-import { ChartArea, FlaskConical } from "lucide-react";
+import { ChartArea, FlaskConical, Info } from "lucide-react";
 import { Pagination } from "@/app/ui/molecules/Pagination";
 import { Button } from "@/app/ui/atoms/Button";
+import { InformationBlock } from "@/app/ui/molecules/InformationBlock";
 
 export default function ExperimentsClient() {
   const { selectedTenant } = useAuth();
@@ -79,6 +80,12 @@ export default function ExperimentsClient() {
           />
         </div>
       </div>
+
+      <InformationBlock
+        icon={Info}
+        title="What are Experiments?"
+        description="Experiments allow you to test different variations of your product features or content. Create an experiment to compare variants via A/B testing and use data to determine which performs better for your users."
+      />
 
       <Separator />
 

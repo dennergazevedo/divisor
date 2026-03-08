@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Separator } from "@/app/ui/atoms/Separator";
 import Link from "next/link";
-import { ChevronRight, BarChart3, Gauge } from "lucide-react";
+import { ChevronRight, BarChart3, Gauge, Info } from "lucide-react";
 import { Pagination } from "@/app/ui/molecules/Pagination";
+import { InformationBlock } from "@/app/ui/molecules/InformationBlock";
 
 export default function PerformanceClient() {
   const { selectedTenant } = useAuth();
@@ -58,6 +59,12 @@ export default function PerformanceClient() {
           Analyze the performance of your active experiments
         </p>
       </div>
+
+      <InformationBlock
+        icon={Info}
+        title="What is the Performance Dashboard?"
+        description="The Performance dashboard provides a centralized view of all your running experiments and their metrics. Monitor key performance indicators to identify which variants are driving the most conversions and engagement."
+      />
 
       <Separator />
 

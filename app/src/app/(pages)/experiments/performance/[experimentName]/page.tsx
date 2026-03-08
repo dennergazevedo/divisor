@@ -13,7 +13,9 @@ import {
   DollarSign,
   Package,
   Users,
+  Info,
 } from "lucide-react";
+import { InformationBlock } from "@/app/ui/molecules/InformationBlock";
 import {
   BarChart,
   Bar,
@@ -127,6 +129,12 @@ export default function PerformanceDetailPage({
               </div>
             </div>
           </div>
+
+          <InformationBlock
+            icon={Info}
+            title="Experiment Performance Analysis"
+            description="Detailed metrics for the selected experiment. Compare conversions, revenue, and items sold across different variants to determine the winning strategy based on real-time data."
+          />
 
           <Separator className="bg-neutral-800" />
 
