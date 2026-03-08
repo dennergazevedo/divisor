@@ -74,7 +74,7 @@ export default function SupportPage() {
 
         <Separator />
 
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full max-w-4xl">
           <div className="bg-zinc-900/50 backdrop-blur-sm border border-neutral-800 rounded-3xl p-8 shadow-2xl">
             <form
               onSubmit={handleSubmit(onSubmit)}

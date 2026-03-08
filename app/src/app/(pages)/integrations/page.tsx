@@ -10,7 +10,9 @@ import {
 } from "@/app/ui/molecules/Tabs";
 import { SidebarTrigger } from "@/app/ui/organisms/Sidebar";
 import { Separator } from "@/app/ui/atoms/Separator";
-import { Plug } from "lucide-react";
+import { Plug, CheckCircle2, Copy, Check } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 function IntegrationsContent() {
   const searchParams = useSearchParams();
@@ -22,24 +24,91 @@ function IntegrationsContent() {
     "javascript" | "react" | "angular" | "vue"
   >(initialTab);
 
+  const { selectedTenant } = useAuth();
+  const tenantId = selectedTenant?.id || "YOUR_TENANT_ID";
+
+  const Step = ({
+    number,
+    title,
+    children,
+  }: {
+    number: string;
+    title: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="flex gap-6 relative group pb-12 last:pb-0">
+      <div className="flex flex-col items-center">
+        <div className="w-10 h-10 rounded-full bg-zinc-800 border border-neutral-700 flex items-center justify-center text-sm font-bold text-white group-hover:border-purple-500 transition-colors z-10">
+          {number}
+        </div>
+        <div className="w-[1px] flex-1 bg-neutral-800 group-last:hidden mt-2" />
+      </div>
+      <div className="flex flex-col gap-4 flex-1">
+        <h3 className="font-bold text-white pt-2">{title}</h3>
+        <div className="text-sm text-neutral-400">{children}</div>
+      </div>
+    </div>
+  );
+
+  const CodeBlock = ({
+    code,
+    color = "text-purple-300",
+  }: {
+    code: string;
+    color?: string;
+  }) => {
+    const [copied, setCopied] = useState(false);
+
+    const onCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(code);
+        setCopied(true);
+        toast.success("Copied to clipboard!");
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        toast.error("Failed to copy");
+        console.error(err);
+      }
+    };
+
+    return (
+      <div className="relative group/code">
+        <pre className="bg-black/50 rounded-xl p-4 overflow-x-auto text-[11px] leading-relaxed border border-neutral-800 font-mono">
+          <code className={color}>{code}</code>
+        </pre>
+        <button
+          onClick={onCopy}
+          className="absolute top-3 right-3 p-2 rounded-lg bg-zinc-800/50 border border-neutral-700 text-neutral-400 hover:text-white hover:bg-zinc-700 transition-all opacity-0 group-hover/code:opacity-100"
+          title="Copy code"
+        >
+          {copied ? (
+            <Check className="w-3.5 h-3.5 text-emerald-400" />
+          ) : (
+            <Copy className="w-3.5 h-3.5" />
+          )}
+        </button>
+      </div>
+    );
+  };
+
   return (
     <main className="relative flex flex-col h-full w-full">
       <SidebarTrigger className="fixed top-2 left-4 md:relative md:top-0 md:left-0 p-5 md:p-8 md:pt-12" />
 
-      <section className="flex flex-col gap-4 p-8 py-4 mt-20 md:mt-0 max-w-6xl mx-auto w-full">
+      <section className="flex flex-col gap-4 p-8 py-4 mt-20 md:mt-0 mx-auto w-full">
         <div className="flex flex-col gap-6">
-          <div>
-            <h1 className="text-lg font-bold flex flex-row items-center gap-2">
+          <div className="space-y-1">
+            <h1 className="text-xl font-bold flex flex-row items-center gap-2">
               <Plug className="w-5 h-5 text-purple-400" />
-              Integrations
+              Integration Guide
             </h1>
             <p className="text-sm text-neutral-400">
-              Learn how to integrate Divisor and start tracking results in
-              minutes.
+              Follow these simple steps to integrate Divisor into your stack and
+              start experimenting.
             </p>
           </div>
 
-          <Separator />
+          <Separator className="bg-neutral-800" />
 
           <Tabs
             value={activeTab}
@@ -47,212 +116,275 @@ function IntegrationsContent() {
               setActiveTab(v as "javascript" | "react" | "angular" | "vue")
             }
           >
-            <TabsList className="mb-8">
+            <TabsList className="mb-10 bg-zinc-900 border-neutral-800">
               <TabsTrigger value="javascript">JavaScript</TabsTrigger>
               <TabsTrigger value="react">React</TabsTrigger>
               <TabsTrigger value="angular">Angular</TabsTrigger>
               <TabsTrigger value="vue">Vue</TabsTrigger>
             </TabsList>
 
-            {/* ===================== JavaScript ===================== */}
-            <TabsContent value="javascript">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">
-                    1. Initialization & Get Variant
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Initialize the client and determination which variant to
-                    show.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
-                    <code>{`import { DivisorClient } from "@divisor.dev/sdk"
+            <div className="bg-zinc-900/40 border border-neutral-800 rounded-2xl p-8 backdrop-blur-sm max-w-4xl">
+              {/* ===================== JavaScript ===================== */}
+              <TabsContent value="javascript" className="mt-0">
+                <div className="space-y-0">
+                  <Step number="1" title="Install the SDK">
+                    <p className="mb-4">
+                      Add the Divisor core SDK to your project via npm or yarn.
+                    </p>
+                    <CodeBlock
+                      code={`npm install @divisor.dev/sdk`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
+
+                  <Step number="2" title="Instantiate DivisorClient">
+                    <p className="mb-4">
+                      Create a new instance of the client using your Tenant ID.
+                    </p>
+                    <CodeBlock
+                      code={`import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
-  tenantId: 'your-tenant-id',
-  userId: 'user-123' // Optional
+  tenantId: '${tenantId}',
+  userId: 'user-unique-id' // Optional: for sticky variations
+})`}
+                    />
+                  </Step>
+
+                  <Step number="3" title="Fetch your variant">
+                    <p className="mb-4">
+                      Request which variant should be displayed for a specific
+                      experiment.
+                    </p>
+                    <CodeBlock
+                      code={`const { variant } = await client.getVariant({
+  experimentName: 'hero-test',
+  variantFallback: 'control'
 })
 
-async function checkExperiment() {
-  const result = await client.getVariant({
-    experimentName: "checkout-flow",
-    variantFallback: "default"
-  })
-  
-  console.log(result.variant) // "A", "B", or "default"
-}`}</code>
-                  </pre>
-                </div>
+if (variant === 'test-b') {
+  // Show new version
+} else {
+  // Show control
+}`}
+                    />
+                  </Step>
 
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">2. Track Conversion</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Record conversion events like purchases or signups.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
-                    <code>{`// After a successful action:
-await client.conversion({
-  experimentName: "checkout-flow",
-  variant: "B",
-  value: 150.00,
-  itensCount: 2
-})`}</code>
-                  </pre>
-                </div>
-              </div>
-            </TabsContent>
+                  <Step number="4" title="Track conversions">
+                    <p className="mb-4">
+                      Send conversion events when users perform desired actions.
+                    </p>
+                    <CodeBlock
+                      code={`await client.conversion({
+  experimentName: 'hero-test',
+  variant: variant,
+  value: 1.0 // Optional: numeric value (e.g., price)
+})`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
 
-            {/* ===================== React ===================== */}
-            <TabsContent value="react">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">1. Get Variant Hook</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Determination the variant using React state and effects.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
-                    <code>{`import { useState, useEffect } from 'react'
-import { DivisorClient } from "@divisor.dev/sdk"
+                  <Step number="5" title="Done!">
+                    <div className="flex items-center gap-3 p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
+                      <CheckCircle2 className="w-5 h-5" />
+                      <span className="font-semibold">
+                        You&apos;re all set! Check your dashboard for real-time
+                        results.
+                      </span>
+                    </div>
+                  </Step>
+                </div>
+              </TabsContent>
+
+              {/* ===================== React ===================== */}
+              <TabsContent value="react" className="mt-0">
+                <div className="space-y-0">
+                  <Step number="1" title="Install the SDK">
+                    <p className="mb-4">
+                      Add the Divisor SDK to your React project.
+                    </p>
+                    <CodeBlock
+                      code={`npm install @divisor.dev/sdk`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
+
+                  <Step number="2" title="Instantiate DivisorClient">
+                    <p className="mb-4">
+                      We recommend instantiating the client outside your
+                      component tree or in a Context.
+                    </p>
+                    <CodeBlock
+                      code={`import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
-  tenantId: 'your-tenant-id',
-  userId: 'user-123'
-})
+  tenantId: '${tenantId}'
+})`}
+                    />
+                  </Step>
 
-export function useExperiment(name, fallback) {
-  const [variant, setVariant] = useState(fallback)
+                  <Step number="3" title="Use the Experiment hook">
+                    <p className="mb-4">
+                      Fetch the variant using a custom hook or directly in a
+                      useEffect.
+                    </p>
+                    <CodeBlock
+                      code={`import { useState, useEffect } from 'react'
+
+function MyComponent() {
+  const [variant, setVariant] = useState('control')
 
   useEffect(() => {
-    client.getVariant({ experimentName: name, variantFallback: fallback })
-      .then(res => setVariant(res.variant ?? fallback))
-  }, [name, fallback])
+    client.getVariant({ experimentName: 'signup-test', variantFallback: 'control' })
+      .then(res => setVariant(res.variant))
+  }, [])
 
-  return variant
-}`}</code>
-                  </pre>
+  return variant === 'B' ? <NewHero /> : <OldHero />
+}`}
+                    />
+                  </Step>
+
+                  <Step number="4" title="Track conversions">
+                    <p className="mb-4">
+                      Trigger conversions from event handlers.
+                    </p>
+                    <CodeBlock
+                      code={`const onSignup = () => {
+  client.conversion({
+    experimentName: 'signup-test',
+    variant: variant
+  })
+}`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
+
+                  <Step number="5" title="Done!">
+                    <div className="flex items-center gap-3 p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
+                      <CheckCircle2 className="w-5 h-5" />
+                      <span className="font-semibold">
+                        Ready to scale! Your experiments are now live.
+                      </span>
+                    </div>
+                  </Step>
                 </div>
+              </TabsContent>
 
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">
-                    2. Trigger Conversion
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Call the conversion method from your event handlers.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
-                    <code>{`function CheckoutButton({ variant }) {
-  const handlePurchase = () => {
-    client.conversion({
-      experimentName: "checkout-flow",
-      variant: variant,
-      value: 199.99,
-      itensCount: 1
-    })
-  }
+              {/* ===================== Angular ===================== */}
+              <TabsContent value="angular" className="mt-0">
+                <div className="space-y-0">
+                  <Step number="1" title="Install the SDK">
+                    <CodeBlock
+                      code={`npm install @divisor.dev/sdk`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
 
-  return <button onClick={handlePurchase}>Buy Now</button>
-}`}</code>
-                  </pre>
-                </div>
-              </div>
-            </TabsContent>
-
-            {/* ===================== Angular ===================== */}
-            <TabsContent value="angular">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">1. Service Setup</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Inject the Divisor service across your application.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
-                    <code>{`@Injectable({ providedIn: 'root' })
+                  <Step number="2" title="Create a Service">
+                    <p className="mb-4">
+                      Encapsulate the client in an Angular service for easy
+                      injection.
+                    </p>
+                    <CodeBlock
+                      code={`@Injectable({ providedIn: 'root' })
 export class DivisorService {
   private client = new DivisorClient({
-    tenantId: 'your-tenant-id',
-    userId: 'user-123'
+    tenantId: '${tenantId}'
   });
 
   async getVariant(name: string, fallback: string) {
-    const res = await this.client.getVariant({
-      experimentName: name, variantFallback: fallback
-    });
+    const res = await this.client.getVariant({ experimentName: name, variantFallback: fallback });
     return res.variant;
   }
-}`}</code>
-                  </pre>
-                </div>
+}`}
+                    />
+                  </Step>
 
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">2. Event Tracking</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Add tracking logic to your service or components.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
-                    <code>{`// In your DivisorService:
-async track(experiment: string, variant: string) {
+                  <Step number="3" title="Fetch variant in Component">
+                    <CodeBlock
+                      code={`// component.ts
+variant = 'control';
+
+async ngOnInit() {
+  this.variant = await this.divisor.getVariant('top-bar', 'control');
+}`}
+                    />
+                  </Step>
+
+                  <Step number="4" title="Track conversions">
+                    <CodeBlock
+                      code={`async track() {
   await this.client.conversion({
-    experimentName: experiment,
-    variant: variant,
-    value: 50,
-    itensCount: 1
+    experimentName: 'top-bar',
+    variant: this.variant
   });
-}`}</code>
-                  </pre>
-                </div>
-              </div>
-            </TabsContent>
+}`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
 
-            {/* ===================== Vue ===================== */}
-            <TabsContent value="vue">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">1. Composition API</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Use lifecycle hooks to fetch variants.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-purple-300 border border-neutral-800">
-                    <code>{`<script setup>
-import { ref, onMounted } from 'vue'
-import { DivisorClient } from "@divisor.dev/sdk"
+                  <Step number="5" title="Done!">
+                    <p className="text-sm font-semibold text-purple-400">
+                      Integration complete for Angular.
+                    </p>
+                  </Step>
+                </div>
+              </TabsContent>
+
+              {/* ===================== Vue ===================== */}
+              <TabsContent value="vue" className="mt-0">
+                <div className="space-y-0">
+                  <Step number="1" title="Install the SDK">
+                    <CodeBlock
+                      code={`npm install @divisor.dev/sdk`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
+
+                  <Step number="2" title="Instantiate Client">
+                    <CodeBlock
+                      code={`import { DivisorClient } from "@divisor.dev/sdk"
 
 const client = new DivisorClient({
-  tenantId: 'your-tenant-id',
-  userId: 'user-123'
-})
+  tenantId: '${tenantId}'
+})`}
+                    />
+                  </Step>
 
-const variant = ref('default')
+                  <Step number="3" title="Fetch variant (Composition API)">
+                    <CodeBlock
+                      code={`<script setup>
+import { ref, onMounted } from 'vue'
+
+const variant = ref('control')
 onMounted(async () => {
-  const res = await client.getVariant({
-    experimentName: 'hero-test',
-    variantFallback: 'default'
-  })
+  const res = await client.getVariant({ experimentName: 'pricing-test', variantFallback: 'control' })
   variant.value = res.variant
 })
-</script>`}</code>
-                  </pre>
-                </div>
+</script>`}
+                    />
+                  </Step>
 
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 space-y-4">
-                  <h3 className="font-bold text-white">
-                    2. Conversion Example
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Track events directly from Vue templates.
-                  </p>
-                  <pre className="bg-black/50 rounded-md p-4 overflow-x-auto text-xs text-emerald-300 border border-neutral-800">
-                    <code>{`async function onPurchase() {
+                  <Step number="4" title="Track conversions">
+                    <CodeBlock
+                      code={`async function handleSale() {
   await client.conversion({
-    experimentName: 'hero-test',
-    variant: variant.value,
-    value: 100,
-    itensCount: 1
+    experimentName: 'pricing-test',
+    variant: variant.value
   })
-}`}</code>
-                  </pre>
+}`}
+                      color="text-emerald-400"
+                    />
+                  </Step>
+
+                  <Step number="5" title="Done!">
+                    <p className="text-sm font-semibold text-purple-400">
+                      Vue integration finished successfully.
+                    </p>
+                  </Step>
                 </div>
-              </div>
-            </TabsContent>
+              </TabsContent>
+            </div>
           </Tabs>
         </div>
       </section>
